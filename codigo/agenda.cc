@@ -1,27 +1,28 @@
+#include "funcionesAux.h"
 #include "agenda.h"
 
-using namespace std;
+Agenda::Agenda(){}
 
-list<Alumno> buscarAlumno(string dni, string apellidos, int equipo){
-
-}
-
-bool insertarAlumno(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento){
+list<Alumno> Agenda::buscarAlumno(string dni, string apellidos, int equipo){
 
 }
 
-bool borrarAlumno(string dni, string apellidos){
+bool Agenda::insertarAlumno(Alumno alumno){
 
 }
 
-bool modificarAlumno(string dni, string apellidos){
+bool Agenda::borrarAlumno(string dni, string apellidos){
 
 }
 
-list<Alumno> mostrarLista(){
+bool Agenda::modificarAlumno(string dni, string apellidos){
 
 }
 
-list<Alumno> mostrarAlumno(string dni, string apellidos){
+list<Alumno> Agenda::mostrarLista(){
+
+}
+
+list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos){
 
 }

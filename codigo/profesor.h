@@ -3,13 +3,20 @@
 #ifndef PROFESOR_H_
 #define PROFESOR_H_
 
+#include <string>
+#include <fstream>
+#include "persona.h"
+
+using namespace std;
+
 class Profesor: public Persona{
 	private:
 		bool rol_;
 		string usuario_;
 		string contrasena_;
 	public:
-		Profesor(bool rol, string usuario, string contrasena);
+		//constructor de la clase Profesor que hereda de la clase Persona
+		Profesor(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, bool rol, string contrasena);
 
 		//métodos get y set de rol_
 		inline bool getRol(){return rol_;};
@@ -27,16 +34,17 @@ class Profesor: public Persona{
 		bool buscaProfesor(string dni);
 
 		//Registra un profesor y lo añade al fichero binario
-		bool registrarProfesor();
+		bool registrarProfesor(Profesor profesor);
 
 		//Inicia sesión de un profesor
-		void login(string usuario, string constrasena);
+		bool login(string usuario, string constrasena);
 
 		//Guarda una copia de seguridad del fichero binario de alumnos
 		bool guardarCopia();
 
 		//Cargar una copia de seguridad en el fichero binario de alumnos
 		bool cargarCopia();
+
 };
 
 #endif

@@ -3,13 +3,16 @@
 #ifndef ALUMNO_H_
 #define ALUMNO_H_
 
+#include "persona.h"
+
 class Alumno: public Persona{
 	private:
 		int curso_;
 		int equipo_;
 		bool lider_;
 	public:
-		Alumno(int curso, int equipo, bool lider);
+		//constructor de la clase Alumno que hereda de la clase Persona
+		Alumno(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, int curso, int equipo=0, bool lider=false);
 
 		//métodos get y set de la variable curso_
 		inline int getCurso(){return curso_;};

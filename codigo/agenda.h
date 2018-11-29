@@ -3,15 +3,24 @@
 #ifndef AGENDA_H_
 #define AGENDA_H_
 
+#include <list>
+#include <string>
+#include "alumno.h"
+
+using namespace std;
+
 class Agenda{
 	private:
 		list<Alumno> listaALumnos_;
 	public:
+		//constructor de la clase Agenda
+		Agenda();
+
 		//Busca uno o varios alumnos en el fichero binario
 		list<Alumno> buscarAlumno(string dni, string apellidos, int equipo);
 
 		//Inserta un alumno en el fichero binario
-		bool insertarAlumno(string dni, string nombre, string apellidos, int telefono, string direccion, string email, sting fecha_nacimiento);
+		bool insertarAlumno(Alumno alumno);
 
 		//Borra un alumno del fichero binario
 		bool borrarAlumno(string dni, string apellidos);
