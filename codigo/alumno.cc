@@ -11,24 +11,29 @@ Alumno::Alumno(string dni, string nombre, string apellidos, int telefono, string
 
 }
 
-void Alumno::setCurso(int curso){
+bool Alumno::setCurso(int curso){
 	if(curso>0 && curso<5){
 		curso_ = curso;
+		return true;
 	}
 	else{
 		cout<<"El curso introducido no es correcto"<<endl;
+		return false;
 	}
 }
 
-void Alumno::setEquipo(int equipo){
+bool Alumno::setEquipo(int equipo){
 	if(equipo > 0){
 		equipo_ = equipo;
+		return true;
 	}
 	else{
 		cout<<"El equipo no es válido"<<endl;
+		return false;
 	}
 }
 
 void Alumno::setLider(bool lider){
+	lider_=lider;
 	
 }
