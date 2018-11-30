@@ -25,5 +25,6 @@ bool comprobarTel(int telefono);
 bool comprobarFechaNacimiento(string fecha_nacimiento);
 void imprimirBool(bool a);
 string convertirBool(bool a);
-
+string convertirBoolLider(bool a);
+bool convertirStringLider(char *lider);
 #endif

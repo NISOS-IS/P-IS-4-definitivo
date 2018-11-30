@@ -13,3 +13,25 @@ string convertirBool(bool a){
 	}
 	return aux;
 }
+
+string convertirBoolLider(bool a){
+	string aux;
+	if(a==true){
+		aux = "Lider";
+	}
+	else{
+		aux = "No Lider";
+	}
+	return aux;
+}
+
+bool convertirStringLider(char *lider){
+	bool aux;
+	
+	if(lider=="Lider"){
+		aux=true;
+	}else{
+		aux=false;
+	}
+	return aux;
+}
