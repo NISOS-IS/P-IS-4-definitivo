@@ -93,5 +93,25 @@ bool Profesor::cargarCopia(){
 }
 
 bool Profesor::guardarCopia(){
-
+	// Creamos el archivo y lo abrimos en binario
+	int lon;
+	ifstream fe("agenda.bin",ios::binary); // h es el string donde se encuentra el archivo
+	// Miramos cual es el tamaño del archivo
+	fe.seekg (0, ios::end);
+	lon = fe.tellg();
+	fe.seekg (0, ios::beg);
+	//Creamos una cadena de caracteres con el tamaño del archivo
+	char* cadena = new char [lon];
+	memset( cadena , 0 , lon );
+	//Leemos el archivo y se guarda en la cadena
+	fe.read(cadena,lon); 
+	//Creamos otro archivo donde se copiara
+	ofstream fs("copiaSeguridad.bin");
+	if(fs.eof()){
+		return false;
+	}
+	fs.write(cadena,lon);
+	fs.close();
+	fe.close();
+	return true;
 }

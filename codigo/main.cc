@@ -17,7 +17,7 @@ int main(){
 	string usuario, contrasena, dni,op;
 	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
 	int telefono, curso, equipo, esLider=1;
-	bool lider, variableCorrecta=false;
+	bool lider, variableCorrecta=false, correcto=false;
 	int m1, opcion;
 	menuprincipal();
 	cout<<"\nSeleccione una opcion:"<<endl;
@@ -166,7 +166,12 @@ int main(){
 								break;
 
 							case 6:
-								profesor.guardarCopia();
+								correcto= profesor.guardarCopia();
+								if(correcto==true){
+									cout<<"Copia de Seguridad Guardada Correctamente"<<endl;
+								}else{
+									cout<<"Error al guardar Copia de Seguridad"<<endl;
+								}
 								break;
 
 							case 7:
