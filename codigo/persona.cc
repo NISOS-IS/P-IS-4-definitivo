@@ -17,13 +17,15 @@ Persona::Persona(string dni, string nombre, string apellidos, int telefono, stri
 	fechaNacimiento_ = fecha_nacimiento;
 }
 
-void Persona::setDNI(string dni){
+bool Persona::setDNI(string dni){
 	bool correcto = true;//comprobarDNI(dni);
 	if(correcto){
 		dni_ = dni;
+		return true;
 	}
 	else{
 		cout<<"El DNI no es correcto"<<endl;
+		return false;
 	}
 }
 
@@ -35,13 +37,15 @@ void Persona::setApellidos(string apellidos){
 	apellidos_ = apellidos;
 }
 
-void Persona::setTelefono(int telefono){
+bool Persona::setTelefono(int telefono){
     string s = to_string(telefono);
 	if(s.size()==9){
 		telefono_ = atoi(s.c_str());
+		return true;
 	}
 	else{
 		cout<<"El telefono no es correcto"<<endl;
+		return false;
 	}
 }
 
@@ -49,10 +53,12 @@ void Persona::setDireccion(string direccion){
 	direccion_ = direccion;
 }
 
-void Persona::setEmail(string email){
-	
+bool Persona::setEmail(string email){
+	email_=email_;
+	return true;
 }
 
 void Persona::setFechaNacimiento(string fecha_nacimiento){
-	
+	fechaNacimiento_=fecha_nacimiento;
+	return true;
 }

@@ -23,7 +23,7 @@ class Persona{
 
 		//métodos get y set de dni_
 		inline string getDNI(){return dni_;};
-		void setDNI(string dni);
+		bool setDNI(string dni);
 
 		//métodos get y set de nombre_
 		inline string getNombre(){return nombre_;};
@@ -35,7 +35,7 @@ class Persona{
 	
 		//métodos get y set de telefono_
 		inline int getTelefono(){return telefono_;};
-		void setTelefono(int telefono);
+		bool setTelefono(int telefono);
 
 		//métodos get y set de direccion_
 		inline string getDireccion(){return direccion_;};
@@ -43,11 +43,11 @@ class Persona{
 
 		//métodos get y set de email_
 		inline string getEmail(){return email_;};
-		void setEmail(string email);
+		bool setEmail(string email);
 
 		//métodos get y set de fechaNacimiento_
 		inline string getFechaNacimiento(){return fechaNacimiento_;};
-		void setFechaNacimiento(string fecha_nacimiento);
+		bool setFechaNacimiento(string fecha_nacimiento);
 };
 
 #endif
