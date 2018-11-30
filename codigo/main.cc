@@ -14,11 +14,11 @@ int main(){
 	Alumno alumno("","","",0,"","","",0,0,false);
 	Profesor profesor("pepe","ariza","t",0,"w","t","s",false,"w");
 	Agenda agenda;
-	string usuario, contrasena, dni, apellidos, op;
+	string usuario, contrasena, dni,op;
 	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
 	int telefono, curso, equipo, esLider=1;
 	bool lider, variableCorrecta=false;
-	int m1;
+	int m1, opcion;
 	menuprincipal();
 	cout<<"\nSeleccione una opcion:"<<endl;
 	cin>>m1;
@@ -67,47 +67,47 @@ int main(){
 
 							case 3:
 								while(variableCorrecta==false){
-									cout<<"Introduce DNI\n"<<endl;
+									cout<<"Introduce DNI"<<endl;
 									cin>>DNI;
 									variableCorrecta= alumno.setDNI(DNI);
 								}
 								variableCorrecta= false;
 								
-								cout<<"Introduce Nombre\n"<<endl;
+								cout<<"Introduce Nombre"<<endl;
 								cin>>nombre;						
 								alumno.setNombre(nombre);
 								
-								cout<<"Introduce Apellido\n"<<endl;
+								cout<<"Introduce Apellido"<<endl;
 								cin>>apellidos;
 								alumno.setApellidos(apellidos);
 								
 								while(variableCorrecta==false){
-									cout<<"Introduce Telefono\n"<<endl;
+									cout<<"Introduce Telefono"<<endl;
 									cin>>telefono;
 									variableCorrecta= alumno.setTelefono(telefono);
 								}
 								variableCorrecta= false;
 								
-								cout<<"Introduce Direccion\n"<<endl;
+								cout<<"Introduce Direccion"<<endl;
 								cin>>direccion;
 								alumno.setDireccion(direccion);
 								
 								while(variableCorrecta==false){
-									cout<<"Introduce Email\n"<<endl;
+									cout<<"Introduce Email"<<endl;
 									cin>>email;
 									variableCorrecta= alumno.setEmail(email);
 								}
 								variableCorrecta= false;
 								
 								while(variableCorrecta==false){
-									cout<<"Introduce Fecha de Nacimiento\n"<<endl;
+									cout<<"Introduce Fecha de Nacimiento"<<endl;
 									cin>>fechaNacimiento;
 									variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
 								}
 								variableCorrecta= false;
 								
 								while(variableCorrecta==false){
-									cout<<"Introduce el Curso\n"<<endl;
+									cout<<"Introduce el Curso"<<endl;
 									cin>>curso;
 									variableCorrecta= alumno.setCurso(curso);
 								}

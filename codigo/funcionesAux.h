@@ -17,6 +17,19 @@ struct Registro{
 		char contrasena[100];
 };
 
+struct RegistroAlumno{
+		char dni[10];
+		char nombre[100];
+		char apellidos[100];
+		int telefono;
+		char direccion[100];
+		char email[100];
+		char fechaNacimiento[100];
+		int curso;
+		int equipo;
+		char lider[100];
+};
+
 using namespace std;
 
 bool comprobarDNI(string dni);

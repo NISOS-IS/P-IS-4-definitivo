@@ -32,7 +32,7 @@ class Agenda{
 		list<Alumno> mostrarLista();
 
 		//Muestra por pantalla los datos de un alumno en concreto
-		list<Alumno> mostrarAlumno(string dni, string apellidos);
+		list<Alumno> mostrarAlumno(string dni, string apellidos, int equipo);
 };
 
 #endif

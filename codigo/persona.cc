@@ -54,7 +54,7 @@ void Persona::setDireccion(string direccion){
 }
 
 bool Persona::setEmail(string email){
-	email_=email_;
+	email_=email;
 	return true;
 }
 

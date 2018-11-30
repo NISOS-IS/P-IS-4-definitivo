@@ -1,5 +1,8 @@
 #include "funcionesAux.h"
 #include "agenda.h"
+#include <iostream>
+#include <fstream>
+#include <cstring>
 
 Agenda::Agenda(){}
 
@@ -69,22 +72,6 @@ bool Agenda::insertarAlumno(Alumno alumno){
 	strcpy(reg.lider,convertirBoolLider(alumno.getLider()).c_str());
 	file.write((char *) &reg, sizeof(RegistroAlumno));
 	file.close();
-	ifstream f("agenda.bin", ios::in | ios::binary);
-	f.read((char *) &reg, sizeof(RegistroAlumno));
-	while(!f.eof()){
-		cout<<reg.dni<<endl;
-		cout<<reg.nombre<<endl;
-		cout<<reg.apellidos<<endl;
-		cout<<reg.telefono<<endl;
-		cout<<reg.direccion<<endl;
-		cout<<reg.email<<endl;
-		cout<<reg.fechaNacimiento<<endl;
-		cout<<reg.curso<<endl;
-		cout<<reg.equipo<<endl;
-		cout<<reg.lider<<endl;
-		f.close();
-		f.read((char *) &reg, sizeof(RegistroAlumno));
-	}
 }
 
 bool Agenda::borrarAlumno(string dni, string apellidos){
@@ -115,6 +102,6 @@ list<Alumno> Agenda::mostrarLista(){
 	}*/
 }
 
-list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos){
+list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos, int equipo){
 	buscarAlumno(dni,apellidos,equipo);
 }
