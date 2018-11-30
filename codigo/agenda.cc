@@ -6,7 +6,7 @@
 
 Agenda::Agenda(){}
 
-list<Alumno> Agenda::buscarAlumno(string dni, string apellidos, int equipo){
+list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
 ifstream file("agenda.bin", ios::in | ios::binary);
 	Alumno aux("","","",0,"","","",0,0,false);
 	RegistroAlumno alumnoAux;

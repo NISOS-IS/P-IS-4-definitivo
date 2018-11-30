@@ -11,7 +11,7 @@ using namespace std;
 
 class Agenda{
 	private:
-		list<Alumno> listaALumnos_;
+		list<Alumno> listaAlumnos_;
 	public:
 		//constructor de la clase Agenda
 		Agenda();
