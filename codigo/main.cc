@@ -8,12 +8,16 @@ using namespace std;
 
 void menuprincipal();
 void menusecundario();
+void menuBuscar(int);
 
 int main(){
 	Alumno alumno("","","",0,"","","",0,0,false);
 	Profesor profesor("pepe","ariza","t",0,"w","t","s",false,"w");
 	Agenda agenda;
 	string usuario, contrasena, dni, apellidos, op;
+	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
+	int telefono, curso, equipo, esLider=1;
+	bool lider, variableCorrecta=false;
 	int m1;
 	menuprincipal();
 	cout<<"\nSeleccione una opcion:"<<endl;
@@ -43,19 +47,122 @@ int main(){
 								break;
 
 							case 2:
-								agenda.mostrarAlumno(dni, apellidos);
+								menuBuscar(1);
+								cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
+								cin>>opcion;
+								if(opcion==1){
+									cout<<"Indique el DNI"<<endl;
+									cin>>dni;
+									agenda.mostrarAlumno(dni, "", 0);
+								}else if(opcion==2){
+									cout<<"Indique el Apellido"<<endl;
+									cin>>apellidos;
+									agenda.mostrarAlumno("", apellidos, 0);
+								}else if(opcion==3){
+									cout<<"Indique el Equipo"<<endl;
+									cin>>equipo;
+									agenda.mostrarAlumno("", "", equipo);
+								}
 								break;
 
 							case 3:
+								while(variableCorrecta==false){
+									cout<<"Introduce DNI\n"<<endl;
+									cin>>DNI;
+									variableCorrecta= alumno.setDNI(DNI);
+								}
+								variableCorrecta= false;
+								
+								cout<<"Introduce Nombre\n"<<endl;
+								cin>>nombre;						
+								alumno.setNombre(nombre);
+								
+								cout<<"Introduce Apellido\n"<<endl;
+								cin>>apellidos;
+								alumno.setApellidos(apellidos);
+								
+								while(variableCorrecta==false){
+									cout<<"Introduce Telefono\n"<<endl;
+									cin>>telefono;
+									variableCorrecta= alumno.setTelefono(telefono);
+								}
+								variableCorrecta= false;
+								
+								cout<<"Introduce Direccion\n"<<endl;
+								cin>>direccion;
+								alumno.setDireccion(direccion);
+								
+								while(variableCorrecta==false){
+									cout<<"Introduce Email\n"<<endl;
+									cin>>email;
+									variableCorrecta= alumno.setEmail(email);
+								}
+								variableCorrecta= false;
+								
+								while(variableCorrecta==false){
+									cout<<"Introduce Fecha de Nacimiento\n"<<endl;
+									cin>>fechaNacimiento;
+									variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
+								}
+								variableCorrecta= false;
+								
+								while(variableCorrecta==false){
+									cout<<"Introduce el Curso\n"<<endl;
+									cin>>curso;
+									variableCorrecta= alumno.setCurso(curso);
+								}
+								variableCorrecta= false;
+								
+								while(variableCorrecta==false){
+									cout<<"Introduce el equipo"<<endl;
+									cin>>equipo;
+									variableCorrecta= alumno.setEquipo(equipo);
+								}
+								
+								//while(esLider!=1 && esLider!=2){
+									cout<<"¿El alumno es lider de grupo?"<<endl;
+									cout<<"1. Si"<<endl;
+									cout<<"2. No"<<endl;
+									cin>>esLider;
+									
+									if(esLider==1){
+										lider=true;
+									}else if(esLider==2){
+										lider=false;
+									}
+								alumno.setLider(lider);
+								//}
 								agenda.insertarAlumno(alumno);
 								break;
 
 							case 4:
-								agenda.modificarAlumno(dni, apellidos);
+								menuBuscar(0);
+								cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
+								cin>>opcion;
+								if(opcion==1){
+									cout<<"Indique el DNI"<<endl;
+									cin>>dni;
+									agenda.modificarAlumno(dni, "");
+								}else if(opcion==2){
+									cout<<"Indique el DNI"<<endl;
+									cin>>apellidos;
+									agenda.modificarAlumno(apellidos, "");
+								}
 								break;
 
 							case 5:
-								agenda.borrarAlumno(dni, apellidos);
+								menuBuscar(0);
+								cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
+								cin>>opcion;
+								if(opcion==1){
+									cout<<"Indique el DNI"<<endl;
+									cin>>dni;
+									agenda.borrarAlumno(dni, "");
+								}else if(opcion==2){
+									cout<<"Indique el DNI"<<endl;
+									cin>>apellidos;
+									agenda.borrarAlumno(apellidos, "");
+								}
 								break;
 
 							case 6:
@@ -120,4 +227,14 @@ void menusecundario(){
 	cout<<"\t5. Borrar un alumno"<<endl;
 	cout<<"\t6. Guardar copia del listado de alumnos"<<endl;
 	cout<<"\t7. Cargar copia del listado de alumnos"<<endl;
+}
+
+void menuBuscar(int opcion){
+	cout<<"----------Elija Criterio----------"<<endl;
+	cout<<"\n\t1. DNI"<<endl;
+	cout<<"\t2. Apellidos"<<endl;
+	if(opcion!=0){
+		cout<<"\t3. Equipo"<<endl;
+	}
+		
 }
