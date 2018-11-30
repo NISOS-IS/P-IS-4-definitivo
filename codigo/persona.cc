@@ -58,7 +58,7 @@ bool Persona::setEmail(string email){
 	return true;
 }
 
-void Persona::setFechaNacimiento(string fecha_nacimiento){
+bool Persona::setFechaNacimiento(string fecha_nacimiento){
 	fechaNacimiento_=fecha_nacimiento;
 	return true;
 }
