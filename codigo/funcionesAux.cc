@@ -38,6 +38,15 @@ bool convertirStringLider(char *lider){
 	return aux;
 }
 
+int leerlinea(char *cad,int max){
+  int i=0,c;
+  while((i<max-1) && ((c = getchar()) != '\n')){
+    cad[i] = c;
+    i++;
+  }
+  cad[i] = '\0';
+  return i;
+}
 
 void modificarDatos(struct RegistroAlumno *alumno){
 	string auxStr;
