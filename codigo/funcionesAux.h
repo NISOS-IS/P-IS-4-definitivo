@@ -40,4 +40,5 @@ void imprimirBool(bool a);
 string convertirBool(bool a);
 string convertirBoolLider(bool a);
 bool convertirStringLider(char *lider);
+void modificarDatos(struct RegistroAlumno *alumno);
 #endif
