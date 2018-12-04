@@ -75,31 +75,138 @@ bool Agenda::insertarAlumno(Alumno alumno){
 }
 
 bool Agenda::borrarAlumno(string dni, string apellidos){
-	buscarAlumno(dni,apellidos,0);
+	int j,cont=0;
+	list<Alumno> al;
+	RegistroAlumno alumno;
+	ifstream in;
+	ofstream out;
+	al = buscarAlumno(dni,apellidos,0);
+
+	if(al.empty()){
+		return false;
+	}else{
+		in.open("agenda.bin", ios::in | ios::binary);
+		out.open("temporal.bin", ios::out | ios::binary);
+
+		if(in.is_open()){
+			in.seekg(0,ios::end);
+			j = in.tellg()/sizeof(RegistroAlumno);
+			in.seekg(0*sizeof(RegistroAlumno));
+
+			in.read((char *)&alumno,sizeof(RegistroAlumno));
+			while(cont < j){
+				string aux1(alumno.dni),aux2(alumno.apellidos);
+				if((aux1 != dni) && (aux2 != apellidos)){
+					out.write((char *)&alumno,sizeof(RegistroAlumno));
+				}
+				in.read((char *)&alumno,sizeof(RegistroAlumno));
+				cont++;
+			}
+
+		}else{
+			return false;
+		}
+		in.close();
+		out.close();
+		remove("agenda.bin");
+		rename("temporal.bin","agenda.bin");
+		return true;
+	}
 }
 
 bool Agenda::modificarAlumno(string dni, string apellidos){
-	buscarAlumno(dni,apellidos,0);
+	int i=0,op,auxNum,j,cont=0,resp=0;
+	list<Alumno> al;
+	RegistroAlumno alumno,auxReg;
+	fstream file;
+	al = buscarAlumno(dni,apellidos,0);
+	string auxStr;
+	bool found=false;
 
+	if(al.empty()){
+		return false;
+	}else{
+		file.open("agenda.bin", ios::in | ios::out | ios::binary);
+
+		if(file.is_open()){
+
+			file.seekg(0,ios::end);
+			j = file.tellg()/sizeof(RegistroAlumno);
+			file.seekg(0*sizeof(RegistroAlumno));
+
+			file.read((char*)&alumno,sizeof(RegistroAlumno));
+			while(!found && (cont < j)){
+				
+				string aux1(alumno.dni),aux2(alumno.apellidos);
+				if((dni == aux1) || (apellidos == aux2)){
+					/*PEDIR LOS DATOS A MODIFICAR*/
+					while(resp != 2){
+						modificarDatos(&alumno);
+						cout<<"Desea continuar modificando datos: "<<endl;
+						cout<<"1. Si\n2. No"<<endl;
+						cin>>resp;
+					}
+					/**/
+					file.seekp(i*sizeof(RegistroAlumno));
+					/*APLICA EL PROCESO DE MODIFICACION*/
+					file.write((char*)&alumno,sizeof(RegistroAlumno));
+					found = true;
+				}
+				i++;
+				cont++;
+				file.read((char*)&alumno,sizeof(RegistroAlumno));
+			}
+		}
+		file.close();
+	}
 }
 
 list<Alumno> Agenda::mostrarLista(){
-	/*ifstream f("agenda.bin", ios::in | ios::binary);
-	f.read((char *) &reg, sizeof(RegistroAlumno));
-	while(!f.eof()){
-		cout<<reg.dni<<endl;
-		cout<<reg.nombre<<endl;
-		cout<<reg.apellidos<<endl;
-		cout<<reg.telefono<<endl;
-		cout<<reg.direccion<<endl;
-		cout<<reg.email<<endl;
-		cout<<reg.fechaNacimiento<<endl;
-		cout<<reg.curso<<endl;
-		cout<<reg.equipo<<endl;
-		cout<<reg.lider<<endl;
-		f.close();
-		f.read((char *) &reg, sizeof(RegistroAlumno));
-	}*/
+	int j,cont=0;
+	ifstream in;
+	in.open("agenda.bin",ios::in | ios::binary);
+	RegistroAlumno al;
+	list<Alumno> alumno;
+	Alumno aux("","","",0,"","","",0,0,false);
+
+	if(in.is_open()){
+		in.seekg(0,ios::end);
+		j = in.tellg()/sizeof(RegistroAlumno);
+		in.seekg(0*sizeof(RegistroAlumno));
+
+		in.read((char *)&al,sizeof(RegistroAlumno));
+		while(cont < j){
+			/*cout<<"DNI: "<<al.dni<<endl;
+			cout<<"Nombre: "<<al.nombre<<endl;
+			cout<<"Apellidos: "<<al.apellidos<<endl;
+			cout<<"Telefono: "<<al.telefono<<endl;
+			cout<<"Direccion: "<<al.direccion<<endl;
+			cout<<"Email: "<<al.email<<endl;
+			cout<<"Fecha de nacimiento: "<<al.fechaNacimiento<<endl;
+			cout<<"Curso: "<<al.curso<<endl;
+			cout<<"Equipo: "<<al.equipo<<endl;
+			cout<<"Lider: "<<al.lider<<endl;
+			cout<<endl;
+			in.read((char *)&al,sizeof(RegistroAlumno));
+			*/
+			
+			aux.setDNI(al.dni);
+			aux.setNombre(al.nombre);
+			aux.setApellidos(al.apellidos);
+			aux.setTelefono(al.telefono);
+			aux.setDireccion(al.direccion);
+			aux.setEmail(al.email);
+			aux.setFechaNacimiento(al.fechaNacimiento);
+			aux.setCurso(al.curso);
+			aux.setEquipo(al.equipo);
+			aux.setLider(convertirStringLider(al.lider));
+			alumno.push_back(aux);
+			in.read((char *)&al,sizeof(RegistroAlumno));
+			cont++;
+		}
+		in.close();
+	}
+	return alumno;
 }
 
 list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos, int equipo){
