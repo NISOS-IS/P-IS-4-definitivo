@@ -50,6 +50,7 @@ int leerlinea(char *cad,int max){
 
 void modificarDatos(struct RegistroAlumno *alumno){
 	string auxStr;
+	char auxCad[100];
 	char dni[10];
 	int op,auxNum;
 	cout<<"Escoger opcion a modificar: "<<endl;
@@ -72,13 +73,15 @@ void modificarDatos(struct RegistroAlumno *alumno){
 		break;
 		case 2:
 			cout<<"Introduce Nombre: "<<endl;
-			cin.getline(auxStr,100);
-			strcpy(alumno->nombre,auxStr.c_str());
+			//cin.getline(auxStr,100);
+			leerlinea(auxCad,100);
+			strcpy(alumno->nombre,auxCad);
 		break;
 		case 3:
 			cout<<"Introduce Apellidos: "<<endl;
-			cin.getline(auxStr,100);
-			strcpy(alumno->apellidos,auxStr.c_str());
+			//cin.getline(auxStr,100);
+			leerlinea(auxCad,100);
+			strcpy(alumno->apellidos,auxCad);
 		break;
 		case 4:
 			cout<<"Introduce Telefono: "<<endl;
@@ -87,7 +90,8 @@ void modificarDatos(struct RegistroAlumno *alumno){
 		break;
 		case 5:
 			cout<<"Introduce Direccion: "<<endl;
-			cin.getline(auxStr,100);
+			//cin.getline(auxStr,100);
+			leerlinea(auxCad,100);
 			strcpy(alumno->direccion,auxStr.c_str());
 		break;
 		case 6:
