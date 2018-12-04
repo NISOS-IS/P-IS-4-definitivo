@@ -172,49 +172,77 @@ bool Agenda::borrarAlumno(string dni, string apellidos){
 }
 
 bool Agenda::modificarAlumno(string dni, string apellidos){
-	int i=0,op,auxNum,j,cont=0,resp=0;
-	list<Alumno> al;
-	RegistroAlumno alumno,auxReg;
-	fstream file;
-	al = buscarAlumno(dni,apellidos,0);
-	string auxStr;
-	bool found=false;
+	listaAlumnos_.clear();
+	int i=0,j=0,cont=0,resp=0,esp=0;
+	char auxStr[100];
+	ifstream in;
+	ofstream out;
+	list<Alumno> alumno;
+	RegistroAlumno reg;
+	bool encontrado = false;
 
-	if(al.empty()){
+	alumno = buscarAlumno(dni,apellidos,0);
+	//Para saber si en el parametro apellidos estan ambos apellidos o uno solo
+	if(apellidos != ""){
+		for (int i = 0; i < apellidos.size(); ++i){
+			if(apellidos[i] == ' ')esp = 1;
+		}
+	}
+
+	if(alumno.empty()){
 		return false;
 	}else{
-		file.open("agenda.bin", ios::in | ios::out | ios::binary);
+		in.open("agenda.bin", ios::in | ios::binary);
+		out.open("temporal.bin", ios::out | ios::binary | ios::app);
 
-		if(file.is_open()){
+		if(in.is_open() && out.is_open()){
+			for (list<Alumno>::iterator it = alumno.begin(); it != alumno.end(); it++){
+				if((dni == it->getDNI()) || (apellidos == it->getApellidos())){
+					cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
+					cout<<"Apellidos:\t\t"<<it->getApellidos()<<endl;
+					cout<<"Telefono: \t\t"<<it->getTelefono()<<endl;
+					cout<<"Direccion: \t\t"<<it->getDireccion()<<endl;
+					cout<<"Fecha de nacimiento: \t"<<it->getFechaNacimiento()<<endl;
+					cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
+					cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
+					cout<<"Lider: \t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
+				}
+			}
 
-			file.seekg(0,ios::end);
-			j = file.tellg()/sizeof(RegistroAlumno);
-			file.seekg(0*sizeof(RegistroAlumno));
+			if((apellidos != "") && (esp == 0)){
+				cout<<"Introduzca los apellidos del alumno: "<<endl;
+				leerlinea(auxStr,100);
+				apellidos = auxStr;
+			}
 
-			file.read((char*)&alumno,sizeof(RegistroAlumno));
-			while(!found && (cont < j)){
-				
-				string aux1(alumno.dni),aux2(alumno.apellidos);
+			in.seekg(0,ios::end);
+			j = in.tellg()/sizeof(RegistroAlumno);
+			in.seekg(0*sizeof(RegistroAlumno));
+
+			in.read((char*)&reg,sizeof(RegistroAlumno));
+			while(!encontrado && (cont < j)){
+				string aux1(reg.dni),aux2(reg.apellidos);
 				if((dni == aux1) || (apellidos == aux2)){
-					/*PEDIR LOS DATOS A MODIFICAR*/
 					while(resp != 2){
-						modificarDatos(&alumno);
-						cout<<"Desea continuar modificando datos: "<<endl;
+						modificarDatos(&reg);
+						cout<<"¿Desea continuar modificando datos: ?"<<endl;
 						cout<<"1. Si\n2. No"<<endl;
 						cin>>resp;
 					}
-					/**/
-					file.seekp(i*sizeof(RegistroAlumno));
-					/*APLICA EL PROCESO DE MODIFICACION*/
-					file.write((char*)&alumno,sizeof(RegistroAlumno));
-					found = true;
 				}
+				out.write((char*)&reg,sizeof(RegistroAlumno));
+				
+				in.read((char*)&reg,sizeof(RegistroAlumno));
 				i++;
 				cont++;
-				file.read((char*)&alumno,sizeof(RegistroAlumno));
 			}
 		}
-		file.close();
+		in.close();
+		out.close();
+		remove("agenda.bin");
+		rename("temporal.bin","agenda.bin");
+		alumno.clear();
+		return true;
 	}
 }
 

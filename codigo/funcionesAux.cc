@@ -160,71 +160,61 @@ void modificarDatos(struct RegistroAlumno *alumno){
 	char dni[10];
 	int op,auxNum;
 	cout<<"Escoger opcion a modificar: "<<endl;
-	cout<<"1. DNI"<<endl;
-	cout<<"2. Nombre"<<endl;
-	cout<<"3. Apellidos"<<endl;
-	cout<<"4. Telefono"<<endl;
-	cout<<"5. Direccion"<<endl;
-	cout<<"6. Email"<<endl;
-	cout<<"7. Fecha de Nacimiento"<<endl;
-	cout<<"8. Curso"<<endl;
-	cout<<"9. Equipo"<<endl;
-	cout<<"10. Lider"<<endl;
+	cout<<"1. Nombre"<<endl;
+	cout<<"2. Apellidos"<<endl;
+	cout<<"3. Telefono"<<endl;
+	cout<<"4. Direccion"<<endl;
+	cout<<"5. Fecha de Nacimiento"<<endl;
+	cout<<"6. Curso"<<endl;
+	cout<<"7. Equipo"<<endl;
+	cout<<"8. Lider"<<endl;
+	cout<<"9. Salir"<<endl;
 	cin>>op;
+	getchar();
 	switch(op){
 		case 1:
-			cout<<"Introduce DNI: "<<endl;
-			cin>>auxStr;
-			strcpy(alumno->dni,auxStr.c_str());
-		break;
-		case 2:
 			cout<<"Introduce Nombre: "<<endl;
-			//cin.getline(auxStr,100);
 			leerlinea(auxCad,100);
 			strcpy(alumno->nombre,auxCad);
 		break;
-		case 3:
+		case 2:
 			cout<<"Introduce Apellidos: "<<endl;
-			//cin.getline(auxStr,100);
 			leerlinea(auxCad,100);
 			strcpy(alumno->apellidos,auxCad);
 		break;
-		case 4:
+		case 3:
 			cout<<"Introduce Telefono: "<<endl;
 			cin>>auxNum;
 			alumno->telefono = auxNum;
 		break;
-		case 5:
+		case 4:
 			cout<<"Introduce Direccion: "<<endl;
-			//cin.getline(auxStr,100);
 			leerlinea(auxCad,100);
-			strcpy(alumno->direccion,auxStr.c_str());
+			strcpy(alumno->direccion,auxCad);
 		break;
-		case 6:
-			cout<<"Introduce Email: "<<endl;
-			cin>>auxStr;
-			strcpy(alumno->email,auxStr.c_str());
-		break;
-		case 7:
+		case 5:
 			cout<<"Introduce Fecha de nacimiento: "<<endl;
 			cin>>auxStr;
 			strcpy(alumno->fechaNacimiento,auxStr.c_str());
 		break;
-		case 8:
+		case 6:
 			cout<<"Introduce Curso: "<<endl;
 			cin>>auxNum;
 			(*alumno).curso = auxNum;
 		break;
-		case 9:
+		case 7:
 			cout<<"Introduce Equipo: "<<endl;
 			cin>>auxNum;
 			(*alumno).equipo = auxNum;
 		break;
-		case 10:
+		case 8:
 			cout<<"¿Lider o No Lider?: "<<endl;
 			cin>>auxStr;
 			strcpy(alumno->lider,auxStr.c_str());
-		break;	
+		break;
+		case 9:
+			cout<<"Saliendo...\n"<<endl;
+		break;
 		default:
 			cout<<"Opcion no valida."<<endl;
 	}

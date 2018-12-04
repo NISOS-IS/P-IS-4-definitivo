@@ -76,14 +76,16 @@ int main(){
 										menuBuscar(0);
 										cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
 										cin>>opcion;
+										char cadAux[100];
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
 											agenda.modificarAlumno(dni, "");
 										}else if(opcion==2){
-											cout<<"Indique el DNI"<<endl;
-											cin>>apellidos;
-											agenda.modificarAlumno(apellidos, "");
+											cout<<"Indique los apellidos"<<endl;
+											leerlinea(cadAux,100);
+											apellidos = cadAux;
+											agenda.modificarAlumno("",apellidos);
 										}
 										break;
 
