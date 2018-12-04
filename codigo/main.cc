@@ -3,6 +3,7 @@
 #include "alumno.h"
 #include"profesor.h"
 #include"agenda.h"
+#include "funcionesAux.h"
 
 using namespace std;
 
@@ -68,73 +69,7 @@ int main(){
 										break;
 
 									case 3:
-										while(variableCorrecta==false){
-											cout<<"Introduce DNI"<<endl;
-											cin>>DNI;
-											variableCorrecta= alumno.setDNI(DNI);
-										}
-										variableCorrecta= false;
-										
-										cout<<"Introduce Nombre"<<endl;
-										cin>>nombre;						
-										alumno.setNombre(nombre);
-										
-										cout<<"Introduce Apellido"<<endl;
-										cin>>apellidos;
-										alumno.setApellidos(apellidos);
-										
-										while(variableCorrecta==false){
-											cout<<"Introduce Telefono"<<endl;
-											cin>>telefono;
-											variableCorrecta= alumno.setTelefono(telefono);
-										}
-										variableCorrecta= false;
-										
-										cout<<"Introduce Direccion"<<endl;
-										cin>>direccion;
-										alumno.setDireccion(direccion);
-										
-										while(variableCorrecta==false){
-											cout<<"Introduce Email"<<endl;
-											cin>>email;
-											variableCorrecta= alumno.setEmail(email);
-										}
-										variableCorrecta= false;
-										
-										while(variableCorrecta==false){
-											cout<<"Introduce Fecha de Nacimiento"<<endl;
-											cin>>fechaNacimiento;
-											variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
-										}
-										variableCorrecta= false;
-										
-										while(variableCorrecta==false){
-											cout<<"Introduce el Curso"<<endl;
-											cin>>curso;
-											variableCorrecta= alumno.setCurso(curso);
-										}
-										variableCorrecta= false;
-										
-										while(variableCorrecta==false){
-											cout<<"Introduce el equipo"<<endl;
-											cin>>equipo;
-											variableCorrecta= alumno.setEquipo(equipo);
-										}
-										
-										//while(esLider!=1 && esLider!=2){
-											cout<<"¿El alumno es lider de grupo?"<<endl;
-											cout<<"1. Si"<<endl;
-											cout<<"2. No"<<endl;
-											cin>>esLider;
-											
-											if(esLider==1){
-												lider=true;
-											}else if(esLider==2){
-												lider=false;
-											}
-										alumno.setLider(lider);
-										//}
-										agenda.insertarAlumno(alumno);
+										escribirDatos();
 										break;
 
 									case 4:

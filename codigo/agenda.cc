@@ -55,8 +55,63 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 	return listaAlumnos_;
 }
 
+bool Agenda::comprobarExistenciaDNI(string dni){
+	bool correcto=false;
+	ifstream file("agenda.bin", ios::in | ios::binary);
+	RegistroAlumno aux;
+	bool encontrado = false;
+	if(file.is_open()){
+		
+		while(!file.eof()){
+			file.read(reinterpret_cast <char *> (&aux), sizeof(RegistroAlumno));
+			if(aux.dni == dni){
+				encontrado = true;
+			}
+		}
+		if(encontrado){
+			correcto= true;
+		}
+		else{
+			correcto= false;
+		}
+	}
+	return correcto;
+}
+
+bool Agenda::comprobarLider(list<Alumno> &aux, bool lider){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getLider()==lider){
+			encontrado=true;
+		}
+	}
+	if(encontrado==true){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+bool Agenda::comprobarEmail(list<Alumno> &aux, string email){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getEmail()==email){
+			encontrado=true;
+		}
+	}
+	if(encontrado){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
 bool Agenda::insertarAlumno(Alumno alumno){
-	ofstream file("agenda.bin", ios::out | ios::binary);
+	ofstream file("agenda.bin", ios::out | ios::binary | ios::app);
 	RegistroAlumno reg;
 	strcpy(reg.dni,alumno.getDNI().c_str());
 	strcpy(reg.nombre,alumno.getNombre().c_str());
@@ -72,6 +127,8 @@ bool Agenda::insertarAlumno(Alumno alumno){
 	strcpy(reg.lider,convertirBoolLider(alumno.getLider()).c_str());
 	file.write((char *) &reg, sizeof(RegistroAlumno));
 	file.close();
+	
+	return true;
 }
 
 bool Agenda::borrarAlumno(string dni, string apellidos){
@@ -210,5 +267,7 @@ list<Alumno> Agenda::mostrarLista(){
 }
 
 list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos, int equipo){
-	buscarAlumno(dni,apellidos,equipo);
+	list<Alumno> aux;
+	aux= buscarAlumno(dni, apellidos, equipo);
+	return aux;
 }

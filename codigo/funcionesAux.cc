@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "funcionesAux.h"
+#include "agenda.h"
 
 using namespace std;
 
@@ -21,19 +22,19 @@ string convertirBoolLider(bool a){
 	if(a==true){
 		aux = "Lider";
 	}
-	else{
+	else if(a==false){
 		aux = "No Lider";
 	}
 	return aux;
 }
 
 bool convertirStringLider(char *lider){
-	bool aux;
-	
+	bool aux=false;
+
 	if(lider=="Lider"){
-		aux=true;
-	}else{
 		aux=false;
+	}else{
+		aux=true;
 	}
 	return aux;
 }
@@ -46,6 +47,111 @@ int leerlinea(char *cad,int max){
   }
   cad[i] = '\0';
   return i;
+}
+
+void escribirDatos(){
+	Alumno alumno("","","",0,"","","",0,0,false);
+	Agenda agenda;
+	list<Alumno> aux;
+	char auxCad[100];
+	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
+	int telefono, curso, equipo, esLider=1;
+	bool lider, variableCorrecta=false,encontrado=false, funcionCorrecta=false;
+
+	while(variableCorrecta==false || encontrado==true){
+		cout<<"Introduce DNI"<<endl;
+		cin>>DNI;
+		encontrado= agenda.comprobarExistenciaDNI(DNI);
+		if(encontrado==false){
+			variableCorrecta= alumno.setDNI(DNI);
+		}else{
+			cout<<"DNI existente. Introduzca uno distinto"<<endl;
+		}
+	}
+	variableCorrecta= false;
+	
+	cout<<"Introduce Nombre"<<endl;
+	cin>>nombre;
+	alumno.setNombre(nombre);
+	
+	cout<<"Introduce Apellido"<<endl;
+	cin>>apellidos;
+	alumno.setApellidos(apellidos);
+
+	while(variableCorrecta==false){
+		cout<<"Introduce Telefono"<<endl;
+		cin>>telefono;
+		variableCorrecta= alumno.setTelefono(telefono);
+	}
+	variableCorrecta= false;
+
+	cout<<"Introduce Direccion"<<endl;
+	cin>>direccion;
+	alumno.setDireccion(direccion);
+
+	while(variableCorrecta==false || encontrado==true){
+		cout<<"Introduce Email"<<endl;
+		cin>>email;
+		aux= agenda.mostrarLista();
+		encontrado= agenda.comprobarEmail(aux, email);
+		if(encontrado==false){
+			variableCorrecta= alumno.setEmail(email);
+			}else{
+				cout<<"Ese email ya esta registrado. Introduzca uno distinto"<<endl;
+			}
+		}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){
+		cout<<"Introduce Fecha de Nacimiento"<<endl;											
+		cin>>fechaNacimiento;
+		variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
+	}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){		
+		cout<<"Introduce el Curso"<<endl;
+		cin>>curso;
+		variableCorrecta= alumno.setCurso(curso);
+	}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){
+		cout<<"Introduce el equipo"<<endl;
+		cin>>equipo;
+		variableCorrecta= alumno.setEquipo(equipo);
+	}
+	variableCorrecta=false;
+
+	do{
+		cout<<"¿El alumno es lider de grupo?"<<endl;
+		cout<<"1. Si"<<endl;
+		cout<<"2. No"<<endl;
+		cin>>esLider;
+				
+		if(esLider==1){
+			lider=true;
+			aux=agenda.buscarAlumno("","",equipo);
+			encontrado= agenda.comprobarLider(aux, lider);
+		
+			if(encontrado==true){
+				lider=false;
+			}else{
+				lider=true;
+			}
+		}else if(esLider==2){
+			lider=false;
+		}else{
+			cout<<"Debe introducir 1 o 2"<<endl;
+		}
+		alumno.setLider(lider);	
+		}while(esLider!=1 && esLider!=2 && isdigit(esLider));
+		funcionCorrecta= agenda.insertarAlumno(alumno);
+		if(funcionCorrecta=true){
+			cout<<"Alumno Guardado"<<endl;
+		}else{
+			cout<<"Fallo al Guardar Alumno"<<endl;
+		}
 }
 
 void modificarDatos(struct RegistroAlumno *alumno){
