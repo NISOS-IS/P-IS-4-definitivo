@@ -1,6 +1,8 @@
 #include <iostream>
+#include<limits>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "funcionesAux.h"
 #include "agenda.h"
 

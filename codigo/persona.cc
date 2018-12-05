@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
-#include <cstdio>
+#include <stdio.h>
+#include <string.h>
 #include <cstdlib>
 #include "persona.h"
 #include "funcionesAux.h"
