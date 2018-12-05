@@ -49,18 +49,84 @@ int leerlinea(char *cad,int max){
   return i;
 }
 
+char letraDNI(int dni){
+  char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+  return letra[dni%23];
+}
+
+short verificaDNI(char *dni){
+	dni[8]=  toupper(dni[8]);
+	if (strlen(dni)!=9)
+      return 0;
+	else
+    return (letraDNI(atoi(dni))==dni[8]);
+}
+
+bool compruebaFecha(string fecha){
+	char linea[10];
+	strcpy(linea, fecha.c_str());
+	unsigned d;
+	unsigned m;
+	unsigned a;
+	bool correcto=true, correctoM=false, correctoD=false;
+   
+   strcpy(linea, fecha.c_str());
+   if (linea == NULL)
+      return EXIT_FAILURE;
+   
+   if (sscanf(linea, "%2u/%2u/%4u", &d, &m, &a) == 3){
+	   if(d>=1 && d<=31){
+		   correctoD=true;
+	   }else{
+		   correctoD=false;
+	   }
+	   if(m>=1 && m<=12){
+		   correctoM=true;
+	   }else{
+		   correctoM=false;
+	   }
+	   
+   }else{
+	   correcto=false;
+   }
+   
+   if(correcto==true && correctoD==true && correctoM==true){
+	   correcto=true;
+   }else{
+		correcto=false;
+   }
+   return correcto;
+}
+
+bool validarEmail(string email){
+	bool correcto=true;
+	size_t at = email.find('@');
+    if (at == string::npos){
+        correcto=false;
+    }
+    size_t dot = email.find('.', at + 1);
+    if (dot == string::npos){
+        correcto=false;
+    }
+    return correcto;
+}
+
 void escribirDatos(){
 	Alumno alumno("","","",0,"","","",0,0,false);
 	Agenda agenda;
 	list<Alumno> aux;
-	char auxCad[100];
-	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
+	char auxDNI[9], auxCad[100], nombreC[100], apellidosC[100], direccionC[100], vTelefono;
+	string DNI, nombre, apellidos, direccion, email, fechaNacimiento, vCurso, vEquipo;
 	int telefono, curso, equipo, esLider=1;
 	bool lider, variableCorrecta=false,encontrado=false, funcionCorrecta=false;
-
+	
 	while(variableCorrecta==false || encontrado==true){
 		cout<<"Introduce DNI"<<endl;
 		cin>>DNI;
+		strcpy(auxDNI, DNI.c_str());
+		auxDNI[8]=  toupper(auxDNI[8]);
+		DNI= auxDNI;
 		encontrado= agenda.comprobarExistenciaDNI(DNI);
 		if(encontrado==false){
 			variableCorrecta= alumno.setDNI(DNI);
@@ -71,22 +137,42 @@ void escribirDatos(){
 	variableCorrecta= false;
 	
 	cout<<"Introduce Nombre"<<endl;
-	cin>>nombre;
+	cin>>auxCad;
+	leerlinea(auxCad,100);
+	strcpy(nombreC,auxCad);
+	nombre=nombreC;
 	alumno.setNombre(nombre);
 	
 	cout<<"Introduce Apellido"<<endl;
-	cin>>apellidos;
+	cin>>auxCad;
+	leerlinea(auxCad,100);
+	strcpy(apellidosC,auxCad);
+	apellidos=apellidosC;
 	alumno.setApellidos(apellidos);
 
 	while(variableCorrecta==false){
 		cout<<"Introduce Telefono"<<endl;
 		cin>>telefono;
-		variableCorrecta= alumno.setTelefono(telefono);
+		while(1){
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Numero de telefono incorrecto"<<endl;
+				cin>>telefono;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setTelefono(telefono);
+			}
+			break;
+		}
 	}
 	variableCorrecta= false;
 
 	cout<<"Introduce Direccion"<<endl;
-	cin>>direccion;
+	cin>>auxCad;
+	leerlinea(auxCad,100);
+	strcpy(direccionC,auxCad);
+	direccion=direccionC;
 	alumno.setDireccion(direccion);
 
 	while(variableCorrecta==false || encontrado==true){
@@ -103,7 +189,7 @@ void escribirDatos(){
 	variableCorrecta= false;
 
 	while(variableCorrecta==false){
-		cout<<"Introduce Fecha de Nacimiento"<<endl;											
+		cout<<"Introduce Fecha de Nacimiento en formato dd/mm/aaaa"<<endl;											
 		cin>>fechaNacimiento;
 		variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
 	}
@@ -112,14 +198,37 @@ void escribirDatos(){
 	while(variableCorrecta==false){		
 		cout<<"Introduce el Curso"<<endl;
 		cin>>curso;
-		variableCorrecta= alumno.setCurso(curso);
+		while(1){
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Debe introducir el numero del Curso"<<endl;
+				cin>>curso;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setCurso(curso);
+			}
+			break;
+		}
+		
 	}
 	variableCorrecta= false;
 
 	while(variableCorrecta==false){
 		cout<<"Introduce el equipo"<<endl;
 		cin>>equipo;
-		variableCorrecta= alumno.setEquipo(equipo);
+		while(1){
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Debe introducir un numero del equipo"<<endl;
+				cin>>equipo;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setEquipo(equipo);
+			}
+			break;
+		}
 	}
 	variableCorrecta=false;
 
@@ -128,24 +237,35 @@ void escribirDatos(){
 		cout<<"1. Si"<<endl;
 		cout<<"2. No"<<endl;
 		cin>>esLider;
-				
-		if(esLider==1){
-			lider=true;
-			aux=agenda.buscarAlumno("","",equipo);
-			encontrado= agenda.comprobarLider(aux, lider);
-		
-			if(encontrado==true){
-				lider=false;
-			}else{
-				lider=true;
+			while(1){
+				if(cin.fail()){
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(),'\n');
+					cout<<"Debe introducir el numero 1 o 2"<<endl;
+					cin>>esLider;
+				}
+				if(!cin.fail()){
+									
+					if(esLider==1){
+						lider=true;
+						aux=agenda.buscarAlumno("","",equipo);
+						encontrado= agenda.comprobarLider(aux, lider);
+					
+						if(encontrado==true){
+							lider=false;
+						}else{
+							lider=true;
+						}
+					}else if(esLider==2){
+						lider=false;
+					}else{
+						cout<<"Debe introducir 1 o 2"<<endl;
+					}
+					alumno.setLider(lider);	
+				}
+				break;
 			}
-		}else if(esLider==2){
-			lider=false;
-		}else{
-			cout<<"Debe introducir 1 o 2"<<endl;
-		}
-		alumno.setLider(lider);	
-		}while(esLider!=1 && esLider!=2 && isdigit(esLider));
+	}while(esLider!=1 && esLider!=2);
 		funcionCorrecta= agenda.insertarAlumno(alumno);
 		if(funcionCorrecta=true){
 			cout<<"Alumno Guardado"<<endl;

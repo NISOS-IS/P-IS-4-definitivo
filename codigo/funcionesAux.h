@@ -43,4 +43,8 @@ bool convertirStringLider(char *lider);
 void escribirDatos();
 void modificarDatos(struct RegistroAlumno *alumno);
 int leerlinea(char *cad,int max);
+char letraDNI(int dni);
+short verificaDNI(char *dni);
+bool compruebaFecha(string fecha);
+bool validarEmail(string email);
 #endif
