@@ -18,13 +18,13 @@ Persona::Persona(string dni, string nombre, string apellidos, int telefono, stri
 }
 
 bool Persona::setDNI(string dni){
-	bool correcto = true;//comprobarDNI(dni);
-	if(correcto){
-		dni_ = dni;
+	char cadDni[9];
+	strcpy(cadDni, dni.c_str());
+	if (verificaDNI(cadDni)){
+		dni_=dni;
 		return true;
-	}
-	else{
-		cout<<"El DNI no es correcto"<<endl;
+	}else{
+		cout<<"EL DNI introducido no es correcto"<<endl;
 		return false;
 	}
 }
@@ -54,11 +54,24 @@ void Persona::setDireccion(string direccion){
 }
 
 bool Persona::setEmail(string email){
-	email_=email;
-	return true;
+	bool correcto=false;
+	correcto= validarEmail(email);
+	if(correcto==true){
+		email_=email;
+		return true;
+	}else{
+		cout<<"El email no es correcto"<<endl;
+		return false;
+	}
 }
 
 bool Persona::setFechaNacimiento(string fecha_nacimiento){
-	fechaNacimiento_=fecha_nacimiento;
-	return true;
+	bool correcto=false;
+	correcto= compruebaFecha(fecha_nacimiento);
+	if(correcto==true){
+		fechaNacimiento_=fecha_nacimiento;
+		return true;
+	}else{
+		return false;
+	}
 }
