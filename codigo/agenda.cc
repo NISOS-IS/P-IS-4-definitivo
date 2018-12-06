@@ -56,70 +56,13 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 	return listaAlumnos_;
 }
 
-bool Agenda::comprobarExistenciaDNI(string dni){
-	bool correcto=false;
-	ifstream file("agenda.bin", ios::in | ios::binary);
-	RegistroAlumno aux;
-	bool encontrado = false;
-	if(file.is_open()){
-		
-		while(!file.eof()){
-			file.read(reinterpret_cast <char *> (&aux), sizeof(RegistroAlumno));
-			if(aux.dni == dni){
-				encontrado = true;
-			}
-		}
-		if(encontrado){
-			correcto= true;
-		}
-		else{
-			correcto= false;
-		}
-	}
-	return correcto;
-}
-
-bool Agenda::comprobarLider(list<Alumno> &aux, bool lider){
-	list<Alumno>::iterator i;
-	bool encontrado=false;
-	for(i=aux.begin();i!=aux.end();i++){
-		if(i->getLider()==lider){
-			encontrado=true;
-		}
-	}
-	if(encontrado==true){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-bool Agenda::comprobarEmail(list<Alumno> &aux, string email){
-	list<Alumno>::iterator i;
-	bool encontrado=false;
-	
-	for(i=aux.begin();i!=aux.end();i++){
-		if(i->getEmail()==email){
-			encontrado=true;
-		}
-	}
-	if(encontrado){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-
 bool Agenda::insertarAlumno(Alumno alumno){
 	ofstream file("agenda.bin", ios::out | ios::binary | ios::app);
 	RegistroAlumno reg;
 	strcpy(reg.dni,alumno.getDNI().c_str());
 	strcpy(reg.nombre,alumno.getNombre().c_str());
     strcpy(reg.apellidos,alumno.getApellidos().c_str());
-	
     reg.telefono=alumno.getTelefono();
-	
     strcpy(reg.direccion, alumno.getDireccion().c_str());
     strcpy(reg.email, alumno.getEmail().c_str());
     strcpy(reg.fechaNacimiento,alumno.getFechaNacimiento().c_str());

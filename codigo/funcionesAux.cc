@@ -8,6 +8,61 @@
 
 using namespace std;
 
+
+bool comprobarExistenciaDNI(string dni){
+	bool correcto=false;
+	ifstream file("agenda.bin", ios::in | ios::binary);
+	RegistroAlumno aux;
+	bool encontrado = false;
+	if(file.is_open()){
+		
+		while(!file.eof()){
+			file.read(reinterpret_cast <char *> (&aux), sizeof(RegistroAlumno));
+			if(aux.dni == dni){
+				encontrado = true;
+			}
+		}
+		if(encontrado){
+			correcto= true;
+		}
+		else{
+			correcto= false;
+		}
+	}
+	return correcto;
+}
+
+bool comprobarLider(list<Alumno> &aux, bool lider){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getLider()==lider){
+			encontrado=true;
+		}
+	}
+	if(encontrado==true){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+bool comprobarEmail(list<Alumno> &aux, string email){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getEmail()==email){
+			encontrado=true;
+		}
+	}
+	if(encontrado){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 string convertirBool(bool a){
 	string aux;
 	if(a==true){
@@ -139,7 +194,7 @@ void escribirDatos(){
 		strcpy(auxDNI, DNI.c_str());
 		auxDNI[8]=  toupper(auxDNI[8]);
 		DNI= auxDNI;
-		encontrado= agenda.comprobarExistenciaDNI(DNI);
+		encontrado= comprobarExistenciaDNI(DNI);
 		if(encontrado==false){
 			variableCorrecta= alumno.setDNI(DNI);
 		}else{
@@ -190,7 +245,7 @@ void escribirDatos(){
 		cout<<"Introduce Email"<<endl;
 		cin>>email;
 		aux= agenda.mostrarLista();
-		encontrado= agenda.comprobarEmail(aux, email);
+		encontrado= comprobarEmail(aux, email);
 		if(encontrado==false){
 			variableCorrecta= alumno.setEmail(email);
 		}else{
@@ -260,7 +315,7 @@ void escribirDatos(){
 					if(esLider==1){
 						lider=true;
 						aux=agenda.buscarAlumno("","",equipo);
-						encontrado= agenda.comprobarLider(aux, lider);
+						encontrado= comprobarLider(aux, lider);
 					
 						if(encontrado==false){
 							lider=true;

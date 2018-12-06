@@ -18,10 +18,6 @@ class Agenda{
 
 		//Busca uno o varios alumnos en el fichero binario
 		list<Alumno> buscarAlumno(string dni, string apellidos, int equipo);
-
-		bool comprobarExistenciaDNI(string dni);
-		bool comprobarLider(list<Alumno> &aux, bool lider);
-		bool comprobarEmail(list<Alumno> &aux, string email);
 		
 		//Inserta un alumno en el fichero binario
 		bool insertarAlumno(Alumno alumno);

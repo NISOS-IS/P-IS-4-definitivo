@@ -3,6 +3,8 @@
 
 #include <fstream>
 #include <string>
+#include <iostream>
+#include "agenda.h"
 
 struct Registro{
 		char dni[10];
@@ -32,6 +34,9 @@ struct RegistroAlumno{
 
 using namespace std;
 
+bool comprobarExistenciaDNI(string dni);
+bool comprobarLider(list<Alumno> &aux, bool lider);
+bool comprobarEmail(list<Alumno> &aux, string email);
 bool comprobarDNI(string dni);
 bool comprobarEmail(string email);
 bool comprobarTel(int telefono);
