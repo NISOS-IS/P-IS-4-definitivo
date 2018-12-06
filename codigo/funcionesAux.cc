@@ -117,6 +117,13 @@ bool validarEmail(string email){
     return correcto;
 }
 
+string mayusculas(string cadena){
+	for(int i=0; i<cadena.length(); i++){
+		cadena[i]= toupper(cadena[i]);
+	}
+	return cadena;
+}
+
 void escribirDatos(){
 	Alumno alumno("","","",0,"","","",0,0,false);
 	Agenda agenda;
@@ -145,6 +152,7 @@ void escribirDatos(){
 	getchar();
 	leerlinea(auxCad,100);
 	nombre=auxCad;
+	nombre= mayusculas(nombre);
 	alumno.setNombre(nombre);
 	
 	cout<<"Introduce Apellido"<<endl;

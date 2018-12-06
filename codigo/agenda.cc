@@ -278,9 +278,9 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 			/* Comprobar si el equipo tiene lider */
 			/*********************************************/
 			//lider = liderPorEquipo(equipo);
-			alumno.clear();
+			lider=true;
 			alumno = buscarAlumno("","",equipo);
-			lider = comprobarLider(alumno,lid);
+			lider = comprobarLider(alumno,lider);
 			/*********************************************/
 
 			/* 
