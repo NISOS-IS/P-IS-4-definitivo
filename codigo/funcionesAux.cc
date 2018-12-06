@@ -336,7 +336,6 @@ void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 					strcpy(alumno->lider,"Lider");
 				}else if(auxNum == 2){
 					strcpy(alumno->lider,"No Lider");
-					cout<<"Lider==="<<alumno->lider<<endl;
 				}
 				getchar();
 			}else

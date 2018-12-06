@@ -255,7 +255,7 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 					cout<<"Fecha de nacimiento: \t"<<it->getFechaNacimiento()<<endl;
 					cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
 					cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
-					cout<<"Lider: \t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
+					cout<<"Lider: \t\t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
 					equipo = it->getEquipo();
 				}
 			}
@@ -274,7 +274,7 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 			in.seekg(0*sizeof(RegistroAlumno));
 
 			in.read((char*)&reg,sizeof(RegistroAlumno));
-			while(!encontrado && (cont < j)){
+			while(cont < j){
 
 				string aux1(reg.dni),aux2(reg.apellidos);
 				if((dni == aux1) || (apellidos == aux2)){
@@ -285,10 +285,8 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 						cin>>resp;
 						getchar();
 					}
-					encontrado = true;
 				}
-				cout<<"Imprime fuera: "<<reg.dni<<endl;
-				cout<<"Imprime fuera: "<<reg.lider<<endl;
+
 				out.write((char*)&reg,sizeof(RegistroAlumno));
 				in.read((char*)&reg,sizeof(RegistroAlumno));
 				i++;
