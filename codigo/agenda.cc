@@ -132,59 +132,108 @@ bool Agenda::insertarAlumno(Alumno alumno){
 }
 
 bool Agenda::borrarAlumno(string dni, string apellidos){
-	int j,cont=0;
+	int j,cont=0,esp=0,resp=0,tam;
+	char auxStr[100];//uno[2],dos[2],resp[2];
+	//strcpy(uno,"1");
+	//strcpy(dos,"2");
 	list<Alumno> al;
+	al.clear();
+	listaAlumnos_.clear();
 	RegistroAlumno alumno;
 	ifstream in;
 	ofstream out;
+	bool encontrado = false;
 	al = buscarAlumno(dni,apellidos,0);
+	
+	if(apellidos != ""){
+		tam=apellidos.size();
+		for (int i = 0; i < tam; i++){
+			if(apellidos[i] == ' ')esp = 1;
+		}
+	}
 
 	if(al.empty()){
+		cout<<"No entro"<<endl;
 		return false;
 	}else{
 		in.open("agenda.bin", ios::in | ios::binary);
 		out.open("temporal.bin", ios::out | ios::binary);
 
-		if(in.is_open()){
-			in.seekg(0,ios::end);
-			j = in.tellg()/sizeof(RegistroAlumno);
-			in.seekg(0*sizeof(RegistroAlumno));
-
-			in.read((char *)&alumno,sizeof(RegistroAlumno));
-			while(cont < j){
-				string aux1(alumno.dni),aux2(alumno.apellidos);
-				if((aux1 != dni) && (aux2 != apellidos)){
-					out.write((char *)&alumno,sizeof(RegistroAlumno));
-				}
-				in.read((char *)&alumno,sizeof(RegistroAlumno));
-				cont++;
-			}
-
-		}else{
-			return false;
+		if((esp == 0) && (apellidos != "")){
+			cout<<"Introduce los apellidos del alumno: "<<endl;
+			leerlinea(auxStr,100);
+			apellidos = auxStr;
 		}
-		in.close();
-		out.close();
-		remove("agenda.bin");
-		rename("temporal.bin","agenda.bin");
+
+		for (list<Alumno>::iterator it = al.begin(); it != al.end(); it++){
+			if((dni == it->getDNI()) || (apellidos == it->getApellidos())){
+				cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
+				cout<<"Apellidos:\t\t"<<it->getApellidos()<<endl;
+				cout<<"Telefono: \t\t"<<it->getTelefono()<<endl;
+				cout<<"Direccion: \t\t"<<it->getDireccion()<<endl;
+				cout<<"Fecha de nacimiento: \t"<<it->getFechaNacimiento()<<endl;
+				cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
+				cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
+				cout<<"Lider: \t\t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
+				encontrado = true;
+			}
+		}
+
+		if(encontrado){
+			cout<<"¿Está seguro de querer eliminar los datos del alumno?"<<endl;
+			cout<<"1. Si\n2. No"<<endl;
+			cin>>resp;
+			getchar();
+		}
+		if(resp == 1){
+			if(in.is_open() && out.is_open()){
+				in.seekg(0,ios::end);
+				j = in.tellg()/sizeof(RegistroAlumno);
+				in.seekg(0*sizeof(RegistroAlumno));
+
+				in.read((char *)&alumno,sizeof(RegistroAlumno));
+				while(cont < j){
+					string aux1(alumno.dni),aux2(alumno.apellidos);
+					if((aux1 != dni) && (aux2 != apellidos)){
+						out.write((char *)&alumno,sizeof(RegistroAlumno));
+					}
+					in.read((char *)&alumno,sizeof(RegistroAlumno));
+					cont++;
+				}
+				in.close();
+				out.close();
+				remove("agenda.bin");
+				rename("temporal.bin","agenda.bin");
+			}else{
+				cout<<"No se pudo abrir el fichero."<<endl;
+				return false;
+			}
+		}else{
+			in.close();
+			out.close();
+			remove("temporal.bin");
+			cout<<"Saliendo..."<<endl;
+		}
 		return true;
 	}
 }
 
 bool Agenda::modificarAlumno(string dni, string apellidos){
 	listaAlumnos_.clear();
-	int i=0,j=0,cont=0,resp=0,esp=0;
-	char auxStr[100];
+	int i=0,j=0,cont=0,esp=0,equipo,resp=0;
+	char auxStr[100],esLider[9];
+	strcpy(esLider,"Lider");
 	ifstream in;
 	ofstream out;
 	list<Alumno> alumno;
 	RegistroAlumno reg;
-	bool encontrado = false;
+	bool encontrado = false,lider=false;
 
 	alumno = buscarAlumno(dni,apellidos,0);
 	//Para saber si en el parametro apellidos estan ambos apellidos o uno solo
 	if(apellidos != ""){
-		for (int i = 0; i < apellidos.size(); ++i){
+		j=apellidos.size();
+		for (int i = 0; i < j; ++i){
 			if(apellidos[i] == ' ')esp = 1;
 		}
 	}
@@ -196,6 +245,7 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 		out.open("temporal.bin", ios::out | ios::binary | ios::app);
 
 		if(in.is_open() && out.is_open()){
+			/* Mostrar los alumnos que se van a modificar los datos */
 			for (list<Alumno>::iterator it = alumno.begin(); it != alumno.end(); it++){
 				if((dni == it->getDNI()) || (apellidos == it->getApellidos())){
 					cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
@@ -206,8 +256,12 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 					cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
 					cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
 					cout<<"Lider: \t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
+					equipo = it->getEquipo();
 				}
 			}
+
+			/* para comprobar si el equipo tiene lider */
+			lider = liderPorEquipo(equipo);
 
 			if((apellidos != "") && (esp == 0)){
 				cout<<"Introduzca los apellidos del alumno: "<<endl;
@@ -221,17 +275,21 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 
 			in.read((char*)&reg,sizeof(RegistroAlumno));
 			while(!encontrado && (cont < j)){
+
 				string aux1(reg.dni),aux2(reg.apellidos);
 				if((dni == aux1) || (apellidos == aux2)){
 					while(resp != 2){
-						modificarDatos(&reg);
-						cout<<"¿Desea continuar modificando datos: ?"<<endl;
+						modificarDatos(&reg,lider);
+						cout<<"¿Desea continuar modificando datos?"<<endl;
 						cout<<"1. Si\n2. No"<<endl;
 						cin>>resp;
+						getchar();
 					}
+					encontrado = true;
 				}
+				cout<<"Imprime fuera: "<<reg.dni<<endl;
+				cout<<"Imprime fuera: "<<reg.lider<<endl;
 				out.write((char*)&reg,sizeof(RegistroAlumno));
-				
 				in.read((char*)&reg,sizeof(RegistroAlumno));
 				i++;
 				cont++;
@@ -252,6 +310,7 @@ list<Alumno> Agenda::mostrarLista(){
 	in.open("agenda.bin",ios::in | ios::binary);
 	RegistroAlumno al;
 	list<Alumno> alumno;
+	alumno.clear();
 	Alumno aux("","","",0,"","","",0,0,false);
 
 	if(in.is_open()){
@@ -261,20 +320,6 @@ list<Alumno> Agenda::mostrarLista(){
 
 		in.read((char *)&al,sizeof(RegistroAlumno));
 		while(cont < j){
-			/*cout<<"DNI: "<<al.dni<<endl;
-			cout<<"Nombre: "<<al.nombre<<endl;
-			cout<<"Apellidos: "<<al.apellidos<<endl;
-			cout<<"Telefono: "<<al.telefono<<endl;
-			cout<<"Direccion: "<<al.direccion<<endl;
-			cout<<"Email: "<<al.email<<endl;
-			cout<<"Fecha de nacimiento: "<<al.fechaNacimiento<<endl;
-			cout<<"Curso: "<<al.curso<<endl;
-			cout<<"Equipo: "<<al.equipo<<endl;
-			cout<<"Lider: "<<al.lider<<endl;
-			cout<<endl;
-			in.read((char *)&al,sizeof(RegistroAlumno));
-			*/
-			
 			aux.setDNI(al.dni);
 			aux.setNombre(al.nombre);
 			aux.setApellidos(al.apellidos);
@@ -284,7 +329,10 @@ list<Alumno> Agenda::mostrarLista(){
 			aux.setFechaNacimiento(al.fechaNacimiento);
 			aux.setCurso(al.curso);
 			aux.setEquipo(al.equipo);
+			cout<<"Tipo Lider: "<<al.lider<<endl;
 			aux.setLider(convertirStringLider(al.lider));
+			if(convertirStringLider(al.lider))cout<<"TipoLider='Lider'=>imprime;TipoLider='No Lider'=>No deberia imprimir."<<endl;
+			else cout<<"Si me imprime, es por 'No Lider', todo OK."<<endl;
 			alumno.push_back(aux);
 			in.read((char *)&al,sizeof(RegistroAlumno));
 			cont++;

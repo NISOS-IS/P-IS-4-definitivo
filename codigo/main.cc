@@ -20,6 +20,7 @@ int main(){
 	int telefono, curso, equipo, esLider=1;
 	bool lider, variableCorrecta=false, correcto=false;
 	int m1, m2, opcion;
+	char cadAux[100];
 	
 	do{
 		menuprincipal();
@@ -46,7 +47,7 @@ int main(){
 								cin>>m2;
 								switch(m2){
 									case 1:
-										agenda.mostrarLista();
+										mostrarListado();
 										break;
 
 									case 2:
@@ -76,33 +77,35 @@ int main(){
 										menuBuscar(0);
 										cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
 										cin>>opcion;
-										char cadAux[100];
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
 											agenda.modificarAlumno(dni, "");
 										}else if(opcion==2){
 											cout<<"Indique los apellidos"<<endl;
+											getchar();
 											leerlinea(cadAux,100);
 											apellidos = cadAux;
 											agenda.modificarAlumno("",apellidos);
 										}
-										break;
+									break;
 
 									case 5:
 										menuBuscar(0);
-										cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
+										cout<<"¿Por que campo desea mostrar los datos del alumno?"<<endl;
 										cin>>opcion;
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
 											agenda.borrarAlumno(dni, "");
 										}else if(opcion==2){
-											cout<<"Indique el DNI"<<endl;
-											cin>>apellidos;
-											agenda.borrarAlumno(apellidos, "");
+											cout<<"Indique los apellidos del alumno: "<<endl;
+											getchar();
+											leerlinea(cadAux,100);
+											apellidos = cadAux;
+											agenda.borrarAlumno("",apellidos);
 										}
-										break;
+									break;
 
 									case 6:
 										correcto= profesor.guardarCopia();

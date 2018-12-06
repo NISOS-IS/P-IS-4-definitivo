@@ -60,9 +60,9 @@ char letraDNI(int dni){
 short verificaDNI(char *dni){
 	dni[8]=  toupper(dni[8]);
 	if (strlen(dni)!=9)
-      return 0;
+      	return 0;
 	else
-    return (letraDNI(atoi(dni))==dni[8]);
+    	return (letraDNI(atoi(dni))==dni[8]);
 }
 
 bool compruebaFecha(string fecha){
@@ -139,17 +139,14 @@ void escribirDatos(){
 	variableCorrecta= false;
 	
 	cout<<"Introduce Nombre"<<endl;
-	cin>>auxCad;
+	getchar();
 	leerlinea(auxCad,100);
-	strcpy(nombreC,auxCad);
-	nombre=nombreC;
+	nombre=auxCad;
 	alumno.setNombre(nombre);
 	
 	cout<<"Introduce Apellido"<<endl;
-	cin>>auxCad;
 	leerlinea(auxCad,100);
-	strcpy(apellidosC,auxCad);
-	apellidos=apellidosC;
+	apellidos=auxCad;
 	alumno.setApellidos(apellidos);
 
 	while(variableCorrecta==false){
@@ -168,14 +165,13 @@ void escribirDatos(){
 			break;
 		}
 	}
-	variableCorrecta= false;
-
+	getchar();
 	cout<<"Introduce Direccion"<<endl;
-	cin>>auxCad;
-	leerlinea(auxCad,100);
-	strcpy(direccionC,auxCad);
-	direccion=direccionC;
+	leerlinea(direccionC,100);
+	direccion = direccionC;
 	alumno.setDireccion(direccion);
+
+	variableCorrecta= false;
 
 	while(variableCorrecta==false || encontrado==true){
 		cout<<"Introduce Email"<<endl;
@@ -184,10 +180,10 @@ void escribirDatos(){
 		encontrado= agenda.comprobarEmail(aux, email);
 		if(encontrado==false){
 			variableCorrecta= alumno.setEmail(email);
-			}else{
+		}else{
 				cout<<"Ese email ya esta registrado. Introduzca uno distinto"<<endl;
-			}
 		}
+	}
 	variableCorrecta= false;
 
 	while(variableCorrecta==false){
@@ -276,7 +272,7 @@ void escribirDatos(){
 		}
 }
 
-void modificarDatos(struct RegistroAlumno *alumno){
+void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 	string auxStr;
 	char auxCad[100];
 	char dni[10];
@@ -330,9 +326,20 @@ void modificarDatos(struct RegistroAlumno *alumno){
 			(*alumno).equipo = auxNum;
 		break;
 		case 8:
-			cout<<"¿Lider o No Lider?: "<<endl;
-			cin>>auxStr;
-			strcpy(alumno->lider,auxStr.c_str());
+			if(((lider==true) && (strcmp(alumno->lider,"Lider")==0)) || (lider == false)){
+				cout<<"¿Lider o No Lider?: "<<endl;
+				cout<<"1. Lider\n2. No lider"<<endl;
+				cin>>auxNum;
+				if(auxNum == 1){
+					strcpy(alumno->lider,"Lider");
+				}else if(auxNum == 2){
+					strcpy(alumno->lider,"No Lider");
+					cout<<"Lider==="<<alumno->lider<<endl;
+				}
+				getchar();
+			}else
+				cout<<"Ya existe un lider en este equipo."<<endl;
+
 		break;
 		case 9:
 			cout<<"Saliendo...\n"<<endl;
@@ -340,4 +347,51 @@ void modificarDatos(struct RegistroAlumno *alumno){
 		default:
 			cout<<"Opcion no valida."<<endl;
 	}
+}
+
+void mostrarListado(){
+	Agenda agenda;
+	list<Alumno>aux = agenda.mostrarLista();
+	for (list<Alumno>::iterator it = aux.begin();it != aux.end(); it++){
+		cout<<"DNI: \t\t\t"<<it->getDNI()<<endl;
+		cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
+		cout<<"Apellidos:\t\t"<<it->getApellidos()<<endl;
+		cout<<"Telefono: \t\t"<<it->getTelefono()<<endl;
+		cout<<"Direccion: \t\t"<<it->getDireccion()<<endl;
+		cout<<"Email: \t\t\t"<<it->getEmail()<<endl;
+		cout<<"Fecha de nacimiento: \t"<<it->getFechaNacimiento()<<endl;
+		cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
+		cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
+		cout<<"Lider: \t\t\t"<<convertirBoolLider(it->getLider())<<endl;		
+		cout<<endl;
+	}
+	aux.clear();
+}
+
+bool liderPorEquipo(int equipo){
+	int j,cont=0;
+	RegistroAlumno alumno;
+	ifstream in;
+	in.open("agenda.bin", ios::in | ios::binary);
+	
+	if(in.is_open()){
+		in.seekg(0,ios::end);
+		j = in.tellg()/sizeof(RegistroAlumno);
+		in.seekg(0*sizeof(RegistroAlumno));
+
+		in.read((char *)&alumno,sizeof(RegistroAlumno));
+		while(cont < j){
+			if(alumno.equipo == equipo){
+				if(strcmp(alumno.lider,"Lider") == 0){
+					return true;
+				}
+			}
+			in.read((char *)&alumno,sizeof(RegistroAlumno));
+			cont++;
+		}
+		in.close();
+	}else{
+		cout<<"No se pudo abrir el fichero para comprobar si el equipo tiene lider."<<endl;
+	}
+	return false;
 }
