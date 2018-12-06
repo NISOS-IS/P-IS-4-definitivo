@@ -15,6 +15,7 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 	if(file.is_open()){
 		while(!file.eof()){
 			file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
+			apellido = alumnoAux.apellidos;
 			if(apel=="" && equipo==0){
 				if(alumnoAux.dni == dni){
 					encontrado = true;
