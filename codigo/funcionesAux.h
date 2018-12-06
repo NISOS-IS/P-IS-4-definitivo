@@ -1,3 +1,4 @@
+/*Archivo funcionesAux.h que contiene struct de Registros y RegistroAlumno y las cabeceras de funciones auxiliares*/
 #ifndef FUNCIONESAUX_H_
 #define FUNCIONESAUX_H_
 

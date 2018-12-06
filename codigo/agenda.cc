@@ -1,13 +1,21 @@
+/* Archivo agenda.cc que contiene todas las funciones relativas a la clase Agenda
+*/
 #include "funcionesAux.h"
 #include "agenda.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
 
+//constructor de la clase Agenda vacio
 Agenda::Agenda(){}
 
+/*
+Funcion buscarAlumno que buscar un alumno en la agenda
+@param recibe como parametros el dni o apellidos de un alumno o el equipo al que pertenece
+@return devuelve una lista de alumno
+*/
 list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
-ifstream file("agenda.bin", ios::in | ios::binary);
+	ifstream file("agenda.bin", ios::in | ios::binary);
 	Alumno aux("","","",0,"","","",0,0,false);
 	RegistroAlumno alumnoAux;
 	bool encontrado = false;
@@ -16,14 +24,18 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 		while(!file.eof()){
 			file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
 			apellido = alumnoAux.apellidos;
+			//si apel es una cadena vacia y equipo 0, realiza la busqueda por dni
 			if(apel=="" && equipo==0){
 				if(alumnoAux.dni == dni){
 					encontrado = true;
 				}
+			//si dni es cadena vacia y equipo 0, realiza la busqueda por apellido
 			}else if(dni=="" && equipo==0){
+				//compruebe si apellido contiene apel
 				if(apellido.find(apel) != string::npos){
 					encontrado=true;
 				}
+			//si dni y apel son cadena vacia, realiza la busqueda por equipo
 			}else if(dni=="" && apel==""){
 				if(alumnoAux.equipo==equipo){
 					encontrado=true;
@@ -56,23 +68,35 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 	return listaAlumnos_;
 }
 
+/*
+Funcion insertarAlumno que insertar a un nuevo alumno en la agenda
+@param recibe como parametro un objeto de la clase Alumno
+@return devuelve true si todo va correcto o false si algo falla
+*/
+
 bool Agenda::insertarAlumno(Alumno alumno){
+	bool correcto=false;
 	ofstream file("agenda.bin", ios::out | ios::binary | ios::app);
 	RegistroAlumno reg;
-	strcpy(reg.dni,alumno.getDNI().c_str());
-	strcpy(reg.nombre,alumno.getNombre().c_str());
-    strcpy(reg.apellidos,alumno.getApellidos().c_str());
-    reg.telefono=alumno.getTelefono();
-    strcpy(reg.direccion, alumno.getDireccion().c_str());
-    strcpy(reg.email, alumno.getEmail().c_str());
-    strcpy(reg.fechaNacimiento,alumno.getFechaNacimiento().c_str());
-	reg.curso=alumno.getCurso();
-	reg.equipo=alumno.getEquipo();
-	strcpy(reg.lider,convertirBoolLider(alumno.getLider()).c_str());
-	file.write((char *) &reg, sizeof(RegistroAlumno));
-	file.close();
+	if(file.is_open()){
+		strcpy(reg.dni,alumno.getDNI().c_str());
+		strcpy(reg.nombre,alumno.getNombre().c_str());
+		strcpy(reg.apellidos,alumno.getApellidos().c_str());
+		reg.telefono=alumno.getTelefono();
+		strcpy(reg.direccion, alumno.getDireccion().c_str());
+		strcpy(reg.email, alumno.getEmail().c_str());
+		strcpy(reg.fechaNacimiento,alumno.getFechaNacimiento().c_str());
+		reg.curso=alumno.getCurso();
+		reg.equipo=alumno.getEquipo();
+		strcpy(reg.lider,convertirBoolLider(alumno.getLider()).c_str());
+		file.write((char *) &reg, sizeof(RegistroAlumno));
+		file.close();
+		correcto=true;
+	}else{
+		correcto= false;
+	}
 	
-	return true;
+	return correcto;
 }
 
 /* borrar el alumno indicado ya sea por dni o apellidos */

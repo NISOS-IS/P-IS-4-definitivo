@@ -1,3 +1,4 @@
+/*Archivo main.cc que contiene el programa*/
 #include <iostream>
 #include <string.h>
 #include "alumno.h"

@@ -9,6 +9,10 @@
 
 using namespace std;
 
+/*
+Clase Agenda
+@param list<Alumno>
+*/
 class Agenda{
 	private:
 		list<Alumno> listaAlumnos_;

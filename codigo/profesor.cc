@@ -7,11 +7,20 @@
 
 using namespace std;
 
+/*
+Constructor de la clase Profesor que hereda de Persona
+@param dni, nombre, apellidos, telefono, direccion, email, fecha_nacimiento, rol, contrasena
+*/
 Profesor::Profesor(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, bool rol, string contrasena):Persona(dni, nombre, apellidos, telefono, direccion, email, fecha_nacimiento){
 	rol_ = rol;
 	contrasena_ =contrasena;
 }
 
+/*
+Metodo setContrasena que comprueba que una contrasena sea correcta
+@param contrasena
+@return true si la contrasena es correcto y false si no lo es
+*/
 void Profesor::setContrasena(string contrasena){
 	if(contrasena.size()>=4){
 		contrasena_ = contrasena;
@@ -95,7 +104,7 @@ bool Profesor::cargarCopia(){
 	RegistroAlumno alumno;
 
 	in.open("copiaSeguridad.bin", ios::in | ios::binary);
-	out.open("temporal.bin", ios::out | ios::binary | ios::app);
+	out.open("temporal.bin", ios::out | ios::binary);
 
 	if(in.is_open() && out.is_open()){
 
@@ -116,15 +125,21 @@ bool Profesor::cargarCopia(){
 	}
 }
 
+/*
+Funcion guardarCopia que realiza una copia de seguridad de agenda
+@param nada
+@return true si la copia de Seguridad se realiza de forma correcta y false si algo falla
+*/
 bool Profesor::guardarCopia(){
 	int lon;
 	ifstream fe;
+	bool correcto= false;
 	//Creamos otro archivo donde se copiara
 	fe.open("agenda.bin");
 	ofstream fs("copiaSeguridad.bin");
 	// Miramos cual es el tamaño del archivo
 	if(fe.fail()){
-		return false;
+		correcto= false;
 	}else{
 		fe.seekg (0, ios::end);
 		lon = fe.tellg();
@@ -135,12 +150,16 @@ bool Profesor::guardarCopia(){
 		//Leemos el archivo y se guarda en la cadena
 		fe.read(cadena,lon); 
 		if(fs.eof()){
-			return false;
+			correcto= false;
+		}else{
+			fs.write(cadena,lon);
+			correcto= true;
 		}
-		fs.write(cadena,lon);
-		return true;
 	}
 
 	fs.close();
 	fe.close();
+	
+	return correcto;
 }
+

@@ -1,3 +1,4 @@
+/*Archivo funcionesAux.cc que contiene funciones auxiliares usadas por el programa*/
 #include <iostream>
 #include<limits>
 #include <stdio.h>
@@ -8,7 +9,11 @@
 
 using namespace std;
 
-
+/*
+Funcion comprobarExistenciaDNI que comprueba si un dni ya esta guardado en agenda
+@param dni
+@return true si se encuentra el dni y false si no se encuentra
+*/
 bool comprobarExistenciaDNI(string dni){
 	bool correcto=false;
 	ifstream file("agenda.bin", ios::in | ios::binary);
@@ -32,6 +37,11 @@ bool comprobarExistenciaDNI(string dni){
 	return correcto;
 }
 
+/*
+Funcion comprobarLider que comprueba si un equipo ya tiene lider asginado
+@param list<Alumno>, lider
+@return true si se encuentra el lider y false si no se encuentra
+*/
 bool comprobarLider(list<Alumno> &aux, bool lider){
 	list<Alumno>::iterator i;
 	bool encontrado=false;
@@ -47,6 +57,11 @@ bool comprobarLider(list<Alumno> &aux, bool lider){
 	}
 }
 
+/*
+Funcion comprobarEmail que comprueba si un email ya esta guardado en agenda
+@param list<Alumno>, email
+@return true si se encuentra el email y false si no se encuentra
+*/
 bool comprobarEmail(list<Alumno> &aux, string email){
 	list<Alumno>::iterator i;
 	bool encontrado=false;
@@ -63,6 +78,11 @@ bool comprobarEmail(list<Alumno> &aux, string email){
 	}
 }
 
+/*
+Funcion convertirBool que convirte un bool en un string
+@param a
+@return string
+*/
 string convertirBool(bool a){
 	string aux;
 	if(a==true){
@@ -74,6 +94,11 @@ string convertirBool(bool a){
 	return aux;
 }
 
+/*
+Funcion convertirBoolLider que convierte un bool lider en string
+@param a
+@return string
+*/
 string convertirBoolLider(bool a){
 	string aux;
 	if(a==true){
@@ -85,6 +110,11 @@ string convertirBoolLider(bool a){
 	return aux;
 }
 
+/*
+Funcion convertirStringLider que convierte un string en un bool
+@param lider
+@return bool
+*/
 bool convertirStringLider(char *lider){
 	bool aux=false;
 	string cadena;
@@ -109,12 +139,22 @@ int leerlinea(char *cad,int max){
   return i;
 }
 
+/*
+Funcion letraDNI que calcula la letra del dni
+@param dni
+@return devuelve la letra correspondiente al dni
+*/
 char letraDNI(int dni){
   char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
 
   return letra[dni%23];
 }
 
+/*
+Funcion verificaDNI que comprueba que un dni es correcto
+@param dni
+@return si el dni es correcto
+*/
 short verificaDNI(char *dni){
 	dni[8]=  toupper(dni[8]);
 	if (strlen(dni)!=9)
@@ -123,6 +163,11 @@ short verificaDNI(char *dni){
     	return (letraDNI(atoi(dni))==dni[8]);
 }
 
+/*
+Funcion compruebaFecha que si una fecha es correcta
+@param fecha
+@return true si la fecha es correcta y false en caso contrario
+*/
 bool compruebaFecha(string fecha){
 	char linea[10];
 	strcpy(linea, fecha.c_str());
@@ -130,48 +175,60 @@ bool compruebaFecha(string fecha){
 	unsigned m;
 	unsigned a;
 	bool correcto=true, correctoM=false, correctoD=false;
-   
-   strcpy(linea, fecha.c_str());
-   if (linea == NULL)
-      return EXIT_FAILURE;
-   
-   if (sscanf(linea, "%2u/%2u/%4u", &d, &m, &a) == 3){
-	   if(d>=1 && d<=31){
+  
+	strcpy(linea, fecha.c_str());
+	if (linea == NULL) return EXIT_FAILURE;
+	//comprueba que el formato de la fecha sea correcto, es decir dd/mm/aaaa
+	if (sscanf(linea, "%2u/%2u/%4u", &d, &m, &a) == 3){
+		//comprueba que el dia no sea menor de 1 ni mayor de 31
+		if(d>=1 && d<=31){
 		   correctoD=true;
-	   }else{
+		}else{
 		   correctoD=false;
-	   }
-	   if(m>=1 && m<=12){
+		}
+		//comprueba que el mes no sea menor de 1 ni mayor de 12
+		if(m>=1 && m<=12){
 		   correctoM=true;
-	   }else{
+		}else{
 		   correctoM=false;
-	   }
+		}
 	   
-   }else{
+	}else{
 	   correcto=false;
-   }
+	}
    
-   if(correcto==true && correctoD==true && correctoM==true){
+	if(correcto==true && correctoD==true && correctoM==true){
 	   correcto=true;
-   }else{
+	}else{
 		correcto=false;
-   }
-   return correcto;
+	}
+	return correcto;
 }
 
+/*
+Funcion validarEmail que comprueba que un email tenga el formato correcto
+@param email
+@return true si el email es correcto y false si no lo es
+*/
 bool validarEmail(string email){
 	bool correcto=true;
-	size_t at = email.find('@');
+
+	size_t at = email.find('@'); //busca que dentro de la cadena haya un "@"
     if (at == string::npos){
         correcto=false;
     }
-    size_t dot = email.find('.', at + 1);
+    size_t dot = email.find('.', at + 1); //busca que dentro de una cadena haya "."
     if (dot == string::npos){
         correcto=false;
     }
     return correcto;
 }
 
+/*
+Funcion mayusculas que convierte en mayusculas una cadena
+@param cadena
+@return cadena en mayusculas
+*/
 string mayusculas(string cadena){
 	for(int i=0; i<cadena.length(); i++){
 		cadena[i]= toupper(cadena[i]);
@@ -179,12 +236,17 @@ string mayusculas(string cadena){
 	return cadena;
 }
 
+/*
+Funcion escribe datos que pide los datos de un alumno
+@param nada
+@return void
+*/
 void escribirDatos(){
 	Alumno alumno("","","",0,"","","",0,0,false);
 	Agenda agenda;
 	list<Alumno> aux;
-	char auxDNI[9], auxCad[100], nombreC[100], apellidosC[100], direccionC[100], vTelefono;
-	string DNI, nombre, apellidos, direccion, email, fechaNacimiento, vCurso, vEquipo;
+	char auxDNI[9], auxCad[100], nombreC[100], apellidosC[100], direccionC[100];
+	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
 	int telefono, curso, equipo, esLider=1;
 	bool lider, variableCorrecta=false,encontrado=false, funcionCorrecta=false;
 	
@@ -220,6 +282,7 @@ void escribirDatos(){
 		cout<<"Introduce Telefono"<<endl;
 		cin>>telefono;
 		while(1){
+			//comprueba que solo se introducen numeros
 			if(cin.fail()){
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(),'\n');

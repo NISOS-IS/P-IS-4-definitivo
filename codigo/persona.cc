@@ -17,6 +17,11 @@ Persona::Persona(string dni, string nombre, string apellidos, int telefono, stri
 	fechaNacimiento_ = fecha_nacimiento;
 }
 
+/*
+Metodo setDNI que comprueba que un dni sea correcto
+@param dni
+@return true si el dni es correcto y false si no lo es
+*/
 bool Persona::setDNI(string dni){
 	char cadDni[9];
 	strcpy(cadDni, dni.c_str());
@@ -37,6 +42,11 @@ void Persona::setApellidos(string apellidos){
 	apellidos_ = apellidos;
 }
 
+/*
+Metodo setTelefono que comprueba que un telefono sea correcto
+@param telefono
+@return true si el telefono es correcto y false si no lo es
+*/
 bool Persona::setTelefono(int telefono){
     string s = to_string(telefono);
 	if(s.size()==9){
@@ -53,6 +63,11 @@ void Persona::setDireccion(string direccion){
 	direccion_ = direccion;
 }
 
+/*
+Metodo setEmail que comprueba que un email sea correcto
+@param email
+@return true si el email es correcto y false si no lo es
+*/
 bool Persona::setEmail(string email){
 	bool correcto=false;
 	correcto= validarEmail(email);
@@ -65,6 +80,11 @@ bool Persona::setEmail(string email){
 	}
 }
 
+/*
+Metodo setFechaNacimiento que comprueba que un fechaNacimiento sea correcta
+@param fecha_nacimiento
+@return true si la fechaNacimiento es correcta y false si no lo es
+*/
 bool Persona::setFechaNacimiento(string fecha_nacimiento){
 	bool correcto=false;
 	correcto= compruebaFecha(fecha_nacimiento);
