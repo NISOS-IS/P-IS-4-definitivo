@@ -32,11 +32,13 @@ string convertirBoolLider(bool a){
 
 bool convertirStringLider(char *lider){
 	bool aux=false;
+	string cadena;
+	cadena= lider;
 
-	if(lider=="Lider"){
-		aux=false;
-	}else{
+	if(cadena=="Lider"){
 		aux=true;
+	}else{
+		aux=false;
 	}
 	return aux;
 }
@@ -249,10 +251,10 @@ void escribirDatos(){
 						aux=agenda.buscarAlumno("","",equipo);
 						encontrado= agenda.comprobarLider(aux, lider);
 					
-						if(encontrado==true){
-							lider=false;
-						}else{
+						if(encontrado==false){
 							lider=true;
+						}else{
+							lider=false;
 						}
 					}else if(esLider==2){
 						lider=false;

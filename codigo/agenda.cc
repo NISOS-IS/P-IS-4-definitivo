@@ -20,7 +20,7 @@ ifstream file("agenda.bin", ios::in | ios::binary);
 					encontrado = true;
 				}
 			}else if(dni=="" && equipo==0){
-				if(alumnoAux.apellidos==apel){
+				if(apellido.find(apel) != string::npos){
 					encontrado=true;
 				}
 			}else if(dni=="" && apel==""){
