@@ -43,6 +43,7 @@ bool convertirStringLider(char *lider){
 	return aux;
 }
 
+/* Permite la introduccion de cadenas de caracteres con espacios */
 int leerlinea(char *cad,int max){
   int i=0,c;
   while((i<max-1) && ((c = getchar()) != '\n')){
@@ -245,7 +246,7 @@ void escribirDatos(){
 					cin>>esLider;
 				}
 				if(!cin.fail()){
-									
+		
 					if(esLider==1){
 						lider=true;
 						aux=agenda.buscarAlumno("","",equipo);
@@ -274,6 +275,8 @@ void escribirDatos(){
 		}
 }
 
+/* funcion para mostrar al profesor las opciones que habra para 
+modificar los datos del alumno*/
 void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 	string auxStr;
 	char auxCad[100];
@@ -350,6 +353,8 @@ void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 	}
 }
 
+/* funcion para mostrar un listado de todos los alumnos que existan en
+el registro.*/
 void mostrarListado(){
 	Agenda agenda;
 	list<Alumno>aux = agenda.mostrarLista();
@@ -369,6 +374,7 @@ void mostrarListado(){
 	aux.clear();
 }
 
+/* a eliminar */
 bool liderPorEquipo(int equipo){
 	int j,cont=0;
 	RegistroAlumno alumno;

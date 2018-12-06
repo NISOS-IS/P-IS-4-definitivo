@@ -88,8 +88,32 @@ bool Profesor::login(string usuario, string constrasena){
 
 }
 
+/* Carga de la copia de seguridad del fichero de registros de alumnos */
 bool Profesor::cargarCopia(){
+	ifstream in;
+	ofstream out;
+	RegistroAlumno alumno;
 
+	in.open("copiaSeguridad.bin", ios::in | ios::binary);
+	out.open("temporal.bin", ios::out | ios::binary | ios::app);
+
+	if(in.is_open() && out.is_open()){
+
+		while(!in.eof()){
+			in.read((char *)&alumno,sizeof(RegistroAlumno));
+			out.write((char *)&alumno,sizeof(RegistroAlumno));
+		}
+
+		in.close();
+		out.close();
+
+		remove("agenda.bin");
+		rename("temporal.bin","agenda.bin");
+		return true;
+	}else{
+		cout<<"No se pudo crear el fichero de copia."<<endl;
+		return false;
+	}
 }
 
 bool Profesor::guardarCopia(){

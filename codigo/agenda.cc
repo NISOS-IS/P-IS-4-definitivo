@@ -132,12 +132,12 @@ bool Agenda::insertarAlumno(Alumno alumno){
 	return true;
 }
 
+/* borrar el alumno indicado ya sea por dni o apellidos */
 bool Agenda::borrarAlumno(string dni, string apellidos){
 	int j,cont=0,esp=0,resp=0,tam;
-	char auxStr[100];//uno[2],dos[2],resp[2];
-	//strcpy(uno,"1");
-	//strcpy(dos,"2");
+	char auxStr[100];
 	list<Alumno> al;
+	//limpia las list creadas para no repetir la informacion a mostrar
 	al.clear();
 	listaAlumnos_.clear();
 	RegistroAlumno alumno;
@@ -146,6 +146,9 @@ bool Agenda::borrarAlumno(string dni, string apellidos){
 	bool encontrado = false;
 	al = buscarAlumno(dni,apellidos,0);
 	
+	/*Comprueba si el parametros apellidos tiene los apellidos
+	o uno solo
+	*/
 	if(apellidos != ""){
 		tam=apellidos.size();
 		for (int i = 0; i < tam; i++){
@@ -160,12 +163,17 @@ bool Agenda::borrarAlumno(string dni, string apellidos){
 		in.open("agenda.bin", ios::in | ios::binary);
 		out.open("temporal.bin", ios::out | ios::binary);
 
+		/* En caso de que el parametro apellidos tenga un solo apellido
+		volvera a pedir que se introduzca los apellidos completo.
+		*/
 		if((esp == 0) && (apellidos != "")){
 			cout<<"Introduce los apellidos del alumno: "<<endl;
 			leerlinea(auxStr,100);
 			apellidos = auxStr;
 		}
 
+		/*Muestra por pantalla los datos del alumno
+		 a eliminar*/
 		for (list<Alumno>::iterator it = al.begin(); it != al.end(); it++){
 			if((dni == it->getDNI()) || (apellidos == it->getApellidos())){
 				cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
@@ -180,14 +188,18 @@ bool Agenda::borrarAlumno(string dni, string apellidos){
 			}
 		}
 
+		/* Preguntara al profesor si quiere eliminar el registro del alumno*/
 		if(encontrado){
 			cout<<"¿Está seguro de querer eliminar los datos del alumno?"<<endl;
 			cout<<"1. Si\n2. No"<<endl;
 			cin>>resp;
 			getchar();
 		}
+		/*En caso afirmativo procedera a actualizar la agenda */
 		if(resp == 1){
 			if(in.is_open() && out.is_open()){
+
+				/*Lectura y escritura de la agenda para su actualizacion */
 				in.seekg(0,ios::end);
 				j = in.tellg()/sizeof(RegistroAlumno);
 				in.seekg(0*sizeof(RegistroAlumno));
@@ -228,10 +240,10 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 	ofstream out;
 	list<Alumno> alumno;
 	RegistroAlumno reg;
-	bool encontrado = false,lider=false;
+	bool encontrado = false,lider=false,lid=true;
 
 	alumno = buscarAlumno(dni,apellidos,0);
-	//Para saber si en el parametro apellidos estan ambos apellidos o uno solo
+	//Saber si en el parametro apellidos estan ambos apellidos o uno solo
 	if(apellidos != ""){
 		j=apellidos.size();
 		for (int i = 0; i < j; ++i){
@@ -246,6 +258,7 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 		out.open("temporal.bin", ios::out | ios::binary | ios::app);
 
 		if(in.is_open() && out.is_open()){
+
 			/* Mostrar los alumnos que se van a modificar los datos */
 			for (list<Alumno>::iterator it = alumno.begin(); it != alumno.end(); it++){
 				if((dni == it->getDNI()) || (apellidos == it->getApellidos())){
@@ -258,18 +271,30 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 					cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
 					cout<<"Lider: \t\t\t"<<convertirBoolLider(it->getLider())<<"\n"<<endl;
 					equipo = it->getEquipo();
+					//lid=it->getLider();
 				}
 			}
 
-			/* para comprobar si el equipo tiene lider */
-			lider = liderPorEquipo(equipo);
+			/* Comprobar si el equipo tiene lider */
+			/*********************************************/
+			//lider = liderPorEquipo(equipo);
+			alumno.clear();
+			alumno = buscarAlumno("","",equipo);
+			lider = comprobarLider(alumno,lid);
+			/*********************************************/
 
+			/* 
+			En caso de que el parametro apellidos tenga un solo apellido
+			volvera a pedir que se introduzca los apellidos completo.
+			*/
 			if((apellidos != "") && (esp == 0)){
 				cout<<"Introduzca los apellidos del alumno: "<<endl;
 				leerlinea(auxStr,100);
 				apellidos = auxStr;
 			}
 
+			/* Apertura lectura y escritura de ficheros para la 
+			modificacion de registros */
 			in.seekg(0,ios::end);
 			j = in.tellg()/sizeof(RegistroAlumno);
 			in.seekg(0*sizeof(RegistroAlumno));
@@ -279,6 +304,9 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 
 				string aux1(reg.dni),aux2(reg.apellidos);
 				if((dni == aux1) || (apellidos == aux2)){
+					/* se haran tantas modificaciones mientras
+					se cumpla la condicion while, para un mismo alumno
+					*/
 					while(resp != 2){
 						modificarDatos(&reg,lider);
 						cout<<"¿Desea continuar modificando datos?"<<endl;
@@ -303,6 +331,8 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 	}
 }
 
+/* Introducira en un list todos los alumnos del registro 
+para su utilizacion proxima a mostrar el listado*/
 list<Alumno> Agenda::mostrarLista(){
 	int j,cont=0;
 	ifstream in;
@@ -317,6 +347,9 @@ list<Alumno> Agenda::mostrarLista(){
 		j = in.tellg()/sizeof(RegistroAlumno);
 		in.seekg(0*sizeof(RegistroAlumno));
 
+		/* Lee todo el registro y los introduce en un objeto
+		de clase Alumno, y el objeto estara en un list<Alumno>
+		*/
 		in.read((char *)&al,sizeof(RegistroAlumno));
 		while(cont < j){
 			aux.setDNI(al.dni);
