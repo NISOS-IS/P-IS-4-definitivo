@@ -64,6 +64,10 @@ int main(){
 										}else if(opcion==2){
 											cout<<"Indique el Apellido"<<endl;
 											cin>>apellidos;
+											getchar();
+											leerlinea(cadAux,100);
+											apellidos = cadAux;
+											apellidos= mayusculas(apellidos);
 											agenda.mostrarAlumno("", apellidos, 0);
 										}else if(opcion==3){
 											cout<<"Indique el Equipo"<<endl;
@@ -78,7 +82,7 @@ int main(){
 
 									case 4:
 										menuBuscar(0);
-										cout<<"¿Por que campo desea mostrar el/los alumno/os?"<<endl;
+										cout<<"¿Por que campo desea modificar el/los alumno/os?"<<endl;
 										cin>>opcion;
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
@@ -92,6 +96,7 @@ int main(){
 											getchar();
 											leerlinea(cadAux,100);
 											apellidos = cadAux;
+											apellidos= mayusculas(apellidos);
 											agenda.modificarAlumno("",apellidos);
 										}
 									break;
@@ -112,6 +117,7 @@ int main(){
 											getchar();
 											leerlinea(cadAux,100);
 											apellidos = cadAux;
+											apellidos= mayusculas(apellidos);
 											agenda.borrarAlumno("",apellidos);
 										}
 									break;

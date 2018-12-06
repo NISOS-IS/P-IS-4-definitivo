@@ -158,6 +158,7 @@ void escribirDatos(){
 	cout<<"Introduce Apellido"<<endl;
 	leerlinea(auxCad,100);
 	apellidos=auxCad;
+	apellidos= mayusculas(apellidos);
 	alumno.setApellidos(apellidos);
 
 	while(variableCorrecta==false){
@@ -180,6 +181,7 @@ void escribirDatos(){
 	cout<<"Introduce Direccion"<<endl;
 	leerlinea(direccionC,100);
 	direccion = direccionC;
+	direccion= mayusculas(direccion);
 	alumno.setDireccion(direccion);
 
 	variableCorrecta= false;
@@ -306,11 +308,17 @@ void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 		case 1:
 			cout<<"Introduce Nombre: "<<endl;
 			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
 			strcpy(alumno->nombre,auxCad);
 		break;
 		case 2:
 			cout<<"Introduce Apellidos: "<<endl;
 			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
 			strcpy(alumno->apellidos,auxCad);
 		break;
 		case 3:
@@ -321,6 +329,9 @@ void modificarDatos(struct RegistroAlumno *alumno,bool lider){
 		case 4:
 			cout<<"Introduce Direccion: "<<endl;
 			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
 			strcpy(alumno->direccion,auxCad);
 		break;
 		case 5:
@@ -380,33 +391,4 @@ void mostrarListado(){
 		cout<<endl;
 	}
 	aux.clear();
-}
-
-/* a eliminar */
-bool liderPorEquipo(int equipo){
-	int j,cont=0;
-	RegistroAlumno alumno;
-	ifstream in;
-	in.open("agenda.bin", ios::in | ios::binary);
-	
-	if(in.is_open()){
-		in.seekg(0,ios::end);
-		j = in.tellg()/sizeof(RegistroAlumno);
-		in.seekg(0*sizeof(RegistroAlumno));
-
-		in.read((char *)&alumno,sizeof(RegistroAlumno));
-		while(cont < j){
-			if(alumno.equipo == equipo){
-				if(strcmp(alumno.lider,"Lider") == 0){
-					return true;
-				}
-			}
-			in.read((char *)&alumno,sizeof(RegistroAlumno));
-			cont++;
-		}
-		in.close();
-	}else{
-		cout<<"No se pudo abrir el fichero para comprobar si el equipo tiene lider."<<endl;
-	}
-	return false;
 }

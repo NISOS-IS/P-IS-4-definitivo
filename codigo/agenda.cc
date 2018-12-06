@@ -170,6 +170,7 @@ bool Agenda::borrarAlumno(string dni, string apellidos){
 			cout<<"Introduce los apellidos del alumno: "<<endl;
 			leerlinea(auxStr,100);
 			apellidos = auxStr;
+			apellidos= mayusculas(apellidos);
 		}
 
 		/*Muestra por pantalla los datos del alumno
@@ -291,6 +292,7 @@ bool Agenda::modificarAlumno(string dni, string apellidos){
 				cout<<"Introduzca los apellidos del alumno: "<<endl;
 				leerlinea(auxStr,100);
 				apellidos = auxStr;
+				apellidos= mayusculas(apellidos);
 			}
 
 			/* Apertura lectura y escritura de ficheros para la 

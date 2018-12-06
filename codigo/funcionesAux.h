@@ -40,6 +40,7 @@ void imprimirBool(bool a);
 string convertirBool(bool a);
 string convertirBoolLider(bool a);
 bool convertirStringLider(char *lider);
+string mayusculas(string cadena);
 void escribirDatos();
 void modificarDatos(struct RegistroAlumno *alumno,bool lider);
 int leerlinea(char *cad,int max);
@@ -48,5 +49,4 @@ short verificaDNI(char *dni);
 bool compruebaFecha(string fecha);
 bool validarEmail(string email);
 void mostrarListado();
-bool liderPorEquipo(int equipo);
 #endif
