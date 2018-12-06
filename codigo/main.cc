@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include "alumno.h"
 #include"profesor.h"
 #include"agenda.h"
@@ -20,7 +20,7 @@ int main(){
 	int telefono, curso, equipo, esLider=1;
 	bool lider, variableCorrecta=false, correcto=false;
 	int m1, m2, opcion;
-	char cadAux[100];
+	char cadAux[100], auxDNI[9];
 	
 	do{
 		menuprincipal();
@@ -57,6 +57,9 @@ int main(){
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
+											strcpy(auxDNI, dni.c_str());
+											auxDNI[8]=  toupper(auxDNI[8]);
+											dni= auxDNI;
 											agenda.mostrarAlumno(dni, "", 0);
 										}else if(opcion==2){
 											cout<<"Indique el Apellido"<<endl;
@@ -80,6 +83,9 @@ int main(){
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
+											strcpy(auxDNI, dni.c_str());
+											auxDNI[8]=  toupper(auxDNI[8]);
+											dni= auxDNI;
 											agenda.modificarAlumno(dni, "");
 										}else if(opcion==2){
 											cout<<"Indique los apellidos"<<endl;
@@ -97,6 +103,9 @@ int main(){
 										if(opcion==1){
 											cout<<"Indique el DNI"<<endl;
 											cin>>dni;
+											strcpy(auxDNI, dni.c_str());
+											auxDNI[8]=  toupper(auxDNI[8]);
+											dni= auxDNI;
 											agenda.borrarAlumno(dni, "");
 										}else if(opcion==2){
 											cout<<"Indique los apellidos del alumno: "<<endl;

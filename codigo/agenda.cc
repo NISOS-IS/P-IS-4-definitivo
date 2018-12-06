@@ -329,10 +329,7 @@ list<Alumno> Agenda::mostrarLista(){
 			aux.setFechaNacimiento(al.fechaNacimiento);
 			aux.setCurso(al.curso);
 			aux.setEquipo(al.equipo);
-			cout<<"Tipo Lider: "<<al.lider<<endl;
 			aux.setLider(convertirStringLider(al.lider));
-			if(convertirStringLider(al.lider))cout<<"TipoLider='Lider'=>imprime;TipoLider='No Lider'=>No deberia imprimir."<<endl;
-			else cout<<"Si me imprime, es por 'No Lider', todo OK."<<endl;
 			alumno.push_back(aux);
 			in.read((char *)&al,sizeof(RegistroAlumno));
 			cont++;
