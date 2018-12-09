@@ -16,11 +16,11 @@ class Alumno: public Persona{
 
 		//métodos get y set de la variable curso_
 		inline int getCurso(){return curso_;};
-		void setCurso(int curso);
+		bool setCurso(int curso);
 
 		//métodos get y set de la variable equipo_
 		inline int getEquipo(){return equipo_;};
-		void setEquipo(int equipo);
+		bool setEquipo(int equipo);
 
 		//métodos get y set de la variable lider_
 		inline bool getLider(){return lider_;};

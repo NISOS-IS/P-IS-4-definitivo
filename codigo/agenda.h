@@ -11,7 +11,7 @@ using namespace std;
 
 class Agenda{
 	private:
-		list<Alumno> listaALumnos_;
+		list<Alumno> listaAlumnos_;
 	public:
 		//constructor de la clase Agenda
 		Agenda();
@@ -32,7 +32,7 @@ class Agenda{
 		list<Alumno> mostrarLista();
 
 		//Muestra por pantalla los datos de un alumno en concreto
-		list<Alumno> mostrarAlumno(string dni, string apellidos);
+		list<Alumno> mostrarAlumno(string dni, string apellidos, int equipo);
 };
 
 #endif

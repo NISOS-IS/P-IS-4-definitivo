@@ -9,20 +9,38 @@ El profesor puede consultar uno o varios alumnos de la agenda, introduciendo en 
 
 **Prioridad:** 1  
 **Prioridad de implementación:** 0  
-**Tiempo estimado de implementación:** 1h 30min  
+**Tiempo estimado de implementación:** 3h  
 
 ----
 ## (REVERSO)
 ----
 
-* Muestra los datos del usuario/s buscados.
-* Muestra un mensaje de error si los campos requeridos quedan vacíos.
-* Muestra un mensaje de error si el alumno/s no ha sido encontrado.
+*Devuelve el alumno/s buscados.
+*Muestra un mensaje de error si el alumno/os no ha sido encontrado.
+*Muestra un mensaje de error si los campos a buscar no tienen el formato correcto.
 ----
 
-/*BUSCAR PROFESOR HAY QUE HACERLO*/
+## (ANVERSO)
+**ID:** 011 **Buscar Profesor**
 
-## (Anverso)
+---
+
+Para poder registarse, primero se debe poder comproba que no exista ya ese profesor registrado, buscando por su DNI.
+
+**Prioridad:** 1  
+**Prioridad de implementación:** 0  
+**Tiempo estimado de implementación:** 1h 30min
+---
+
+## (REVERSO)
+---
+-Si el profesor no esta ya guardado, se realiza el registro
+-Muestra un mensaje de error si el DNI no tiene un formato correcto.
+-Muestra un aviso si el profesor ya esta registrado.
+-Muestra un mensaje de error si ocurre algún fallo al registrarlo.
+
+
+## (ANVERSO)
 **ID:** 002 **Insertar Alumno**
 
 ----
@@ -34,7 +52,7 @@ El profesor podrá dar de alta a un nuevo alumno indicando de este tanto su info
 **Tiempo estimado de implementación:** 2h  
 
 ----
-## (Reverso)
+## (REVERSO)
 ---
 
 + Da de alta correctamente un usuario y verifica que sea registrado.
@@ -53,7 +71,7 @@ El profesor podrá registrarse en el sistema. Sus datos se guardarán en un fich
 
 **Prioridad:** 1  
 **Prioridad de implementación:** 1  
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 2h  
 
 ----
 ## (REVERSO)
@@ -65,7 +83,7 @@ El profesor podrá registrarse en el sistema. Sus datos se guardarán en un fich
 ----
 
 ## (ANVERSO)  
-**ID:** 005 **Mostrar Listado**  
+**ID:** 005 **Mostrar Lista**  
 
 ----
 
@@ -112,7 +130,7 @@ El profesor podrá iniciar sesión.
 
 **Prioridad:** 1  
 **Prioridad de implementación:** 2  
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 3h  
 
 ----
 ## (REVERSO)
@@ -132,7 +150,7 @@ El profesor podrá modificar los datos de un alumno. Toda la información debe s
 
 **Prioridad:** 3  
 **Prioridad de implementación:** 3  
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 1h 30min  
 
 -----  
 ## (REVERSO)
@@ -154,7 +172,7 @@ El profesor puede borrar un alumno de la agenda introduciendo su DNI o su Apelli
 
 **Prioridad:** 3  
 **Prioridad de implementación:** 3  
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 2h  
 
 ----
 ## (REVERSO)
@@ -166,25 +184,23 @@ El profesor puede borrar un alumno de la agenda introduciendo su DNI o su Apelli
 * Si existen varios alumnos con el mismo apellido, estos se muestran para elegir el que se desea eliminar.
 ----
 
-## (ANVERSO)
-**ID:** 004 **Borrar alumno**
+##(ANVERSO)
+**ID:** 007 **Guardar copia de seguridad**  
 
 ----
 
-El profesor puede borrar un alumno de la agenda introduciendo su DNI o su Apellido.
+Hacer una copiar de seguridad de todos los alumnos.
 
-**Prioridad:** 3  
+**Prioridad:** 4
 **Prioridad de implementación:** 4
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 2h
 
 ----
-## (REVERSO)
+##(REVERSO)
 ----
 
-* Válida la existencia del usuario que se desea borrar.
-* Muestra un mensaje satisfactorio cuando el alumno ha sido borrado correctamente.
-* Muestra un mensaje de error si los campos requeridos quedan vacíos.
-* Si existen varios alumnos con el mismo apellido, estos se muestran para elegir el que se desea eliminar.
+- El programa podrá realizar una copia de seguridad de todos los datos de los alumnos almacenados en la agenda guardándola en un fichero binario.
+- Si hay dos ficheros con el mismo nombre se sobreescribe la información.
 ----
 
 ## (ANVERSO)  
@@ -196,7 +212,7 @@ Poder recuperar la información si ocurre algún fallo.
 
 **Prioridad:** 5  
 **Prioridad de implementación:** 5  
-**Tiempo estimado de implementación:** 1h  
+**Tiempo estimado de implementación:** 2h  
 
 -----  
 ## (REVERSO)
@@ -204,3 +220,164 @@ Poder recuperar la información si ocurre algún fallo.
 
 - Cargará el fichero binario de copia de seguridad con todos los datos guardados en la base de datos.
 -----
+
+##FUNCIONES AUXILIARES
+- **comprobarExistenciaDNI**  
+>- **Prioridad de implementación:** 0  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **getCurso**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setCurso**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getEquipo**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setEquipo**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getLider**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setLider**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getDNI**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setDNI**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getNombre**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setNombre**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getApellidos**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setApellidos**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getTelefono**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setTelefono**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getDireccion**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setDireccion**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **getEmail**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setEmail**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getFechaNacimiento**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setFechaNacimiento**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getRol**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setRol**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getUsuario**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setUsuario**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **getContrasena**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 5 min  
+
+- **setContrasena**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **comprobarLider**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **comprobarEmail**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **escribirDatos**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 2h  
+
+- **leerlinea**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **letraDNI**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **verificaDNI**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **compruebaFecha**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **validarEmail**  
+>- **Prioridad de implementación:** 1  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **mostrarListado**  
+>- **Prioridad de implementación:** 2  
+>- **Tiempo estimado de implementación:** 1h  
+
+- **modificarDatos**  
+>- **Prioridad de implementación:** 3  
+>- **Tiempo estimado de implementación:** 1h 30min  
+
+- **convertirBool**  
+>- **Prioridad de implementación:** 4  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **convertirBoolLider**  
+>- **Prioridad de implementación:** 4  
+>- **Tiempo estimado de implementación:** 30 min  
+
+- **convertirStringLider**  
+>- **Prioridad de implementación:** 4  
+>- **Tiempo estimado de implementación:** 30 min  

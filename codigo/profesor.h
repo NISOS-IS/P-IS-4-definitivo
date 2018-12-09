@@ -17,6 +17,7 @@ class Profesor: public Persona{
 	public:
 		//constructor de la clase Profesor que hereda de la clase Persona
 		Profesor(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, bool rol, string contrasena);
+		Profesor();
 
 		//métodos get y set de rol_
 		inline bool getRol(){return rol_;};
@@ -37,7 +38,7 @@ class Profesor: public Persona{
 		bool registrarProfesor(Profesor profesor);
 
 		//Inicia sesión de un profesor
-		bool login(string usuario, string constrasena);
+		bool login(string usuario, string contrasena);
 
 		//Guarda una copia de seguridad del fichero binario de alumnos
 		bool guardarCopia();
