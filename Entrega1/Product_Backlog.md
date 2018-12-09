@@ -1,4 +1,4 @@
-#Product Backlog
+# Product Backlog
 
 ## (ANVERSO)
 **ID:** 001 **Buscar alumno**
@@ -23,17 +23,17 @@ El profesor puede consultar uno o varios alumnos de la agenda, introduciendo en 
 ## (ANVERSO)
 **ID:** 011 **Buscar Profesor**
 
----
+----
 
 Para poder registarse, primero se debe poder comproba que no exista ya ese profesor registrado, buscando por su DNI.
 
 **Prioridad:** 1  
 **Prioridad de implementación:** 0  
-**Tiempo estimado de implementación:** 1h 30min    
----
+**Tiempo estimado de implementación:** 1h 30min  
+----
 
 ## (REVERSO)
----
+----
 -Si el profesor no esta ya guardado, se realiza el registro
 -Muestra un mensaje de error si el DNI no tiene un formato correcto.
 -Muestra un aviso si el profesor ya esta registrado.
