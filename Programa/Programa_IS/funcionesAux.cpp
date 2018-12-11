@@ -1,12 +1,11 @@
 /*Archivo funcionesAux.cc que contiene funciones auxiliares usadas por el programa*/
-
 #include <iostream>
-#include <limits>
-#include <cstdio>
-#include <cstring>
+#include<limits>
+#include <stdio.h>
+#include <string.h>
 #include <ctype.h>
-#include "agenda.h"
 #include "funcionesAux.h"
+#include "agenda.h"
 
 using namespace std;
 
@@ -155,17 +154,17 @@ Funcion letraDNI que calcula la letra correpondiente del dni
 @param dni
 @return char
 */
-char letraDNI(int dni){
+/*char letraDNI(int dni){
     char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
     return letra[dni%23];
 }
 
 
-/*
+
 Funcion verificaDNI que comprueba que un dni es correcto
 @param dni
 @return short
-*/
+
 short verificaDNI(char *dni){
     dni[8] = toupper(dni[8]);
     if(strlen(dni) != 9){
@@ -174,77 +173,7 @@ short verificaDNI(char *dni){
     else{
         return (letraDNI(atoi(dni)) == dni [8]);
     }
-}
-
-
-/*
-Funcion compruebaFecha que comprueba si una fecha es correcta
-@param fecha
-@return bool
-*/
-bool compruebaFecha(string fecha){
-    char linea[10];
-    strcpy(linea, fecha.c_str());
-    unsigned d, m, a;
-    bool correcto = true, correctoM = false, correctoD = false;
-
-    strcpy(linea, fecha.c_str());
-    if(linea == NULL){
-        return EXIT_FAILURE;
-    }
-    //Comprueba que el formato de la fecha sea correcto, es decir, dd/mm/aaaa
-    if(sscanf(linea, "%2u/%2u/%4u", &d, &m, &a) == 3){
-        //Comprueba que el dia no sea menor de 1 ni mayor de 31
-        if(d >= 1 && d <= 31){
-            correctoD = true;
-        }
-        else{
-            correctoD = false;
-        }
-
-        //Comprueba que el mes no sea menor de 1 ni mayor de 12
-        if(m >= 1 && m <= 12){
-            correctoM = true;
-        }
-        else{
-            correctoM = false;
-        }
-    }
-    else{
-        correcto = false;
-    }
-
-    if(correcto && correctoD && correctoM){
-        correcto = true;
-    }
-    else{
-        correcto = false;
-    }
-    return correcto;
-}
-
-
-/*
-Funcion validarEmail que comprueba que un email tenga el formato correcto
-@param email
-@return bool
-*/
-bool validarEmail(string email){
-    bool correcto = true;
-
-    size_t at = email.find('@'); //Busca dentro de la cadena un "@"
-    if(at == string::npos){
-        correcto = false;
-    }
-
-    size_t dot = email.find('.', at+1); //Busca dentro de la cadena un "."
-    if(dot == string::npos){
-        correcto = false;
-    }
-
-    return correcto;
-}
-
+}*/
 
 /*
 Funcion mayusculas que convierte en mayusculas una cadena
@@ -263,171 +192,92 @@ string mayusculas(string cadena){
 Funcion escribeDatos que pide los datos de un alumno
 @return void
 */
-void escribirDatos(){
-    Alumno alumno("","","",0,"","","",0,0,false);
+bool escribirDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, int curso, int equipo, bool lider){
+    Alumno alumno;
     Agenda agenda;
     list<Alumno> aux;
-    char auxDNI[9], auxCad[100], nombreC[100], apellidosC[100], direccionC[100];
-    string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
-    int telefono, curso, equipo, esLider = 1;
-    bool lider, variableCorrecta = false, encontrado = false, funcionCorrecta = false;
+    char auxDNI[9];
+    QWidget *parent= new QWidget;
+    bool funcionCorrecta=false, devuelve=false, encontrado=false, guardar=true;;
 
-    while(variableCorrecta == false || encontrado == true){
-        cout<<"Introduce DNI"<<endl;
-        cin>>DNI;
-        strcpy(auxDNI, DNI.c_str());
-        auxDNI[8] = toupper(auxDNI[8]);
-        DNI = auxDNI;
-        encontrado = comprobarExistenciaDNI(DNI);
-        if(!encontrado){
-            variableCorrecta = alumno.setDNI(DNI);
+    strcpy(auxDNI, dni.c_str());
+    auxDNI[8]= toupper(auxDNI[8]);
+    dni= auxDNI;
+    encontrado= comprobarExistenciaDNI(dni);
+    if(encontrado==false){
+        if((alumno.setDNI(dni))==false){
+            guardar=false;
         }
-        else{
-            cout<<"DNI existente. Introduzca uno distinto"<<endl;
-        }
+    }else{
+        QMessageBox::critical(parent, "Title", "DNI existente. Introduzca uno distinto");
+        guardar=false;
     }
-    variableCorrecta = false;
 
-    cout<<"Introduce Nombre: "<<endl;
-    getchar();
-    leerlinea(auxCad, 100);
-    nombre = auxCad;
-    nombre = mayusculas(nombre);
+    nombre= mayusculas(nombre);
     alumno.setNombre(nombre);
 
-    cout<<"Introduce Apellido: "<<endl;
-    leerlinea(auxCad, 100);
-    apellidos = auxCad;
-    apellidos = mayusculas(apellidos);
+    apellidos= mayusculas(apellidos);
     alumno.setApellidos(apellidos);
 
-    while(variableCorrecta = false){
-        cout<<"Introduce Telefono: "<<endl;
-        cin>>telefono;
-        while(1){
-            //Comprueba que solo se introducen numeros
-            if(cin.fail()){
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout<<"Numero de telefono incorrecto"<<endl;
-                cin>>telefono;
-            }
-            if(!cin.fail()){
-                variableCorrecta = alumno.setTelefono(telefono);
-            }
-            break;
-        }
+   // variableCorrecta=alumno.setTelefono(telefono);
+    if(alumno.setTelefono(telefono)==false){
+        guardar=false;
     }
-    getchar();
-    cout<<"Introduce Direccion: "<<endl;
-    leerlinea(direccionC, 100);
-    direccion = direccionC;
-    direccion = mayusculas(direccion);
+
+    direccion= mayusculas(direccion);
     alumno.setDireccion(direccion);
 
-    variableCorrecta = false;
-
-    while(variableCorrecta == false || encontrado == true){
-        cout<<"Introduce Email"<<endl;
-        cin>>email;
-        aux = agenda.mostrarLista();
-        encontrado = comprobarEmail(aux, email);
-        if(encontrado == false){
-            variableCorrecta = alumno.setEmail(email);
+    aux= agenda.mostrarLista();
+    if(aux.empty()){
+        if((alumno.setEmail(email))==false){
+            guardar=false;
         }
-        else{
-            cout<<"Ese email ya está registrado. Introduzca uno distinto"<<endl;
-        }
-    }
-    variableCorrecta = false;
-
-    while(variableCorrecta == false){
-        cout<<"Introduce Fecha de Nacimiento en formato dd/mm/aaaa"<<endl;
-        cin>>fechaNacimiento;
-        variableCorrecta = alumno.setFechaNacimiento(fechaNacimiento);
-    }
-    variableCorrecta = false;
-
-    while(variableCorrecta == false){
-        cout<<"Introduce Curso: "<<endl;
-        cin>>curso;
-        while(1){
-            if(cin.fail()){
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout<<"Debe introducir el numero del Curso: "<<endl;
-                cin>>curso;
+    }else{
+        encontrado= comprobarEmail(aux, email);
+        if(encontrado==false){
+            if((alumno.setEmail(email))==false){
+                guardar=false;
             }
-            if(!cin.fail()){
-                variableCorrecta = alumno.setCurso(curso);
-            }
-            break;
+        }else{
+            guardar=false;
+            QMessageBox::critical(parent, "Title", "Ese email ya esta registrado. Introduzca uno distinto");
         }
     }
-    variableCorrecta = false;
 
-    while(variableCorrecta == false){
-        cout<<"Introduce Equipo: "<<endl;
-        cin>>equipo;
-        while(1){
-            if(cin.fail()){
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout<<"Debe introducir el numero del Equipo: "<<endl;
-                cin>>curso;
-            }
-            if(!cin.fail()){
-                variableCorrecta = alumno.setEquipo(equipo);
-            }
-            break;
+    if((alumno.setFechaNacimiento(fecha_nacimiento))==false){
+        guardar=false;
+    }
+
+    if((alumno.setCurso(curso))==false){
+        guardar=false;
+    }
+
+    if((alumno.setEquipo(equipo))==false){
+        guardar=false;
+    }
+
+    if(lider==true){
+        aux=agenda.buscarAlumno("","",equipo);
+        encontrado= comprobarLider(aux, lider);
+        if(encontrado==false){
+            lider=true;
+        }else{
+            lider=false;
         }
     }
-    variableCorrecta = false;
+    alumno.setLider(lider);
 
-    do{
-        cout<<"¿El alumno es lider de grupo?"<<endl;
-        cout<<"1. Si"<<endl;
-        cout<<"2. No"<<endl;
-        cin>>esLider;
-            while(1){
-                if(cin.fail()){
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout<<"Debe introducir el numero 1 o 2"<<endl;
-                    cin>>esLider;
-                }
-                if(!cin.fail()){
-                    if(esLider == 1){
-                        lider = true;
-                        aux = agenda.buscarAlumno("","",equipo);
-                        encontrado = comprobarLider(aux, lider);
-
-                        if(encontrado == false){
-                            lider = true;
-                        }
-                        else{
-                            lider = false;
-                        }
-                    }
-                    else if(esLider == 2){
-                        lider = false;
-                    }
-                    else{
-                        cout<<"Debe introducir 1 o 2"<<endl;
-                    }
-                    alumno.setLider(lider);
-                }
-                break;
+    if(guardar==true){
+        funcionCorrecta= agenda.insertarAlumno(alumno);
+            if(funcionCorrecta==true){
+                devuelve= true;
+            }else{
+                devuelve= false;
             }
-    }while(esLider!=1 && esLider!=2);
-    funcionCorrecta = agenda.insertarAlumno(alumno);
-    if(funcionCorrecta = true){
-        cout<<"Alumno Guardado"<<endl;
     }
-    else{
-        cout<<"Fallo al Guardar Alumno"<<endl;
-    }
+    return devuelve;
 }
+
 
 
 /*

@@ -1,53 +1,30 @@
-/*Archivo persona.h que contiene la clase Persona*/
+/*Archivo alumno.h que contiene la clase Alumno que hereda de la clase Persona*/
 
-#ifndef PERSONA_H_
-#define PERSONA_H_
+#ifndef ALUMNO_H_
+#define ALUMNO_H_
 
-#include <string>
+#include "persona.h"
 
-using namespace std;
-
-class Persona{
+class Alumno: public Persona{
     private:
-        string dni_;
-        string nombre_;
-        string apellidos_;
-        int telefono_;
-        string direccion_;
-        string email_;
-        string fechaNacimiento_;
+        int curso_;
+        int equipo_;
+        bool lider_;
     public:
-        //constructor de Persona
-        Persona(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento);
-        Persona();
+        //constructor de la clase Alumno que hereda de la clase Persona
+        Alumno(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, int curso, int equipo=0, bool lider=false);
+        Alumno();
+        //métodos get y set de la variable curso_
+        inline int getCurso(){return curso_;}
+        bool setCurso(int curso);
 
-        //métodos get y set de dni_
-        inline string getDNI(){return dni_;}
-        bool setDNI(string dni);
+        //métodos get y set de la variable equipo_
+        inline int getEquipo(){return equipo_;}
+        bool setEquipo(int equipo);
 
-        //métodos get y set de nombre_
-        inline string getNombre(){return nombre_;}
-        void setNombre(string nombre);
-
-        //métodos get y set de apellidos_
-        inline string getApellidos(){return apellidos_;}
-        void setApellidos(string apellidos);
-
-        //métodos get y set de telefono_
-        inline int getTelefono(){return telefono_;}
-        bool setTelefono(int telefono);
-
-        //métodos get y set de direccion_
-        inline string getDireccion(){return direccion_;}
-        void setDireccion(string direccion);
-
-        //métodos get y set de email_
-        inline string getEmail(){return email_;}
-        bool setEmail(string email);
-
-        //métodos get y set de fechaNacimiento_
-        inline string getFechaNacimiento(){return fechaNacimiento_;}
-        bool setFechaNacimiento(string fecha_nacimiento);
+        //métodos get y set de la variable lider_
+        inline bool getLider(){return lider_;}
+        void setLider(bool lider);
 };
 
 #endif

@@ -15,7 +15,7 @@ Funcion buscarAlumno que busca un alumno en la agenda
 */
 list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
     ifstream file("agenda.bin", ios::in | ios::binary);
-    Alumno aux("","","",0,"","","",0,0,false);
+    Alumno aux;
     RegistroAlumno alumnoAux;
     string apellido;
     bool encontrado = false;
@@ -278,7 +278,7 @@ list<Alumno> Agenda::mostrarLista(){
     RegistroAlumno al;
     list<Alumno> alumno;
     alumno.clear();
-    Alumno aux("","","",0,"","","",0,0,false);
+    Alumno aux;
 
     if(in.is_open()){
         in.seekg(0, ios::end);

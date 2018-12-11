@@ -1,6 +1,6 @@
 #include "menu.h"
 #include "ui_menu.h"
-
+#include "insertar_modificar_alumno.h"
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
@@ -15,7 +15,8 @@ Menu::~Menu()
 
 void Menu::on_pushButtonInsertarAlumno_clicked()
 {
-
+    Insertar_Modificar_Alumno *ventana= new Insertar_Modificar_Alumno;
+    ventana->show();
 }
 
 void Menu::on_pushButtonMostrarAlumno_clicked()
