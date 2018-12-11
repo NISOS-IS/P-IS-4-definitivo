@@ -1,6 +1,6 @@
 #include <iostream>
-#include <string>
-#include <cstdio>
+#include <stdio.h>
+#include <string.h>
 #include <cstdlib>
 #include "persona.h"
 #include "funcionesAux.h"
@@ -18,6 +18,7 @@ Persona::Persona(string dni, string nombre, string apellidos, int telefono, stri
 	fechaNacimiento_ = fecha_nacimiento;
 }
 
+<<<<<<< HEAD
 Persona::Persona(){}
 
 
@@ -34,6 +35,21 @@ bool Persona::setDNI(string dni){
 	}
 	else{
 		cout<<"El DNI no es correcto"<<endl;
+=======
+/*
+Metodo setDNI que comprueba que un dni sea correcto
+@param dni
+@return true si el dni es correcto y false si no lo es
+*/
+bool Persona::setDNI(string dni){
+	char cadDni[9];
+	strcpy(cadDni, dni.c_str());
+	if (verificaDNI(cadDni)){
+		dni_=dni;
+		return true;
+	}else{
+		cout<<"EL DNI introducido no es correcto"<<endl;
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 		return false;
 	}
 }
@@ -46,11 +62,18 @@ void Persona::setApellidos(string apellidos){
 	apellidos_ = apellidos;
 }
 
+<<<<<<< HEAD
 
 /*
 Método setTelefono que comprueba que un telefono sea correcto
 @param telefono(int)
 @return bool
+=======
+/*
+Metodo setTelefono que comprueba que un telefono sea correcto
+@param telefono
+@return true si el telefono es correcto y false si no lo es
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 */
 bool Persona::setTelefono(int telefono){
     string s = to_string(telefono);
@@ -68,6 +91,7 @@ void Persona::setDireccion(string direccion){
 	direccion_ = direccion;
 }
 
+<<<<<<< HEAD
 
 /*
 Método setEmail que compruebe que un email es correcto
@@ -98,5 +122,37 @@ bool Persona::setFechaNacimiento(string fecha_nacimiento){
 	}
 	else{
 	    return false;
+=======
+/*
+Metodo setEmail que comprueba que un email sea correcto
+@param email
+@return true si el email es correcto y false si no lo es
+*/
+bool Persona::setEmail(string email){
+	bool correcto=false;
+	correcto= validarEmail(email);
+	if(correcto==true){
+		email_=email;
+		return true;
+	}else{
+		cout<<"El email no es correcto"<<endl;
+		return false;
+	}
+}
+
+/*
+Metodo setFechaNacimiento que comprueba que un fechaNacimiento sea correcta
+@param fecha_nacimiento
+@return true si la fechaNacimiento es correcta y false si no lo es
+*/
+bool Persona::setFechaNacimiento(string fecha_nacimiento){
+	bool correcto=false;
+	correcto= compruebaFecha(fecha_nacimiento);
+	if(correcto==true){
+		fechaNacimiento_=fecha_nacimiento;
+		return true;
+	}else{
+		return false;
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 	}
 }

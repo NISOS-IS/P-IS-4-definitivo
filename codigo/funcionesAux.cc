@@ -1,4 +1,5 @@
 /*Archivo funcionesAux.cc que contiene funciones auxiliares usadas por el programa*/
+<<<<<<< HEAD
 
 #include <iostream>
 #include <limits>
@@ -6,13 +7,22 @@
 #include <cstring>
 #include <ctype.h>
 #include "agenda.h"
+=======
+#include <iostream>
+#include<limits>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 #include "funcionesAux.h"
+#include "agenda.h"
 
 using namespace std;
 
 /*
 Funcion comprobarExistenciaDNI que comprueba si un dni ya esta guardado en agenda
 @param dni
+<<<<<<< HEAD
 @return bool
 */
 bool comprobarExistenciaDNI(string dni){
@@ -85,6 +95,76 @@ bool comprobarEmail(list<Alumno> &aux, string email){
 
 /*
 Funcion convertirBool que convierte un bool en un string
+=======
+@return true si se encuentra el dni y false si no se encuentra
+*/
+bool comprobarExistenciaDNI(string dni){
+	bool correcto=false;
+	ifstream file("agenda.bin", ios::in | ios::binary);
+	RegistroAlumno aux;
+	bool encontrado = false;
+	if(file.is_open()){
+		
+		while(!file.eof()){
+			file.read(reinterpret_cast <char *> (&aux), sizeof(RegistroAlumno));
+			if(aux.dni == dni){
+				encontrado = true;
+			}
+		}
+		if(encontrado){
+			correcto= true;
+		}
+		else{
+			correcto= false;
+		}
+	}
+	return correcto;
+}
+
+/*
+Funcion comprobarLider que comprueba si un equipo ya tiene lider asginado
+@param list<Alumno>, lider
+@return true si se encuentra el lider y false si no se encuentra
+*/
+bool comprobarLider(list<Alumno> &aux, bool lider){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getLider()==lider){
+			encontrado=true;
+		}
+	}
+	if(encontrado==true){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+/*
+Funcion comprobarEmail que comprueba si un email ya esta guardado en agenda
+@param list<Alumno>, email
+@return true si se encuentra el email y false si no se encuentra
+*/
+bool comprobarEmail(list<Alumno> &aux, string email){
+	list<Alumno>::iterator i;
+	bool encontrado=false;
+	
+	for(i=aux.begin();i!=aux.end();i++){
+		if(i->getEmail()==email){
+			encontrado=true;
+		}
+	}
+	if(encontrado){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+/*
+Funcion convertirBool que convirte un bool en un string
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 @param a
 @return string
 */
@@ -554,6 +634,423 @@ void mostrarListado(){
         cout<<"Curso: "<<it->getCurso()<<endl;
         cout<<"Equipo: "<<it->getEquipo()<<endl;
         cout<<"Lider: "<<convertirBoolLider(it->getLider())<<"\n"<<endl;
+	}
+	aux.clear();
+}
+
+/*
+Funcion convertirBoolLider que convierte un bool lider en string
+@param a
+@return string
+*/
+string convertirBoolLider(bool a){
+	string aux;
+	if(a==true){
+		aux = "Lider";
+	}
+	else if(a==false){
+		aux = "No Lider";
+	}
+	return aux;
+}
+
+/*
+Funcion convertirStringLider que convierte un string en un bool
+@param lider
+@return bool
+*/
+bool convertirStringLider(char *lider){
+	bool aux=false;
+	string cadena;
+	cadena= lider;
+
+	if(cadena=="Lider"){
+		aux=true;
+	}else{
+		aux=false;
+	}
+	return aux;
+}
+
+/* Permite la introduccion de cadenas de caracteres con espacios */
+int leerlinea(char *cad,int max){
+  int i=0,c;
+  while((i<max-1) && ((c = getchar()) != '\n')){
+    cad[i] = c;
+    i++;
+  }
+  cad[i] = '\0';
+  return i;
+}
+
+/*
+Funcion letraDNI que calcula la letra del dni
+@param dni
+@return devuelve la letra correspondiente al dni
+*/
+char letraDNI(int dni){
+  char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+  return letra[dni%23];
+}
+
+/*
+Funcion verificaDNI que comprueba que un dni es correcto
+@param dni
+@return si el dni es correcto
+*/
+short verificaDNI(char *dni){
+	dni[8]=  toupper(dni[8]);
+	if (strlen(dni)!=9)
+      	return 0;
+	else
+    	return (letraDNI(atoi(dni))==dni[8]);
+}
+
+/*
+Funcion compruebaFecha que si una fecha es correcta
+@param fecha
+@return true si la fecha es correcta y false en caso contrario
+*/
+bool compruebaFecha(string fecha){
+	char linea[10];
+	strcpy(linea, fecha.c_str());
+	unsigned d;
+	unsigned m;
+	unsigned a;
+	bool correcto=true, correctoM=false, correctoD=false;
+  
+	strcpy(linea, fecha.c_str());
+	if (linea == NULL) return EXIT_FAILURE;
+	//comprueba que el formato de la fecha sea correcto, es decir dd/mm/aaaa
+	if (sscanf(linea, "%2u/%2u/%4u", &d, &m, &a) == 3){
+		//comprueba que el dia no sea menor de 1 ni mayor de 31
+		if(d>=1 && d<=31){
+		   correctoD=true;
+		}else{
+		   correctoD=false;
+		}
+		//comprueba que el mes no sea menor de 1 ni mayor de 12
+		if(m>=1 && m<=12){
+		   correctoM=true;
+		}else{
+		   correctoM=false;
+		}
+	   
+	}else{
+	   correcto=false;
+	}
+   
+	if(correcto==true && correctoD==true && correctoM==true){
+	   correcto=true;
+	}else{
+		correcto=false;
+	}
+	return correcto;
+}
+
+/*
+Funcion validarEmail que comprueba que un email tenga el formato correcto
+@param email
+@return true si el email es correcto y false si no lo es
+*/
+bool validarEmail(string email){
+	bool correcto=true;
+
+	size_t at = email.find('@'); //busca que dentro de la cadena haya un "@"
+    if (at == string::npos){
+        correcto=false;
+    }
+    size_t dot = email.find('.', at + 1); //busca que dentro de una cadena haya "."
+    if (dot == string::npos){
+        correcto=false;
+    }
+    return correcto;
+}
+
+/*
+Funcion mayusculas que convierte en mayusculas una cadena
+@param cadena
+@return cadena en mayusculas
+*/
+string mayusculas(string cadena){
+	for(int i=0; i<cadena.length(); i++){
+		cadena[i]= toupper(cadena[i]);
+	}
+	return cadena;
+}
+
+/*
+Funcion escribe datos que pide los datos de un alumno
+@param nada
+@return void
+*/
+void escribirDatos(){
+	Alumno alumno("","","",0,"","","",0,0,false);
+	Agenda agenda;
+	list<Alumno> aux;
+	char auxDNI[9], auxCad[100], nombreC[100], apellidosC[100], direccionC[100];
+	string DNI, nombre, apellidos, direccion, email, fechaNacimiento;
+	int telefono, curso, equipo, esLider=1;
+	bool lider, variableCorrecta=false,encontrado=false, funcionCorrecta=false;
+	
+	while(variableCorrecta==false || encontrado==true){
+		cout<<"Introduce DNI"<<endl;
+		cin>>DNI;
+		strcpy(auxDNI, DNI.c_str());
+		auxDNI[8]=  toupper(auxDNI[8]);
+		DNI= auxDNI;
+		encontrado= comprobarExistenciaDNI(DNI);
+		if(encontrado==false){
+			variableCorrecta= alumno.setDNI(DNI);
+		}else{
+			cout<<"DNI existente. Introduzca uno distinto"<<endl;
+		}
+	}
+	variableCorrecta= false;
+	
+	cout<<"Introduce Nombre"<<endl;
+	getchar();
+	leerlinea(auxCad,100);
+	nombre=auxCad;
+	nombre= mayusculas(nombre);
+	alumno.setNombre(nombre);
+	
+	cout<<"Introduce Apellido"<<endl;
+	leerlinea(auxCad,100);
+	apellidos=auxCad;
+	apellidos= mayusculas(apellidos);
+	alumno.setApellidos(apellidos);
+
+	while(variableCorrecta==false){
+		cout<<"Introduce Telefono"<<endl;
+		cin>>telefono;
+		while(1){
+			//comprueba que solo se introducen numeros
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Numero de telefono incorrecto"<<endl;
+				cin>>telefono;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setTelefono(telefono);
+			}
+			break;
+		}
+	}
+	getchar();
+	cout<<"Introduce Direccion"<<endl;
+	leerlinea(direccionC,100);
+	direccion = direccionC;
+	direccion= mayusculas(direccion);
+	alumno.setDireccion(direccion);
+
+	variableCorrecta= false;
+
+	while(variableCorrecta==false || encontrado==true){
+		cout<<"Introduce Email"<<endl;
+		cin>>email;
+		aux= agenda.mostrarLista();
+		encontrado= comprobarEmail(aux, email);
+		if(encontrado==false){
+			variableCorrecta= alumno.setEmail(email);
+		}else{
+				cout<<"Ese email ya esta registrado. Introduzca uno distinto"<<endl;
+		}
+	}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){
+		cout<<"Introduce Fecha de Nacimiento en formato dd/mm/aaaa"<<endl;											
+		cin>>fechaNacimiento;
+		variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento);
+	}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){		
+		cout<<"Introduce el Curso"<<endl;
+		cin>>curso;
+		while(1){
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Debe introducir el numero del Curso"<<endl;
+				cin>>curso;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setCurso(curso);
+			}
+			break;
+		}
+		
+	}
+	variableCorrecta= false;
+
+	while(variableCorrecta==false){
+		cout<<"Introduce el equipo"<<endl;
+		cin>>equipo;
+		while(1){
+			if(cin.fail()){
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout<<"Debe introducir un numero del equipo"<<endl;
+				cin>>equipo;
+			}
+			if(!cin.fail()){
+				variableCorrecta= alumno.setEquipo(equipo);
+			}
+			break;
+		}
+	}
+	variableCorrecta=false;
+
+	do{
+		cout<<"¿El alumno es lider de grupo?"<<endl;
+		cout<<"1. Si"<<endl;
+		cout<<"2. No"<<endl;
+		cin>>esLider;
+			while(1){
+				if(cin.fail()){
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(),'\n');
+					cout<<"Debe introducir el numero 1 o 2"<<endl;
+					cin>>esLider;
+				}
+				if(!cin.fail()){
+		
+					if(esLider==1){
+						lider=true;
+						aux=agenda.buscarAlumno("","",equipo);
+						encontrado= comprobarLider(aux, lider);
+					
+						if(encontrado==false){
+							lider=true;
+						}else{
+							lider=false;
+						}
+					}else if(esLider==2){
+						lider=false;
+					}else{
+						cout<<"Debe introducir 1 o 2"<<endl;
+					}
+					alumno.setLider(lider);	
+				}
+				break;
+			}
+	}while(esLider!=1 && esLider!=2);
+		funcionCorrecta= agenda.insertarAlumno(alumno);
+		if(funcionCorrecta=true){
+			cout<<"Alumno Guardado"<<endl;
+		}else{
+			cout<<"Fallo al Guardar Alumno"<<endl;
+		}
+}
+
+/* funcion para mostrar al profesor las opciones que habra para 
+modificar los datos del alumno*/
+void modificarDatos(struct RegistroAlumno *alumno,bool lider){
+	string auxStr;
+	char auxCad[100];
+	char dni[10];
+	int op,auxNum;
+	cout<<"Escoger opcion a modificar: "<<endl;
+	cout<<"1. Nombre"<<endl;
+	cout<<"2. Apellidos"<<endl;
+	cout<<"3. Telefono"<<endl;
+	cout<<"4. Direccion"<<endl;
+	cout<<"5. Fecha de Nacimiento"<<endl;
+	cout<<"6. Curso"<<endl;
+	cout<<"7. Equipo"<<endl;
+	cout<<"8. Lider"<<endl;
+	cout<<"9. Salir"<<endl;
+	cin>>op;
+	getchar();
+	switch(op){
+		case 1:
+			cout<<"Introduce Nombre: "<<endl;
+			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
+			strcpy(alumno->nombre,auxCad);
+		break;
+		case 2:
+			cout<<"Introduce Apellidos: "<<endl;
+			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
+			strcpy(alumno->apellidos,auxCad);
+		break;
+		case 3:
+			cout<<"Introduce Telefono: "<<endl;
+			cin>>auxNum;
+			alumno->telefono = auxNum;
+		break;
+		case 4:
+			cout<<"Introduce Direccion: "<<endl;
+			leerlinea(auxCad,100);
+			auxStr= auxCad;
+			auxStr= mayusculas(auxStr);
+			strcpy(auxCad, auxStr.c_str());
+			strcpy(alumno->direccion,auxCad);
+		break;
+		case 5:
+			cout<<"Introduce Fecha de nacimiento: "<<endl;
+			cin>>auxStr;
+			strcpy(alumno->fechaNacimiento,auxStr.c_str());
+		break;
+		case 6:
+			cout<<"Introduce Curso: "<<endl;
+			cin>>auxNum;
+			(*alumno).curso = auxNum;
+		break;
+		case 7:
+			cout<<"Introduce Equipo: "<<endl;
+			cin>>auxNum;
+			(*alumno).equipo = auxNum;
+		break;
+		case 8:
+			if(((lider==true) && (strcmp(alumno->lider,"Lider")==0)) || (lider == false)){
+				cout<<"¿Lider o No Lider?: "<<endl;
+				cout<<"1. Lider\n2. No lider"<<endl;
+				cin>>auxNum;
+				if(auxNum == 1){
+					strcpy(alumno->lider,"Lider");
+				}else if(auxNum == 2){
+					strcpy(alumno->lider,"No Lider");
+				}
+				getchar();
+			}else
+				cout<<"Ya existe un lider en este equipo."<<endl;
+
+		break;
+		case 9:
+			cout<<"Saliendo...\n"<<endl;
+		break;
+		default:
+			cout<<"Opcion no valida."<<endl;
+	}
+}
+
+/* funcion para mostrar un listado de todos los alumnos que existan en
+el registro.*/
+void mostrarListado(){
+	Agenda agenda;
+	list<Alumno>aux = agenda.mostrarLista();
+	for (list<Alumno>::iterator it = aux.begin();it != aux.end(); it++){
+		cout<<"DNI: \t\t\t"<<it->getDNI()<<endl;
+		cout<<"Nombre: \t\t"<<it->getNombre()<<endl;
+		cout<<"Apellidos:\t\t"<<it->getApellidos()<<endl;
+		cout<<"Telefono: \t\t"<<it->getTelefono()<<endl;
+		cout<<"Direccion: \t\t"<<it->getDireccion()<<endl;
+		cout<<"Email: \t\t\t"<<it->getEmail()<<endl;
+		cout<<"Fecha de nacimiento: \t"<<it->getFechaNacimiento()<<endl;
+		cout<<"Curso: \t\t\t"<<it->getCurso()<<endl;
+		cout<<"Equipo: \t\t"<<it->getEquipo()<<endl;
+		cout<<"Lider: \t\t\t"<<convertirBoolLider(it->getLider())<<endl;		
+		cout<<endl;
 	}
 	aux.clear();
 }

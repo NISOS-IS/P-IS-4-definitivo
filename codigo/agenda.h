@@ -9,6 +9,10 @@
 
 using namespace std;
 
+/*
+Clase Agenda
+@param list<Alumno>
+*/
 class Agenda{
 	private:
 		list<Alumno> listaAlumnos_;
@@ -18,7 +22,7 @@ class Agenda{
 
 		//Busca uno o varios alumnos en el fichero binario
 		list<Alumno> buscarAlumno(string dni, string apellidos, int equipo);
-
+		
 		//Inserta un alumno en el fichero binario
 		bool insertarAlumno(Alumno alumno);
 

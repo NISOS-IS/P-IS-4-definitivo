@@ -7,11 +7,16 @@
 
 using namespace std;
 
+/*
+Constructor de la clase Profesor que hereda de Persona
+@param dni, nombre, apellidos, telefono, direccion, email, fecha_nacimiento, rol, contrasena
+*/
 Profesor::Profesor(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, bool rol, string contrasena):Persona(dni, nombre, apellidos, telefono, direccion, email, fecha_nacimiento){
 	rol_ = rol;
 	contrasena_ =contrasena;
 }
 
+<<<<<<< HEAD
 Profesor::Profesor():Persona(){}
 
 
@@ -19,6 +24,12 @@ Profesor::Profesor():Persona(){}
 Método setContrasena que comprueba que una contraseña sea correcta
 @param contrasena(string)
 @return bool
+=======
+/*
+Metodo setContrasena que comprueba que una contrasena sea correcta
+@param contrasena
+@return true si la contrasena es correcto y false si no lo es
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 */
 void Profesor::setContrasena(string contrasena){
 	if(contrasena.size()>=4){
@@ -111,6 +122,7 @@ bool Profesor::login(string usuario, string contrasena){
     return correcto;
 }
 
+<<<<<<< HEAD
 
 /*
 Método cargarCopia carga la copia de seguridad del fichero de la agenda
@@ -153,17 +165,59 @@ bool Profesor::cargarCopia(){
 /*
 Método guardarCopia que realiza una copia de seguridad de agenda
 @return bool
+=======
+/* Carga de la copia de seguridad del fichero de registros de alumnos */
+bool Profesor::cargarCopia(){
+	ifstream in;
+	ofstream out;
+	RegistroAlumno alumno;
+
+	in.open("copiaSeguridad.bin", ios::in | ios::binary);
+	out.open("temporal.bin", ios::out | ios::binary);
+
+	if(in.is_open() && out.is_open()){
+
+		while(!in.eof()){
+			in.read((char *)&alumno,sizeof(RegistroAlumno));
+			out.write((char *)&alumno,sizeof(RegistroAlumno));
+		}
+
+		in.close();
+		out.close();
+
+		remove("agenda.bin");
+		rename("temporal.bin","agenda.bin");
+		return true;
+	}else{
+		cout<<"No se pudo crear el fichero de copia."<<endl;
+		return false;
+	}
+}
+
+/*
+Funcion guardarCopia que realiza una copia de seguridad de agenda
+@param nada
+@return true si la copia de Seguridad se realiza de forma correcta y false si algo falla
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 */
 bool Profesor::guardarCopia(){
 	int lon;
 	ifstream fe;
+<<<<<<< HEAD
 	bool correcto = false;
+=======
+	bool correcto= false;
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 	//Creamos otro archivo donde se copiara
 	fe.open("agenda.bin");
 	ofstream fs("copiaSeguridad.bin");
 	// Miramos cual es el tamaño del archivo
 	if(fe.fail()){
+<<<<<<< HEAD
 		correcto = false;
+=======
+		correcto= false;
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 	}else{
 		fe.seekg (0, ios::end);
 		lon = fe.tellg();
@@ -174,11 +228,18 @@ bool Profesor::guardarCopia(){
 		//Leemos el archivo y se guarda en la cadena
 		fe.read(cadena,lon); 
 		if(fs.eof()){
+<<<<<<< HEAD
 			correcto = false;
 		}
 		else{
 		    fs.write(cadena,lon);
 		    correcto = true;
+=======
+			correcto= false;
+		}else{
+			fs.write(cadena,lon);
+			correcto= true;
+>>>>>>> 1bd83ba798adb5cb224ac44e67779dc0f46764ae
 		}
 	}
 
@@ -187,3 +248,4 @@ bool Profesor::guardarCopia(){
 	
 	return correcto;
 }
+

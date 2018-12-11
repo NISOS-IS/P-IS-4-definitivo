@@ -5,6 +5,10 @@
 
 #include "persona.h"
 
+/*
+Clase Alumno que hereda de Persona
+@param curso_, equipo_, lider_
+*/
 class Alumno: public Persona{
 	private:
 		int curso_;
