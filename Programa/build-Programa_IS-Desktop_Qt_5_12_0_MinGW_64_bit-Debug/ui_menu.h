@@ -23,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Menu
 {
 public:
-    QTableWidget *tableWidget;
+    QTableWidget *tableWidgetListado;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
@@ -41,9 +41,9 @@ public:
         if (Menu->objectName().isEmpty())
             Menu->setObjectName(QString::fromUtf8("Menu"));
         Menu->resize(1080, 570);
-        tableWidget = new QTableWidget(Menu);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(440, 30, 551, 221));
+        tableWidgetListado = new QTableWidget(Menu);
+        tableWidgetListado->setObjectName(QString::fromUtf8("tableWidgetListado"));
+        tableWidgetListado->setGeometry(QRect(440, 30, 551, 221));
         layoutWidget = new QWidget(Menu);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(100, 30, 281, 411));

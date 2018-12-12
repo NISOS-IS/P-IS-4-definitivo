@@ -26,7 +26,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Registrarse
 {
 public:
-    QWidget *layoutWidget;
+    QWidget *widget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
@@ -52,13 +52,7 @@ public:
     QHBoxLayout *horizontalLayout_8;
     QLabel *label_10;
     QComboBox *comboBoxRol;
-    QHBoxLayout *horizontalLayout_10;
-    QLabel *label_8;
-    QLineEdit *lineEditUsuario;
-    QHBoxLayout *horizontalLayout_11;
-    QLabel *label_9;
-    QLineEdit *lineEditContrasena;
-    QWidget *layoutWidget1;
+    QWidget *widget1;
     QHBoxLayout *horizontalLayout_9;
     QPushButton *pushButtonAceptar;
     QPushButton *pushButtonCancelar;
@@ -68,20 +62,20 @@ public:
         if (Registrarse->objectName().isEmpty())
             Registrarse->setObjectName(QString::fromUtf8("Registrarse"));
         Registrarse->resize(400, 526);
-        layoutWidget = new QWidget(Registrarse);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 40, 361, 341));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+        widget = new QWidget(Registrarse);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 40, 361, 341));
+        verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(layoutWidget);
+        label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        lineEditDNI = new QLineEdit(layoutWidget);
+        lineEditDNI = new QLineEdit(widget);
         lineEditDNI->setObjectName(QString::fromUtf8("lineEditDNI"));
 
         horizontalLayout->addWidget(lineEditDNI);
@@ -91,12 +85,12 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_2 = new QLabel(layoutWidget);
+        label_2 = new QLabel(widget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        lineEditNombre = new QLineEdit(layoutWidget);
+        lineEditNombre = new QLineEdit(widget);
         lineEditNombre->setObjectName(QString::fromUtf8("lineEditNombre"));
 
         horizontalLayout_2->addWidget(lineEditNombre);
@@ -106,12 +100,12 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        label_3 = new QLabel(layoutWidget);
+        label_3 = new QLabel(widget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
         horizontalLayout_3->addWidget(label_3);
 
-        lineEditApellidos = new QLineEdit(layoutWidget);
+        lineEditApellidos = new QLineEdit(widget);
         lineEditApellidos->setObjectName(QString::fromUtf8("lineEditApellidos"));
 
         horizontalLayout_3->addWidget(lineEditApellidos);
@@ -121,12 +115,12 @@ public:
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        label_4 = new QLabel(layoutWidget);
+        label_4 = new QLabel(widget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
         horizontalLayout_4->addWidget(label_4);
 
-        lineEditTelefono = new QLineEdit(layoutWidget);
+        lineEditTelefono = new QLineEdit(widget);
         lineEditTelefono->setObjectName(QString::fromUtf8("lineEditTelefono"));
 
         horizontalLayout_4->addWidget(lineEditTelefono);
@@ -136,12 +130,12 @@ public:
 
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        label_5 = new QLabel(layoutWidget);
+        label_5 = new QLabel(widget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
         horizontalLayout_6->addWidget(label_5);
 
-        lineEditDireccion = new QLineEdit(layoutWidget);
+        lineEditDireccion = new QLineEdit(widget);
         lineEditDireccion->setObjectName(QString::fromUtf8("lineEditDireccion"));
 
         horizontalLayout_6->addWidget(lineEditDireccion);
@@ -151,12 +145,12 @@ public:
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        label_6 = new QLabel(layoutWidget);
+        label_6 = new QLabel(widget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
         horizontalLayout_5->addWidget(label_6);
 
-        lineEditEmail = new QLineEdit(layoutWidget);
+        lineEditEmail = new QLineEdit(widget);
         lineEditEmail->setObjectName(QString::fromUtf8("lineEditEmail"));
 
         horizontalLayout_5->addWidget(lineEditEmail);
@@ -166,12 +160,12 @@ public:
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        label_7 = new QLabel(layoutWidget);
+        label_7 = new QLabel(widget);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
         horizontalLayout_7->addWidget(label_7);
 
-        dateEditFecha = new QDateEdit(layoutWidget);
+        dateEditFecha = new QDateEdit(widget);
         dateEditFecha->setObjectName(QString::fromUtf8("dateEditFecha"));
 
         horizontalLayout_7->addWidget(dateEditFecha);
@@ -181,12 +175,12 @@ public:
 
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        label_10 = new QLabel(layoutWidget);
+        label_10 = new QLabel(widget);
         label_10->setObjectName(QString::fromUtf8("label_10"));
 
         horizontalLayout_8->addWidget(label_10);
 
-        comboBoxRol = new QComboBox(layoutWidget);
+        comboBoxRol = new QComboBox(widget);
         comboBoxRol->addItem(QString());
         comboBoxRol->addItem(QString());
         comboBoxRol->addItem(QString());
@@ -197,53 +191,41 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_8);
 
-        horizontalLayout_10 = new QHBoxLayout();
-        horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
-        label_8 = new QLabel(layoutWidget);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-
-        horizontalLayout_10->addWidget(label_8);
-
-        lineEditUsuario = new QLineEdit(layoutWidget);
-        lineEditUsuario->setObjectName(QString::fromUtf8("lineEditUsuario"));
-
-        horizontalLayout_10->addWidget(lineEditUsuario);
-
-
-        verticalLayout->addLayout(horizontalLayout_10);
-
-        horizontalLayout_11 = new QHBoxLayout();
-        horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
-        label_9 = new QLabel(layoutWidget);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
-
-        horizontalLayout_11->addWidget(label_9);
-
-        lineEditContrasena = new QLineEdit(layoutWidget);
-        lineEditContrasena->setObjectName(QString::fromUtf8("lineEditContrasena"));
-        lineEditContrasena->setEchoMode(QLineEdit::Password);
-
-        horizontalLayout_11->addWidget(lineEditContrasena);
-
-
-        verticalLayout->addLayout(horizontalLayout_11);
-
-        layoutWidget1 = new QWidget(Registrarse);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(100, 410, 179, 30));
-        horizontalLayout_9 = new QHBoxLayout(layoutWidget1);
+        widget1 = new QWidget(Registrarse);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(110, 430, 179, 30));
+        horizontalLayout_9 = new QHBoxLayout(widget1);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
-        pushButtonAceptar = new QPushButton(layoutWidget1);
+        pushButtonAceptar = new QPushButton(widget1);
         pushButtonAceptar->setObjectName(QString::fromUtf8("pushButtonAceptar"));
 
         horizontalLayout_9->addWidget(pushButtonAceptar);
 
-        pushButtonCancelar = new QPushButton(layoutWidget1);
+        pushButtonCancelar = new QPushButton(widget1);
         pushButtonCancelar->setObjectName(QString::fromUtf8("pushButtonCancelar"));
 
         horizontalLayout_9->addWidget(pushButtonCancelar);
 
+        label->raise();
+        label_2->raise();
+        label_3->raise();
+        label_4->raise();
+        label_5->raise();
+        label_6->raise();
+        label_7->raise();
+        label_10->raise();
+        lineEditDNI->raise();
+        lineEditNombre->raise();
+        lineEditApellidos->raise();
+        lineEditTelefono->raise();
+        lineEditEmail->raise();
+        lineEditDireccion->raise();
+        dateEditFecha->raise();
+        comboBoxRol->raise();
+        pushButtonAceptar->raise();
+        pushButtonCancelar->raise();
+        pushButtonCancelar->raise();
 
         retranslateUi(Registrarse);
 
@@ -265,8 +247,6 @@ public:
         comboBoxRol->setItemText(1, QApplication::translate("Registrarse", "Ayudante", nullptr));
         comboBoxRol->setItemText(2, QApplication::translate("Registrarse", "Coordinador", nullptr));
 
-        label_8->setText(QApplication::translate("Registrarse", "Usuario:", nullptr));
-        label_9->setText(QApplication::translate("Registrarse", "Contrase\303\261a:", nullptr));
         pushButtonAceptar->setText(QApplication::translate("Registrarse", "Aceptar", nullptr));
         pushButtonCancelar->setText(QApplication::translate("Registrarse", "Cancelar", nullptr));
     } // retranslateUi

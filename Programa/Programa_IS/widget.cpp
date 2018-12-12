@@ -1,5 +1,3 @@
-#include "registrarse.h"
-#include "ui_registrarse.h"
 #include "widget.h"
 #include "ui_widget.h"
 #include "iniciarsesion.h"
@@ -29,6 +27,5 @@ void Widget::on_pushButtonIniciarSesion_clicked()
 
 void Widget::on_pushButtonRegistrarse_clicked()
 {
-    Registrarse *ventana = new Registrarse;
-    ventana->show();
+
 }

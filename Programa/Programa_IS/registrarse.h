@@ -20,8 +20,6 @@ private slots:
 
     void on_pushButtonAceptar_clicked();
 
-    void on_pushButtonSiguiente_clicked();
-
 private:
     Ui::Registrarse *ui;
 };
