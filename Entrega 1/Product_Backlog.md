@@ -1,4 +1,4 @@
-#Product Backlog
+# Product Backlog
 
 ## (ANVERSO)
 **ID:** 001 **Buscar alumno**
@@ -15,25 +15,25 @@ El profesor puede consultar uno o varios alumnos de la agenda, introduciendo en 
 ## (REVERSO)
 ----
 
-*Devuelve el alumno/s buscados.
-*Muestra un mensaje de error si el alumno/os no ha sido encontrado.
-*Muestra un mensaje de error si los campos a buscar no tienen el formato correcto.
++ Devuelve el alumno/s buscados.
++ Muestra un mensaje de error si el alumno/os no ha sido encontrado.
++ Muestra un mensaje de error si los campos a buscar no tienen el formato correcto.
 ----
 
 ## (ANVERSO)
 **ID:** 011 **Buscar Profesor**
 
----
+----
 
 Para poder registarse, primero se debe poder comproba que no exista ya ese profesor registrado, buscando por su DNI.
 
 **Prioridad:** 1  
 **Prioridad de implementación:** 0  
-**Tiempo estimado de implementación:** 1h 30min
----
+**Tiempo estimado de implementación:** 1h 30min  
+----
 
 ## (REVERSO)
----
+----
 -Si el profesor no esta ya guardado, se realiza el registro
 -Muestra un mensaje de error si el DNI no tiene un formato correcto.
 -Muestra un aviso si el profesor ya esta registrado.
@@ -102,7 +102,7 @@ Guarda en un archivo con formato HTML el listado de todos los alumnos de la agen
 + Si la agenda está vacío muestra un mensaje.
 -----
 
-## (Anverso)
+## (ANVERSO)
 **ID:** 006 **Mostrar Alumno**
 
 ---
@@ -114,7 +114,7 @@ Poder ver toda la información de un alumno o varios buscando por su DNI, apelli
 **Tiempo estimado de implementación:** 1h 30min  
 
 ---
-## (Reverso)
+## (REVERSO)
 ---
 
 +  El usuario podrá ver todos los datos de un alumno, indicando si quiere buscar por el campo DNI o por el campo apellidos.
@@ -184,7 +184,7 @@ El profesor puede borrar un alumno de la agenda introduciendo su DNI o su Apelli
 * Si existen varios alumnos con el mismo apellido, estos se muestran para elegir el que se desea eliminar.
 ----
 
-##(ANVERSO)
+## (ANVERSO)
 **ID:** 007 **Guardar copia de seguridad**  
 
 ----
@@ -196,7 +196,7 @@ Hacer una copiar de seguridad de todos los alumnos.
 **Tiempo estimado de implementación:** 2h
 
 ----
-##(REVERSO)
+## (REVERSO)
 ----
 
 - El programa podrá realizar una copia de seguridad de todos los datos de los alumnos almacenados en la agenda guardándola en un fichero binario.
