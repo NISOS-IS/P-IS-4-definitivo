@@ -51,14 +51,6 @@ string mayusculas(string cadena);
 bool escribirDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fechaNacimiento, int curso, int equipo, bool lider);
 void modificarDatos(struct RegistroAlumno *alumno, bool lider);
 int leerlinea(char *cad, int max);
-
-//Metidas en métodos set
-char letraDNI(int dni);
-short verificaDNI(char *dni);
-//bool compruebaFecha(string fecha);
-bool validarEmail(string email);
-
-
 void mostrarListado();
 
 #endif

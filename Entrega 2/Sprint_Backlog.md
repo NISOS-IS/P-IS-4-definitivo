@@ -1,5 +1,1 @@
-**FUNCIONES REALIZADAS / COMPONENTE DEL EQUIPO**
-
-+ Corrección de errores en la función de borrarAlumno --> Óscar Godoy Calderón (1 hora)  
-+ Investigación y pruebas de la interfaz gráfica en QT Creator --> Isabel Mª Ariza Velasco (6 horas)  
-+ Arreglos en el main para la prueba del programa --> Noelia Hinojosa Sánchez (1 hora y 30 min)  
+**FUNCIONES REALIZADAS / COMPONENTE DEL EQUIPO**+ Corrección de errores en la función de borrarAlumno --> Óscar Godoy Calderón (1 hora)  + Investigación y pruebas de la interfaz gráfica en QT Creator --> Isabel Mª Ariza Velasco (6 horas)  + Arreglos en el main para la prueba del programa --> Noelia Hinojosa Sánchez (1 hora y 30 min)  + buscarAlumno --> Isabel Mª Ariza Velasco (5 min)  + insertarAlumno --> Isabel Mª Ariza Velasco (30 min)  + buscarProfesor --> Noelia Hinojosa Sánchez (5 min)  + registrarProfesor --> Noelia Hinojosa Sánchez (1 hora)  

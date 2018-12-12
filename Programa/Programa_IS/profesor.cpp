@@ -50,15 +50,15 @@ bool Profesor::buscaProfesor(string dni){
             }
         }
         if(encontrado){
-            return true;
+            return false;
         }
         else{
-            return false;
+            return true;
         }
     }
     else{
         cout<<"El profesor con DNI <"<<dni<<"> no está registrado."<<endl;
-        return false;
+        return true;
     }
 }
 
@@ -67,19 +67,24 @@ bool Profesor::registrarProfesor(Profesor profesor){
     Registro reg;
 
     if(file.is_open()){
-        strcpy(reg.dni,profesor.getDNI().c_str());
-        strcpy(reg.nombre,profesor.getNombre().c_str());
-        strcpy(reg.apellidos,profesor.getApellidos().c_str());
-        reg.telefono=profesor.getTelefono();
-        strcpy(reg.direccion,profesor.getDireccion().c_str());
-        strcpy(reg.email,profesor.getEmail().c_str());
-        strcpy(reg.fechaNacimiento,profesor.getFechaNacimiento().c_str());
-        strcpy(reg.rol,convertirBool(profesor.getRol()).c_str());
-        strcpy(reg.usuario,profesor.getUsuario().c_str());
-        strcpy(reg.contrasena,profesor.getContrasena().c_str());
-        file.write((char *) &reg, sizeof(Registro));
-        file.close();
-        return true;
+        if(buscaProfesor(profesor.getDNI())){
+            strcpy(reg.dni,profesor.getDNI().c_str());
+            strcpy(reg.nombre,profesor.getNombre().c_str());
+            strcpy(reg.apellidos,profesor.getApellidos().c_str());
+            reg.telefono=profesor.getTelefono();
+            strcpy(reg.direccion,profesor.getDireccion().c_str());
+            strcpy(reg.email,profesor.getEmail().c_str());
+            strcpy(reg.fechaNacimiento,profesor.getFechaNacimiento().c_str());
+            strcpy(reg.rol,convertirBool(profesor.getRol()).c_str());
+            strcpy(reg.usuario,profesor.getUsuario().c_str());
+            strcpy(reg.contrasena,profesor.getContrasena().c_str());
+            file.write((char *) &reg, sizeof(Registro));
+            file.close();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else{
         return false;

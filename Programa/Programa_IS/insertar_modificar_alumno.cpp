@@ -70,7 +70,6 @@ void Insertar_Modificar_Alumno::on_pushButtonAceptar_clicked()
            curso= ui->lineEditCurso->displayText().toInt();
            equipo= ui->lineEditEquipo->displayText().toInt();
            getLider= ui->comboBoxLider->currentText().toStdString();
-           ui->lineEditDNI->setText(getLider.c_str());
            if(getLider=="Lider"){
                lider=true;
            }else{

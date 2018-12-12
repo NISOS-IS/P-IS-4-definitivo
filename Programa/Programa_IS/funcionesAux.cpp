@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include "funcionesAux.h"
 #include "agenda.h"
+#include "profesor.h"
 
 using namespace std;
 
@@ -150,32 +151,6 @@ int leerlinea(char *cad, int max){
 
 
 /*
-Funcion letraDNI que calcula la letra correpondiente del dni
-@param dni
-@return char
-*/
-/*char letraDNI(int dni){
-    char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
-    return letra[dni%23];
-}
-
-
-
-Funcion verificaDNI que comprueba que un dni es correcto
-@param dni
-@return short
-
-short verificaDNI(char *dni){
-    dni[8] = toupper(dni[8]);
-    if(strlen(dni) != 9){
-        return 0;
-    }
-    else{
-        return (letraDNI(atoi(dni)) == dni [8]);
-    }
-}*/
-
-/*
 Funcion mayusculas que convierte en mayusculas una cadena
 @param cadena
 @return string
@@ -190,7 +165,8 @@ string mayusculas(string cadena){
 
 /*
 Funcion escribeDatos que pide los datos de un alumno
-@return void
+@param dni(string), nombre(string), apellidos(string), telefono(int), direccion(string), email(string), fecha_nacimiento(string), curso(int), equipo(int), lider(bool)
+@return bool
 */
 bool escribirDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fecha_nacimiento, int curso, int equipo, bool lider){
     Alumno alumno;

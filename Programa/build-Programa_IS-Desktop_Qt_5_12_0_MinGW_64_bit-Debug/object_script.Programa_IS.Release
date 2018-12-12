@@ -1,0 +1,16 @@
+release/main.o
+release/widget.o
+release/iniciarsesion.o
+release/registrarse.o
+release/persona.o
+release/alumno.o
+release/profesor.o
+release/agenda.o
+release/funcionesAux.o
+release/menu.o
+release/insertar_modificar_alumno.o
+release/moc_widget.o
+release/moc_iniciarsesion.o
+release/moc_registrarse.o
+release/moc_menu.o
+release/moc_insertar_modificar_alumno.o

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -151,13 +151,45 @@
       </item>
      </layout>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Usuario:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditUsuario"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Contraseña:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditContrasena">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>430</y>
+     <x>100</x>
+     <y>410</y>
      <width>179</width>
      <height>30</height>
     </rect>
@@ -179,25 +211,6 @@
     </item>
    </layout>
   </widget>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
-  <zorder>label_6</zorder>
-  <zorder>label_7</zorder>
-  <zorder>label_10</zorder>
-  <zorder>lineEditDNI</zorder>
-  <zorder>lineEditNombre</zorder>
-  <zorder>lineEditApellidos</zorder>
-  <zorder>lineEditTelefono</zorder>
-  <zorder>lineEditEmail</zorder>
-  <zorder>lineEditDireccion</zorder>
-  <zorder>dateEditFecha</zorder>
-  <zorder>comboBoxRol</zorder>
-  <zorder>pushButtonAceptar</zorder>
-  <zorder>pushButtonCancelar</zorder>
-  <zorder>pushButtonCancelar</zorder>
  </widget>
  <resources/>
  <connections/>
