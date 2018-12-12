@@ -1,8 +1,5 @@
-#include <QMessageBox>
 #include "registrarse.h"
 #include "ui_registrarse.h"
-#include <iostream>
-#include <string>
 #include "profesor.h"
 #include "funcionesAux.h"
 
@@ -100,14 +97,16 @@ void Registrarse::on_pushButtonAceptar_clicked()
        strcpy(registro.usuario, usuario.c_str());
        strcpy(registro.contrasena, contrasena.c_str());
 
-       funcionCorrecta= profesor.registrarProfesor(aux);
-       guardadoCorrecto= ActualizarFicheroInicio(registro);
+       if(!buscaProfesor(aux.getDNI())){
+           funcionCorrecta= profesor.registrarProfesor(aux);
+           guardadoCorrecto= ActualizarFicheroInicio(registro);
 
-       if(funcionCorrecta==true){
-           QMessageBox::information(this, "Title", "Profesor Guardado");
-           close();
-       }else{
-            QMessageBox::critical(this, "Title", "Profesor No Guardado");
+           if(funcionCorrecta==true && guardadoCorrecto==true){
+               QMessageBox::information(this, "Title", "Profesor Guardado");
+               close();
+           }else{
+                QMessageBox::critical(this, "Title", "Profesor No Guardado");
+           }
        }
     }
 }

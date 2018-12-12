@@ -70,7 +70,7 @@ public:
         Registrarse->resize(400, 526);
         layoutWidget = new QWidget(Registrarse);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 40, 361, 341));
+        layoutWidget->setGeometry(QRect(10, 20, 381, 371));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -230,7 +230,7 @@ public:
 
         layoutWidget1 = new QWidget(Registrarse);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(100, 410, 179, 30));
+        layoutWidget1->setGeometry(QRect(110, 430, 179, 30));
         horizontalLayout_9 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
