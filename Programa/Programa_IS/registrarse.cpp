@@ -26,9 +26,10 @@ void Registrarse::on_pushButtonCancelar_clicked()
 void Registrarse::on_pushButtonAceptar_clicked()
 {
     Profesor profesor, aux;
+    RegUsu registro;
     string dni, nombre, apellidos, direccion, email, fechaNacimiento, getRol, usuario, contrasena;
     int telefono;
-    bool habilitar=true, rol, funcionCorrecta=false;
+    bool habilitar=true, rol, funcionCorrecta=false, guardadoCorrecto=false;
 
     QString fecha;
 
@@ -96,7 +97,11 @@ void Registrarse::on_pushButtonAceptar_clicked()
        aux.setUsuario(usuario);
        aux.setContrasena(contrasena);
 
+       strcpy(registro.usuario, usuario.c_str());
+       strcpy(registro.contrasena, contrasena.c_str());
+
        funcionCorrecta= profesor.registrarProfesor(aux);
+       guardadoCorrecto= ActualizarFicheroInicio(registro);
 
        if(funcionCorrecta==true){
            QMessageBox::information(this, "Title", "Profesor Guardado");

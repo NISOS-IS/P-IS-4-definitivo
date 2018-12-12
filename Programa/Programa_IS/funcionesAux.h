@@ -52,5 +52,7 @@ bool escribirDatos(string dni, string nombre, string apellidos, int telefono, st
 void modificarDatos(struct RegistroAlumno *alumno, bool lider);
 int leerlinea(char *cad, int max);
 void mostrarListado();
+bool ActualizarFicheroInicio(RegUsu reg);
+bool comprobarUsuario(RegUsu reg);
 
 #endif
