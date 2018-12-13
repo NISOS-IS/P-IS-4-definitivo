@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include "persona.h"
+#include "funcionesAux.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ class Profesor: public Persona{
         bool registrarProfesor(Profesor profesor);
 
         //Inicia sesión de un profesor
-        bool login(string usuario, string contrasena);
+        bool login(RegUsu reg);
 
         //Guarda una copia de seguridad del fichero binario de alumnos
         bool guardarCopia();

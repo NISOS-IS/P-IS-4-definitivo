@@ -3,8 +3,12 @@
 #include "insertar_modificar_alumno.h"
 #include "profesor.h"
 #include <QMessageBox>
+#include <QInputDialog>
+#include <ctype.h>
+#include <list>
 #include "agenda.h"
 #include "funcionesAux.h"
+#include "alumno.h"
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
@@ -25,7 +29,59 @@ void Menu::on_pushButtonInsertarAlumno_clicked()
 
 void Menu::on_pushButtonMostrarAlumno_clicked()
 {
+    Agenda agenda;
+    list<Alumno> aux = agenda.mostrarLista();
+    QStringList opciones;
+    opciones <<"DNI";
+    opciones <<"Apellido";
+    opciones <<"Equipo";
+    QString opcion = QInputDialog::getItem(this, "Elemento", "¿Por qué campo desea buscar?", opciones);
 
+    if(opcion=="DNI"){
+        QString dni= QInputDialog::getText(this, "Entrada", "Introduce el dni");
+        string DNI= dni.toStdString();
+        char auxDNI[9];
+        strcpy(auxDNI, DNI.c_str());
+        auxDNI[8]=toupper(auxDNI[8]);
+        DNI=auxDNI;
+        agenda.mostrarAlumno(DNI, "", 0);
+    }
+    else if(opcion=="Apellido"){
+        QString apellidos = QInputDialog::getText(this, "Entrada", "Introduce el apellido");
+        string apellido = apellidos.toStdString();
+        apellido = mayusculas(apellido);
+        agenda.mostrarAlumno("", apellido, 0);
+    }
+    else if(opcion=="Equipo"){
+        QString equipo = QInputDialog::getText(this, "Entrada", "Introduce el número del equipo");
+        int eq = equipo.toInt();
+        agenda.mostrarAlumno("", "", eq);
+    }
+    else{
+        QMessageBox::critical(this, "Title", "Opción no válida");
+    }
+    if(aux.empty()){
+        QMessageBox::information(this, "Title", "La Agenda está vacía");
+    }
+    else{
+        ui->tableWidgetListado->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        while(ui->tableWidgetListado->rowCount()>0){
+            ui->tableWidgetListado->removeRow(0);
+        }
+        ui->tableWidgetListado->setColumnCount(3);
+        QStringList cabeceras;
+        cabeceras <<"DNI" <<"Nombre"<<"Apellidos";
+        ui->tableWidgetListado->setHorizontalHeaderLabels(cabeceras);
+        for (list<Alumno>::iterator it = aux.begin(); it != aux.end();it++){
+            ui->tableWidgetListado->insertRow(ui->tableWidgetListado->rowCount());
+            QString dni = QString::fromStdString(it->getDNI());
+            ui->tableWidgetListado->insertRow(ui->tableWidgetListado->rowCount());
+            QString nombre = QString::fromStdString(it->getNombre());
+            ui->tableWidgetListado->insertRow(ui->tableWidgetListado->rowCount());
+            QString apellidos = QString::fromStdString(it->getApellidos());
+        }
+        aux.clear();
+    }
 }
 
 void Menu::on_pushButtonBorrarAlumno_clicked()

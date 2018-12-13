@@ -424,24 +424,3 @@ bool ActualizarFicheroInicio(RegUsu reg){
         return false;
     }
 }
-
-
-/*
-
-*/
-bool comprobarUsuario(RegUsu reg){
-    ifstream file("iniciosesion.bin", ios::in | ios::binary);
-    RegUsu aux;
-    bool encontrado=false;
-
-    if(file.is_open()){
-        file.read((char*)&aux, sizeof(RegUsu));
-        if(aux.usuario == reg.usuario){
-            if(aux.contrasena == reg.contrasena){
-                encontrado = true;
-            }
-        }
-        file.close();
-    }
-    return encontrado;
-}

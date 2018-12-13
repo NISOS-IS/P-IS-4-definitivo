@@ -1,6 +1,7 @@
 #include "iniciarsesion.h"
 #include "ui_iniciarsesion.h"
 #include "menu.h"
+#include "profesor.h"
 #include "funcionesAux.h"
 
 IniciarSesion::IniciarSesion(QWidget *parent) :
@@ -22,6 +23,7 @@ void IniciarSesion::on_pushButtonCancelar_clicked()
 
 void IniciarSesion::on_pushButtonAceptar_clicked()
 {
+    Profesor profesor;
     RegUsu inicio;
     string usuario, contrasena;
     bool encontrado=false, habilitar=true;
@@ -42,13 +44,13 @@ void IniciarSesion::on_pushButtonAceptar_clicked()
     strcpy(inicio.usuario, usuario.c_str());
     strcpy(inicio.contrasena, contrasena.c_str());
 
-    encontrado = comprobarUsuario(inicio);
-    if(encontrado==true){
+    //encontrado = profesor.login(inicio);
+    //if(encontrado==true){
         Menu *ventana = new Menu;
         ventana->show();
-    }
-    else{
-        QMessageBox::critical(this, "Title", "El usuario o la contraseña son inválidos");
-        habilitar=false;
-    }
+   // }
+    //else{
+       // QMessageBox::critical(this, "Title", "El usuario o la contraseña son inválidos");
+        //habilitar=false;
+   // }
 }

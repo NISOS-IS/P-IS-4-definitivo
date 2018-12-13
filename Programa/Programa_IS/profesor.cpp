@@ -41,7 +41,7 @@ void Profesor::setRol(bool rol){
 bool Profesor::buscaProfesor(string dni){
     ifstream file("profesores.bin", ios::in | ios::binary);
     Profesor aux("","","",0,"","","",false,"");
-    bool encontrado = false;
+    bool encontrado = false, correcto = false;
     if(file.is_open()){
         while(!file.eof()){
             file.read(reinterpret_cast<char *> (&aux), sizeof(Profesor));
@@ -50,16 +50,13 @@ bool Profesor::buscaProfesor(string dni){
             }
         }
         if(encontrado){
-            return true;
+            correcto = true;
         }
         else{
-            return false;
+            correcto = false;
         }
     }
-    else{
-        cout<<"El profesor con DNI <"<<dni<<"> no está registrado."<<endl;
-        return false;
-    }
+    return correcto;
 }
 
 bool Profesor::registrarProfesor(Profesor profesor){
@@ -86,19 +83,19 @@ bool Profesor::registrarProfesor(Profesor profesor){
     }
 }
 
-bool Profesor::login(string usuario, string contrasena){
+bool Profesor::login(RegUsu reg){
     ifstream file("usuarios.bin", ios::in | ios::binary);
     bool correcto = false, encontrado = false;
     RegUsu aux;
     if(file.is_open()){
         while(!file.eof()){
             file.read((char*) &aux, sizeof(RegUsu));
-            if(aux.usuario == usuario){
+            if(aux.usuario == reg.usuario){
                 encontrado = true;
             }
         }
         if(encontrado){
-            if(aux.contrasena == contrasena){
+            if(aux.contrasena == reg.contrasena){
                 cout<<"SESIÓN INICIADA"<<endl;
                 correcto = true;
             }
