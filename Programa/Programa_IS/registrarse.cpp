@@ -97,7 +97,7 @@ void Registrarse::on_pushButtonAceptar_clicked()
        strcpy(registro.usuario, usuario.c_str());
        strcpy(registro.contrasena, contrasena.c_str());
 
-       if(buscaProfesor(dni)==false){
+       if(aux.buscaProfesor(dni)==false){
            funcionCorrecta= profesor.registrarProfesor(aux);
            guardadoCorrecto= ActualizarFicheroInicio(registro);
 
