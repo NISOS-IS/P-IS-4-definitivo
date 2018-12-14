@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     agenda.cpp \
     funcionesAux.cpp \
     menu.cpp \
-    insertar_modificar_alumno.cpp
+    insertar_modificar_alumno.cpp \
+    modificar.cpp
 
 HEADERS  += widget.h \
     iniciarsesion.h \
@@ -33,10 +34,12 @@ HEADERS  += widget.h \
     agenda.h \
     funcionesAux.h \
     menu.h \
-    insertar_modificar_alumno.h
+    insertar_modificar_alumno.h \
+    modificar.h
 
 FORMS    += widget.ui \
     iniciarsesion.ui \
     registrarse.ui \
     menu.ui \
-    insertar_modificar_alumno.ui
+    insertar_modificar_alumno.ui \
+    modificar.ui

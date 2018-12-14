@@ -30,31 +30,31 @@ void Insertar_Modificar_Alumno::on_pushButtonAceptar_clicked()
        QString fecha;
 
        if(ui->lineEditDNI->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo DNI es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo DNI es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditNombre->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Nombre es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Nombre es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditApellidos->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Apellidos es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Apellidos es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditTelefono->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Telefono es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Telefono es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditDireccion->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Direccion es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Direccion es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditEmail->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Email es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Email es obligatorio");
            habilitar=false;
        }
        if(ui->lineEditCurso->text().isEmpty()){
-           QMessageBox::critical(this, "Title", "El campo Curso es obligatorio");
+           QMessageBox::critical(this, "Error", "El campo Curso es obligatorio");
            habilitar=false;
        }
 
@@ -79,15 +79,15 @@ void Insertar_Modificar_Alumno::on_pushButtonAceptar_clicked()
            funcionCorrecta= escribirDatos(dni, nombre, apellidos, telefono, direccion, email, fechaNacimiento, curso, equipo, lider);
 
            if(funcionCorrecta==true){
-               QMessageBox::information(this, "Title", "Alumno Guardado");
+               QMessageBox::information(this, "Correcto", "Alumno Guardado");
                close();
            }else{
-                QMessageBox::critical(this, "Title", "Alumno No Guardado");
+                QMessageBox::critical(this, "Error", "Alumno No Guardado");
            }
        }
 }
 
 void Insertar_Modificar_Alumno::on_pushButtonCancelar_clicked()
 {
-    close();
+    hide();
 }

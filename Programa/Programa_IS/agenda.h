@@ -22,10 +22,11 @@ class Agenda{
         bool insertarAlumno(Alumno alumno);
 
         //Borra un alumno del fichero binario
-        bool borrarAlumno(string dni, string apellidos);
+        bool borrarAlumno(string dni);
 
         //Modifica algunos de los datos de un alumno del fichero binario
-        bool modificarAlumno(string dni, string apellidos);
+        //bool modificarAlumno(string dni, string apellidos);
+        bool modificarAlumno(Alumno alumno);
 
         //Muestra por pantalla el listado de alumnos del fichero binario
         list<Alumno> mostrarLista();

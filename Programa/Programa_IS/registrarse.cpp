@@ -17,7 +17,7 @@ Registrarse::~Registrarse()
 
 void Registrarse::on_pushButtonCancelar_clicked()
 {
-    close();
+    hide();
 }
 
 void Registrarse::on_pushButtonAceptar_clicked()
@@ -31,37 +31,37 @@ void Registrarse::on_pushButtonAceptar_clicked()
     QString fecha;
 
     if(ui->lineEditDNI->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo DNI es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo DNI es obligatorio");
        habilitar=false;
     }
     if(ui->lineEditNombre->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo Nombre es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo Nombre es obligatorio");
        habilitar=false;
     }
     if(ui->lineEditApellidos->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo Apellidos es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo Apellidos es obligatorio");
        habilitar=false;
     }
     if(ui->lineEditTelefono->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo Telefono es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo Telefono es obligatorio");
        habilitar=false;
     }
     if(ui->lineEditDireccion->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo Direccion es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo Direccion es obligatorio");
        habilitar=false;
     }
     if(ui->lineEditEmail->text().isEmpty()){
-       QMessageBox::critical(this, "Title", "El campo Email es obligatorio");
+       QMessageBox::critical(this, "Error", "El campo Email es obligatorio");
        habilitar=false;
     }
 
     if(ui->lineEditUsuario->text().isEmpty()){
-        QMessageBox::critical(this, "Title", "El usuario no está disponible");
+        QMessageBox::critical(this, "Error", "El usuario no está disponible");
         habilitar=false;
     }
 
     if(ui->lineEditContrasena->text().isEmpty()){
-        QMessageBox::critical(this, "Title", "La contraseña debe tener al menos 4 caracteres");
+        QMessageBox::critical(this, "Error", "La contraseña debe tener al menos 4 caracteres");
         habilitar=false;
     }
 
@@ -81,7 +81,8 @@ void Registrarse::on_pushButtonAceptar_clicked()
             rol=false;
        }
        usuario= ui->lineEditUsuario->displayText().toStdString();
-       contrasena= ui->lineEditContrasena->displayText().toStdString();
+       //contrasena= ui->lineEditContrasena->displayText().toStdString();
+       contrasena= ui->lineEditContrasena->text().toStdString();
 
        aux.setDNI(dni);
        aux.setNombre(nombre);
@@ -102,10 +103,10 @@ void Registrarse::on_pushButtonAceptar_clicked()
            guardadoCorrecto= ActualizarFicheroInicio(registro);
 
            if(funcionCorrecta==true && guardadoCorrecto==true){
-               QMessageBox::information(this, "Title", "Profesor Guardado");
+               QMessageBox::information(this, "Correcto", "Profesor Guardado");
                close();
            }else{
-                QMessageBox::critical(this, "Title", "Profesor No Guardado");
+                QMessageBox::critical(this, "Error", "Profesor No Guardado");
            }
        }
     }

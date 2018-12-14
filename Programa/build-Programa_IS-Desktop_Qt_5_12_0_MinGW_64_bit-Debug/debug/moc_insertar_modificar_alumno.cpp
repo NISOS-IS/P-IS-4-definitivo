@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Programa_IS/insertar_modificar_alumno.h"
+#include "../../../../Nueva/Programa/Programa_IS/insertar_modificar_alumno.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)

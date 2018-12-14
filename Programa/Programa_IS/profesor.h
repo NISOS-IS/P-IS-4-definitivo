@@ -39,7 +39,7 @@ class Profesor: public Persona{
         bool registrarProfesor(Profesor profesor);
 
         //Inicia sesión de un profesor
-        bool login(RegUsu reg);
+        bool login(Profesor reg);
 
         //Guarda una copia de seguridad del fichero binario de alumnos
         bool guardarCopia();

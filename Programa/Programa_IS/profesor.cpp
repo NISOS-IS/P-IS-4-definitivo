@@ -39,24 +39,25 @@ void Profesor::setRol(bool rol){
 }
 
 bool Profesor::buscaProfesor(string dni){
-    ifstream file("profesores.bin", ios::in | ios::binary);
-    Profesor aux("","","",0,"","","",false,"");
-    bool encontrado = false, correcto = false;
-    if(file.is_open()){
-        while(!file.eof()){
-            file.read(reinterpret_cast<char *> (&aux), sizeof(Profesor));
-            if(aux.getDNI() == dni){
-                encontrado = true;
-            }
-        }
-        if(encontrado){
-            correcto = true;
-        }
-        else{
-            correcto = false;
-        }
-    }
-    return correcto;
+    bool correcto = false;
+       ifstream file("agenda.bin", ios::in | ios::binary);
+       Registro aux;
+       bool encontrado = false;
+       if(file.is_open()){
+           while(!file.eof()){
+               file.read(reinterpret_cast <char*>(&aux), sizeof(Registro));
+               if(aux.dni == dni){
+                   encontrado = true;
+               }
+           }
+           if(encontrado){
+               correcto = true;
+           }
+           else{
+               correcto = false;
+           }
+       }
+       return correcto;
 }
 
 bool Profesor::registrarProfesor(Profesor profesor){
@@ -83,19 +84,19 @@ bool Profesor::registrarProfesor(Profesor profesor){
     }
 }
 
-bool Profesor::login(RegUsu reg){
-    ifstream file("usuarios.bin", ios::in | ios::binary);
+bool Profesor::login(Profesor reg){
+    ifstream file("iniciosesion.bin", ios::in | ios::binary);
     bool correcto = false, encontrado = false;
     RegUsu aux;
     if(file.is_open()){
         while(!file.eof()){
             file.read((char*) &aux, sizeof(RegUsu));
-            if(aux.usuario == reg.usuario){
+            if(aux.usuario == reg.getUsuario()){
                 encontrado = true;
             }
         }
         if(encontrado){
-            if(aux.contrasena == reg.contrasena){
+            if(aux.contrasena == reg.getContrasena()){
                 cout<<"SESIÓN INICIADA"<<endl;
                 correcto = true;
             }
@@ -137,8 +138,8 @@ bool Profesor::cargarCopia(){
 
         in.close();
         out.close();
-        remove("agenda.bin");
-        rename("temporal.bin", "agenda.bin");
+        remove("alumnos.bin");
+        rename("temporal.bin", "alumnos.bin");
         return true;
     }
     else{
@@ -157,7 +158,7 @@ bool Profesor::guardarCopia(){
     ifstream fe;
     bool correcto = false;
     //Creamos otro archivo donde se copiara
-    fe.open("agenda.bin");
+    fe.open("alumnos.bin");
     ofstream fs("copiaSeguridad.bin");
     // Miramos cual es el tamaño del archivo
     if(fe.fail()){

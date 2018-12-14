@@ -4,6 +4,7 @@
 #include <cstring>
 #include "agenda.h"
 #include "funcionesAux.h"
+#include <QMessageBox>
 
 //Constructor de la clase Agenda vacío
 Agenda::Agenda(){}
@@ -14,52 +15,65 @@ Funcion buscarAlumno que busca un alumno en la agenda
 @return list<Alumno>
 */
 list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
-    ifstream file("agenda.bin", ios::in | ios::binary);
-    Alumno aux;
-    RegistroAlumno alumnoAux;
-    string apellido;
-    bool encontrado = false;
-    if(file.is_open()){
-        while(!file.eof()){
-            file.read(reinterpret_cast <char*> (&alumnoAux), sizeof(RegistroAlumno));
-            //Si apel es una cadena vacia y equipo 0, realiza la busqueda por dni
-            if(apel=="" && equipo==0){
-                if(alumnoAux.dni == dni){
-                    encontrado = true;
-                }
-            }
-            //Si dni es una cadena vacia y equipo 0, realiza la busqueda por apellido
-            if(dni == "" && equipo==0){
-                //comprueba si apellido tiene apel
-                apellido = alumnoAux.apellidos;
-                if(apellido.find(apel) != string::npos){
-                    encontrado = true;
-                }
-            }
-            //Si dni y apel son cadenas vacias, realiza la busqueda por equipo
-            if(dni=="" && apel==""){
-                if(alumnoAux.equipo == equipo){
-                    encontrado = true;
-                }
-            }
+    int j,cont=0;
+        ifstream file("alumnos.bin", ios::in | ios::binary);
+        Alumno aux;
+        RegistroAlumno alumnoAux;
+        bool encontrado = false;
+        string dni1, nombre, apellido, direccion, email, fechaNacimiento;
+        if(file.is_open()){
+            file.seekg(0,ios::end);
+            j = file.tellg()/sizeof(RegistroAlumno);
+            file.seekg(0*sizeof(RegistroAlumno));
 
-            if(encontrado){
-                aux.setDNI(alumnoAux.dni);
-                aux.setNombre(alumnoAux.nombre);
-                aux.setApellidos(alumnoAux.apellidos);
-                aux.setTelefono(alumnoAux.telefono);
-                aux.setDireccion(alumnoAux.direccion);
-                aux.setEmail(alumnoAux.email);
-                aux.setFechaNacimiento(alumnoAux.fechaNacimiento);
-                aux.setCurso(alumnoAux.curso);
-                aux.setEquipo(alumnoAux.equipo);
-                aux.setLider(convertirStringLider(alumnoAux.lider));
-                listaAlumnos_.push_back(aux);
-                encontrado=false;
+            file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
+            while(cont < j){
+
+                apellido = alumnoAux.apellidos;
+                //si apel es una cadena vacia y equipo 0, realiza la busqueda por dni
+                if(apel=="" && equipo==0){
+                    if(alumnoAux.dni == dni){
+                        encontrado = true;
+                    }
+                //si dni es cadena vacia y equipo 0, realiza la busqueda por apellido
+                }else if(dni=="" && equipo==0){
+                    //compruebe si apellido contiene apel
+                    if(apellido.find(apel) != string::npos){
+                        encontrado=true;
+                    }
+                //si dni y apel son cadena vacia, realiza la busqueda por equipo
+                }else if(dni=="" && apel==""){
+                    if(alumnoAux.equipo==equipo){
+                        encontrado=true;
+                    }
+                }
+                if(encontrado){
+                        dni1=alumnoAux.dni;
+                        aux.setDNI(dni1);
+                        nombre=alumnoAux.nombre;
+                        aux.setNombre(nombre);
+                        apellido=alumnoAux.apellidos;
+                        aux.setApellidos(apellido);
+                        aux.setTelefono(alumnoAux.telefono);
+                        direccion= alumnoAux.direccion;
+                        aux.setDireccion(direccion);
+                        email= alumnoAux.email;
+                        aux.setEmail(email);
+                        fechaNacimiento= alumnoAux.fechaNacimiento;
+                        aux.setFechaNacimiento(fechaNacimiento);
+                        aux.setCurso(alumnoAux.curso);
+                        aux.setEquipo(alumnoAux.equipo);
+                        aux.setLider(convertirStringLider(alumnoAux.lider));
+                        listaAlumnos_.push_back(aux);
+                }else{
+                }
+                file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
+                cont++;
+
             }
         }
-    }
-    return listaAlumnos_;
+
+        return listaAlumnos_;
 }
 
 
@@ -70,7 +84,7 @@ Funcion insertarAlumno que inserta a un nuevo alumno en la agenda
 */
 bool Agenda::insertarAlumno(Alumno alumno){
     bool correcto = false;
-    ofstream file("agenda.bin", ios::out | ios::binary | ios::app);
+    ofstream file("alumnos.bin", ios::out | ios::binary | ios::app);
     RegistroAlumno reg;
 
     if(file.is_open()){
@@ -91,183 +105,135 @@ bool Agenda::insertarAlumno(Alumno alumno){
     return correcto;
 }
 
+/*
+Método modificarAlumno que modifica algunos datos de un alummno
+@param dni, apellidos
+@return bool
+*/
+bool Agenda::modificarAlumno(Alumno alumno){
+    listaAlumnos_.clear();
+    int j=0, cont=0;
+    ifstream in;
+    ofstream out;
+    /* modificacion Oscar: añadi una variable RegistroAlumno registro */
+    RegistroAlumno reg,registro;
+    bool correcto= false;
+
+        in.open("alumnos.bin", ios::in | ios::binary);
+        out.open("temporal.bin", ios::out | ios::binary | ios::app);
+
+        if(in.is_open() && out.is_open()){
+            strcpy(reg.dni,alumno.getDNI().c_str());
+            strcpy(reg.nombre,alumno.getNombre().c_str());
+            strcpy(reg.apellidos,alumno.getApellidos().c_str());
+            reg.telefono=alumno.getTelefono();
+            strcpy(reg.direccion, alumno.getDireccion().c_str());
+            strcpy(reg.email, alumno.getEmail().c_str());
+            strcpy(reg.fechaNacimiento,alumno.getFechaNacimiento().c_str());
+            reg.curso=alumno.getCurso();
+            reg.equipo=alumno.getEquipo();
+            strcpy(reg.lider,convertirBoolLider(alumno.getLider()).c_str());
+            /**************************************************/
+            /* Apertura lectura y escritura de ficheros para la
+            modificacion de registros */
+            in.seekg(0,ios::end);
+            j = in.tellg()/sizeof(RegistroAlumno);
+            in.seekg(0*sizeof(RegistroAlumno));
+
+            /*modificacion oscar: cambio reg por registro */
+            in.read((char*)&registro,sizeof(RegistroAlumno));
+            do{
+                /**********************/
+                /*modificacion oscar*/
+                if(strcmp(reg.dni,registro.dni) == 0){
+                    out.write((char*)&reg,sizeof(RegistroAlumno));
+                }else{
+                    out.write((char*)&registro,sizeof(RegistroAlumno));
+                }
+                /* fin modificacion oscar*/
+                /**********************/
+                //out.write((char*)&reg,sizeof(RegistroAlumno));
+                in.read((char*)&registro,sizeof(RegistroAlumno));
+                /**********************/
+
+                /**********************/
+                cont++;
+            }while(cont<j);
+
+                in.close();
+                out.close();
+                remove("alumnos.bin");
+                rename("temporal.bin","alumnos.bin");
+                correcto= true;
+
+        }else{
+            correcto= false;
+        }
+
+}
 
 /*
 Funcion borrarAlumno que borra a un alumno de la agenda por DNI o por apellidos
 @param dni, apellidos
 @return bool
 */
-bool Agenda::borrarAlumno(string dni, string apellidos){
-    int j, cont = 0, esp = 0, resp = 0, tam;
-    char auxStr[100];
+/* borrar el alumno indicado ya sea por dni o apellidos */
+bool Agenda::borrarAlumno(string dni){
+    int j,cont=0;
     list<Alumno> al;
-    RegistroAlumno alumno;
-
-    //Limpia las list creadas para no repetir la información a mostrar
+    //limpia las list creadas para no repetir la informacion a mostrar
     al.clear();
     listaAlumnos_.clear();
-
+    RegistroAlumno alumno;
     ifstream in;
     ofstream out;
-    bool encontrado = false;
-    al = buscarAlumno(dni, apellidos, 0);
-
-    //Comprueba si el parámetro apellidos tiene uno solo o los dos
-    if(apellidos != " "){
-        tam = apellidos.size();
-        for(int i = 0; i < tam; i++){
-            if(apellidos[i] == ' '){
-                esp = 1;
-            }
-        }
-    }
-
+    al = mostrarAlumno(dni,"",0);
+    QWidget *parent= new QWidget;
+    /*Comprueba si el parametros apellidos tiene los apellidos
+    o uno solo
+    */
     if(al.empty()){
+        cout<<"Agenda vacia";
+        remove("alumnos.bin");
         return false;
-    }
-    else{
-        in.open("agenda.bin", ios::in | ios::binary);
-        out.open("temporal.bin", ios::out | ios::binary);
+    }else{
+        /* Preguntara al profesor si quiere eliminar el registro del alumno*/
+        /*if(encontrado){
+        }*///else
+            //cout<<"\nNo se pudo encontrar los datos del alumno."<<endl;
 
-        //En caso de que el parámetro apellidos tenga uno solo volverá a pedir que se introduzca los apellidos completos
-        if((esp == 0) && (apellidos != " ")){
-            cout<<"Introduce los apellidos del alumno: "<<endl;
-            leerlinea(auxStr, 100);
-            apellidos = auxStr;
-            apellidos = mayusculas(apellidos);
-        }
+        /*En caso afirmativo procedera a actualizar la agenda */
+            in.open("alumnos.bin", ios::in | ios::binary);
+            out.open("temporal.bin", ios::out | ios::binary);
 
-        //mostrarAlumno()
-
-        //Preguntará al profesor si quiere eliminar el alumno buscado
-        if(encontrado){
-            cout<<"¿Está seguro de querer eliminar los datos del alumno?"<<endl;
-            cout<<"1. Si"<<endl;
-            cout<<"2. No"<<endl;
-            cin>>resp;
-            getchar();
-        }
-
-        //En caso afirmativo procedera a actualizar la agenda
-        if(resp == 1){
             if(in.is_open() && out.is_open()){
-                //Lectura y escritura de la agenda para su actualización
-                in.seekg(0, ios::end);
-                j = in.tellg() / sizeof(RegistroAlumno);
+
+                /*Lectura y escritura de la agenda para su actualizacion */
+                in.seekg(0,ios::end);
+                j = in.tellg()/sizeof(RegistroAlumno);
                 in.seekg(0*sizeof(RegistroAlumno));
 
-                in.read((char*)&alumno, sizeof(RegistroAlumno));
-                do{
-                    string aux1(alumno.dni), aux2(alumno.apellidos);
-                    if((aux1 != dni) && (aux2 != apellidos)){
-                        out.write((char*)&alumno, sizeof(RegistroAlumno));
+                in.read((char *)&alumno,sizeof(RegistroAlumno));
+                while(cont < j){
+                    string aux1(alumno.dni);
+                    if(aux1 != dni){
+                        out.write((char *)&alumno,sizeof(RegistroAlumno));
                     }
-                    in.read((char*)&alumno, sizeof(RegistroAlumno));
+                    in.read((char *)&alumno,sizeof(RegistroAlumno));
                     cont++;
-                }while(cont < j);
+                }
                 in.close();
                 out.close();
-                remove("agenda.bin");
-                rename("temporal.bin", "agenda.bin");
-            }
-            else{
-                cout<<"No se pudo abrir el fichero"<<endl;
+                remove("alumnos.bin");
+                rename("temporal.bin","alumnos.bin");
+            }else{
+                QMessageBox::critical(parent, "This", "No se pudo abrir el fichero");
                 return false;
             }
-        }
-        else{
-            in.close();
-            out.close();
-            remove("temporal.bin");
-            cout<<"Saliendo..."<<endl;
-        }
+
         return true;
     }
 }
-
-
-/*
-Método modificarAlumno que modifica algunos datos de un alummno
-@param dni, apellidos
-@return bool
-*/
-bool Agenda::modificarAlumno(string dni, string apellidos){
-    listaAlumnos_.clear();
-    int i=0, j=0, cont=0, esp=0, equipo, resp=0;
-    char auxStr[100], esLider[9];
-    strcpy(esLider, "Lider");
-    ifstream in;
-    ofstream out;
-    list<Alumno> alumno;
-    RegistroAlumno reg;
-    bool encontrado = false, lider = false, lid = true;
-
-    alumno = buscarAlumno(dni, apellidos, 0);
-    //Saber si en el parámetro apellidos están ambos apellidos o uno solo
-    if(apellidos != " "){
-        j = apellidos.size();
-        for(int i=0; i<j; i++){
-            if(apellidos[i] == ' '){
-                esp = 1;
-            }
-        }
-    }
-
-    if(alumno.empty()){
-        return false;
-    }
-    else{
-        in.open("agenda.bin", ios::in | ios::binary);
-        out.open("temporal.bin", ios::out | ios::binary | ios::app);
-
-        if(in.is_open() && out.is_open()){
-            //Comprobar si el equipo tiene lider
-            lider = true;
-            alumno = buscarAlumno("", "", equipo);
-            lider = comprobarLider(alumno, lider);
-
-            //En caso de que el parámetro apellidos tenga un solo apellido volvera a pedir que se introduzca los apellidos completos
-            if((apellidos != "") && (esp == 0)){
-                cout<<"Introduzca los apellidos del alumno: "<<endl;
-                leerlinea(auxStr, 100);
-                apellidos = auxStr;
-                apellidos = mayusculas(apellidos);
-            }
-
-            //Apertura lectura y escritura de ficheros para la modificación de registros
-            in.seekg(0, ios::end);
-            j = in.tellg() / sizeof(RegistroAlumno);
-            in.seekg(0*sizeof(RegistroAlumno));
-
-            in.read((char*)&reg, sizeof(RegistroAlumno));
-            do{
-                string aux1(reg.dni), aux2(reg.apellidos);
-                if((dni == aux1) || (apellidos == aux2)){
-                    //Se haran tantas modificaciones mientras se cumpla la condicion while, para un mismo alumno
-                    do{
-                        modificarDatos(&reg, lider);
-                        cout<<"¿Desea continuar modificando datos?"<<endl;
-                        cout<<"1. Si"<<endl;
-                        cout<<"2. No"<<endl;
-                        cin>>resp;
-                        getchar();
-                    }while(resp != 2);
-                }
-                out.write((char*)&reg, sizeof(RegistroAlumno));
-                in.read((char*)&reg, sizeof(RegistroAlumno));
-                i++;
-                cont++;
-            }while(cont < j);
-        }
-        in.close();
-        out.close();
-        remove("agenda.bin");
-        rename("temporal.bin", "agenda.bin");
-        alumno.clear();
-        return true;
-    }
-}
-
 
 /*
 Método mostrarLista que introducirá en una list<Alumno> todos los alumos del registro
@@ -275,7 +241,7 @@ Método mostrarLista que introducirá en una list<Alumno> todos los alumos del r
 */
 list<Alumno> Agenda::mostrarLista(){
     int j, cont=0;
-    ifstream in("agenda.bin", ios::in | ios::binary);
+    ifstream in("alumnos.bin", ios::in | ios::binary);
     RegistroAlumno al;
     list<Alumno> alumno;
     alumno.clear();
@@ -310,17 +276,5 @@ list<Alumno> Agenda::mostrarLista(){
 
 list<Alumno> Agenda::mostrarAlumno(string dni, string apellidos, int equipo){
     list<Alumno> aux = buscarAlumno(dni, apellidos, equipo);
-    for(list<Alumno>::iterator it = aux.begin(); it != aux.end(); it++){
-        cout<<"DNI: "<<it->getDNI()<<endl;
-        cout<<"Nombre: "<<it->getNombre()<<endl;
-        cout<<"Apellidos: "<<it->getApellidos()<<endl;
-        cout<<"Telefono: "<<it->getTelefono()<<endl;
-        cout<<"Direccion: "<<it->getDireccion()<<endl;
-        cout<<"Email: "<<it->getEmail()<<endl;
-        cout<<"Fecha de Nacimiento: "<<it->getFechaNacimiento()<<endl;
-        cout<<"Curso: "<<it->getCurso()<<endl;
-        cout<<"Equipo: "<<it->getEquipo()<<endl;
-        cout<<"Lider: "<<convertirBoolLider(it->getLider())<<"\n"<<endl;
-    }
     return aux;
 }

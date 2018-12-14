@@ -9,8 +9,10 @@ debug/agenda.o
 debug/funcionesAux.o
 debug/menu.o
 debug/insertar_modificar_alumno.o
+debug/modificar.o
 debug/moc_widget.o
 debug/moc_iniciarsesion.o
 debug/moc_registrarse.o
 debug/moc_menu.o
 debug/moc_insertar_modificar_alumno.o
+debug/moc_modificar.o

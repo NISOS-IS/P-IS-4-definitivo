@@ -9,8 +9,10 @@ release/agenda.o
 release/funcionesAux.o
 release/menu.o
 release/insertar_modificar_alumno.o
+release/modificar.o
 release/moc_widget.o
 release/moc_iniciarsesion.o
 release/moc_registrarse.o
 release/moc_menu.o
 release/moc_insertar_modificar_alumno.o
+release/moc_modificar.o

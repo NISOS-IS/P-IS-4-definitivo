@@ -16,7 +16,7 @@ Funcion comprobarExistenciaDNI que comprueba si un dni ya esta guardado en agend
 */
 bool comprobarExistenciaDNI(string dni){
     bool correcto = false;
-    ifstream file("agenda.bin", ios::in | ios::binary);
+    ifstream file("alumnos.bin", ios::in | ios::binary);
     RegistroAlumno aux;
     bool encontrado = false;
     if(file.is_open()){
@@ -106,7 +106,7 @@ Funcion convertirBool que convierte un bool en un string
 */
 string convertirBoolLider(bool a){
     string aux;
-    if(a){
+    if(a==true){
         aux = "Lider";
     }
     else{
@@ -122,12 +122,14 @@ Funcion convertirBool que convierte un bool en un string
 @return string
 */
 bool convertirStringLider(char *a){
-    bool aux;
-    if(a == "Lider"){
-        aux = true;
-    }
-    else{
-        aux = false;
+    bool aux=false;
+    string cadena;
+    cadena= a;
+
+    if(cadena=="Lider"){
+        aux=true;
+    }else{
+        aux=false;
     }
     return aux;
 }
@@ -278,13 +280,68 @@ bool escribirDatos(string dni, string nombre, string apellidos, int telefono, st
     return devuelve;
 }
 
+bool modificarDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fechaNacimiento, int curso, int equipo, bool lider){
+    Alumno alumno;
+    Agenda agenda;
+    list<Alumno> aux;
+    bool devuelve=false, funcionCorrecta=false, guardar=true, variableCorrecta=false, encontrado;
 
+    alumno.setDNI(dni);
+    nombre= mayusculas(nombre);
+    alumno.setNombre(nombre);
+
+    apellidos= mayusculas(apellidos);
+    alumno.setApellidos(apellidos);
+
+    variableCorrecta=alumno.setTelefono(telefono);
+    if(variableCorrecta==false){
+        guardar=false;
+    }
+
+    direccion= mayusculas(direccion);
+    alumno.setDireccion(direccion);
+
+    alumno.setEmail(email);
+
+    if((variableCorrecta= alumno.setFechaNacimiento(fechaNacimiento))==false){
+        guardar=false;
+    }
+
+    if((variableCorrecta=alumno.setCurso(curso))==false){
+        guardar=false;
+    }
+
+    if((variableCorrecta=alumno.setEquipo(equipo))==false){
+        guardar=false;
+    }
+
+    if(lider==true){
+        aux=agenda.buscarAlumno("","",equipo);
+        encontrado= comprobarLider(aux, lider);
+        if(encontrado==false){
+            lider=true;
+        }else{
+            lider=false;
+        }
+    }
+    alumno.setLider(lider);
+
+    if(guardar==true){
+        funcionCorrecta= agenda.insertarAlumno(alumno);
+            if(funcionCorrecta==true){
+                devuelve= true;
+            }else{
+                devuelve= false;
+            }
+    }
+    return devuelve;
+}
 
 /*
 Funcion modificarDatos muestra al profesor las opciones que habra para modificar los datos del alumno
 @param *alumno, lider
 @return void
-*/
+
 void modificarDatos(struct RegistroAlumno *alumno, bool lider){
     string auxStr;
     char auxCad[100];
