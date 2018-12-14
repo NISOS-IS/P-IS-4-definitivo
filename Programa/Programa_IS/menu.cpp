@@ -137,7 +137,7 @@ void Menu::on_pushButtonListadoAlumnos_clicked()
             ui->tableWidgetListado->setEditTriggers(QAbstractItemView::NoEditTriggers);
             while (ui->tableWidgetListado->rowCount() > 0)
             {
-                ui->tableWidgetListado->removeRow(0);
+               ui->tableWidgetListado->removeRow(0);
             }
            ui->tableWidgetListado->setColumnCount(10);
            QStringList cabeceras;
@@ -272,6 +272,7 @@ void Menu::on_tableWidgetListado_cellActivated(int row, int column)
         }
     }else if (elegir==2) {
         Modificar *ventana= new Modificar(dni);
-        ventana->exec();
+        ventana->show();
     }
+
 }

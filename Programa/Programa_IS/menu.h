@@ -34,10 +34,6 @@ private slots:
 
     void on_tableWidgetListado_cellActivated(int row, int column);
 
-    void on_tableWidgetListado_cellPressed(int row, int column);
-
-    void on_tableWidgetListado_cellClicked(int row, int column);
-
     void rellenarTabla();
 
 private:

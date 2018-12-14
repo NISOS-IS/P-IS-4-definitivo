@@ -28,8 +28,6 @@ list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
 
             file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
             while(cont < j){
-
-                apellido = alumnoAux.apellidos;
                 //si apel es una cadena vacia y equipo 0, realiza la busqueda por dni
                 if(apel=="" && equipo==0){
                     if(alumnoAux.dni == dni){
@@ -38,6 +36,7 @@ list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
                 //si dni es cadena vacia y equipo 0, realiza la busqueda por apellido
                 }else if(dni=="" && equipo==0){
                     //compruebe si apellido contiene apel
+                    apellido = alumnoAux.apellidos;
                     if(apellido.find(apel) != string::npos){
                         encontrado=true;
                     }
@@ -65,6 +64,7 @@ list<Alumno> Agenda::buscarAlumno(string dni, string apel, int equipo){
                         aux.setEquipo(alumnoAux.equipo);
                         aux.setLider(convertirStringLider(alumnoAux.lider));
                         listaAlumnos_.push_back(aux);
+                        encontrado=false;
                 }else{
                 }
                 file.read(reinterpret_cast <char *> (&alumnoAux), sizeof(RegistroAlumno));
@@ -170,6 +170,7 @@ bool Agenda::modificarAlumno(Alumno alumno){
             correcto= false;
         }
 
+        return correcto;
 }
 
 /*

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Menu_t {
-    QByteArrayData data[16];
-    char stringdata0[407];
+    QByteArrayData data[14];
+    char stringdata0[339];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,9 +44,7 @@ QT_MOC_LITERAL(9, 251, 26), // "on_pushButtonSalir_clicked"
 QT_MOC_LITERAL(10, 278, 35), // "on_tableWidgetListado_cellAct..."
 QT_MOC_LITERAL(11, 314, 3), // "row"
 QT_MOC_LITERAL(12, 318, 6), // "column"
-QT_MOC_LITERAL(13, 325, 33), // "on_tableWidgetListado_cellPre..."
-QT_MOC_LITERAL(14, 359, 33), // "on_tableWidgetListado_cellCli..."
-QT_MOC_LITERAL(15, 393, 13) // "rellenarTabla"
+QT_MOC_LITERAL(13, 325, 13) // "rellenarTabla"
 
     },
     "Menu\0on_pushButtonInsertarAlumno_clicked\0"
@@ -58,9 +56,7 @@ QT_MOC_LITERAL(15, 393, 13) // "rellenarTabla"
     "on_pushButtonCargarCopia_clicked\0"
     "on_pushButtonSalir_clicked\0"
     "on_tableWidgetListado_cellActivated\0"
-    "row\0column\0on_tableWidgetListado_cellPressed\0"
-    "on_tableWidgetListado_cellClicked\0"
-    "rellenarTabla"
+    "row\0column\0rellenarTabla"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +66,7 @@ static const uint qt_meta_data_Menu[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,18 +74,16 @@ static const uint qt_meta_data_Menu[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x08 /* Private */,
-       3,    0,   75,    2, 0x08 /* Private */,
-       4,    0,   76,    2, 0x08 /* Private */,
-       5,    0,   77,    2, 0x08 /* Private */,
-       6,    0,   78,    2, 0x08 /* Private */,
-       7,    0,   79,    2, 0x08 /* Private */,
-       8,    0,   80,    2, 0x08 /* Private */,
-       9,    0,   81,    2, 0x08 /* Private */,
-      10,    2,   82,    2, 0x08 /* Private */,
-      13,    2,   87,    2, 0x08 /* Private */,
-      14,    2,   92,    2, 0x08 /* Private */,
-      15,    0,   97,    2, 0x08 /* Private */,
+       1,    0,   64,    2, 0x08 /* Private */,
+       3,    0,   65,    2, 0x08 /* Private */,
+       4,    0,   66,    2, 0x08 /* Private */,
+       5,    0,   67,    2, 0x08 /* Private */,
+       6,    0,   68,    2, 0x08 /* Private */,
+       7,    0,   69,    2, 0x08 /* Private */,
+       8,    0,   70,    2, 0x08 /* Private */,
+       9,    0,   71,    2, 0x08 /* Private */,
+      10,    2,   72,    2, 0x08 /* Private */,
+      13,    0,   77,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -100,8 +94,6 @@ static const uint qt_meta_data_Menu[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   12,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   12,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   12,
     QMetaType::Void,
 
@@ -123,7 +115,7 @@ void Menu::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 6: _t->on_pushButtonCargarCopia_clicked(); break;
         case 7: _t->on_pushButtonSalir_clicked(); break;
         case 8: _t->on_tableWidgetListado_cellActivated((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 11: _t->rellenarTabla(); break;
+        case 9: _t->rellenarTabla(); break;
         default: ;
         }
     }
@@ -158,13 +150,13 @@ int Menu::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 10;
     }
     return _id;
 }
