@@ -194,8 +194,8 @@ bool Agenda::borrarAlumno(string dni){
     o uno solo
     */
     if(al.empty()){
-        cout<<"Agenda vacia";
-        remove("alumnos.bin");
+        cout<<"Lista vacia";
+        //remove("alumnos.bin");
         return false;
     }else{
         /* Preguntara al profesor si quiere eliminar el registro del alumno*/
