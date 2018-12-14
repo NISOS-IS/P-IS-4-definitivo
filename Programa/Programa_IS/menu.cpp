@@ -183,7 +183,14 @@ void Menu::on_pushButtonListadoAlumnos_clicked()
 
 void Menu::on_pushButtonGuardarCopia_clicked()
 {
-
+    bool correcto=false;
+    Profesor profesor;
+    correcto= profesor.guardarCopia();
+    if(correcto==true){
+        QMessageBox::information(this, "Title", "Copia de Seguridad Guardada");
+    }else{
+        QMessageBox::critical(this, "Title", "Error al Guardar la Copia de Seguridad");
+    }
 }
 
 void Menu::on_pushButtonCargarCopia_clicked()
