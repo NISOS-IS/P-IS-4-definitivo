@@ -187,15 +187,22 @@ void Menu::on_pushButtonGuardarCopia_clicked()
     Profesor profesor;
     correcto= profesor.guardarCopia();
     if(correcto==true){
-        QMessageBox::information(this, "Title", "Copia de Seguridad Guardada");
+        QMessageBox::information(this, "Correcto", "Copia de Seguridad Guardada");
     }else{
-        QMessageBox::critical(this, "Title", "Error al Guardar la Copia de Seguridad");
+        QMessageBox::critical(this, "Error", "Error al Guardar la Copia de Seguridad");
     }
 }
 
 void Menu::on_pushButtonCargarCopia_clicked()
 {
-
+    bool correcto=false;
+    Profesor profesor;
+    correcto= profesor.cargarCopia();
+    if(correcto==true){
+        QMessageBox::information(this, "Correcto", "Copia de Seguridad Cargada");
+    }else{
+        QMessageBox::critical(this, "Error", "Error al Cargar la Copia de Seguridad");
+    }
 }
 
 void Menu::on_pushButtonSalir_clicked()
