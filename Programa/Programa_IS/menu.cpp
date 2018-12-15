@@ -13,11 +13,16 @@
 
 int elegir=0;
 
-Menu::Menu(QWidget *parent) :
+Menu::Menu(const bool &rol, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Menu)
+    ui(new Ui::Menu),
+    rol_(rol)
 {
     ui->setupUi(this);
+    if(rol==true){
+        ui->pushButtonGuardarCopia->setEnabled(false);
+        ui->pushButtonCargarCopia->setEnabled(false);
+    }
 }
 
 Menu::~Menu()
@@ -277,6 +282,8 @@ void Menu::on_tableWidgetListado_cellActivated(int row, int column)
                                       QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             correcto= agenda.borrarAlumno(DNI);
+        }else if (reply == QMessageBox::No) {
+            hide();
         }
         if(correcto==true){
             QMessageBox::information(this, "Correcto", "Alumno Borrado");

@@ -25,7 +25,7 @@ void IniciarSesion::on_pushButtonAceptar_clicked()
 {
     Profesor profesor;
     Profesor inicio;
-    string usuario, contrasena;
+    string usuario, contrasena, contrasenaAux;
     bool encontrado=false, habilitar=true;
 
     if(ui->lineEditUsuario->text().isEmpty()){
@@ -39,14 +39,15 @@ void IniciarSesion::on_pushButtonAceptar_clicked()
     }
 
     usuario= ui->lineEditUsuario->displayText().toStdString();
-    contrasena= ui->lineEditContrasena->text().toStdString();
-
+    contrasenaAux= ui->lineEditContrasena->text().toStdString();
+    contrasena= contrasenaAux;
     inicio.setUsuario(usuario.c_str());
     inicio.setContrasena(contrasena.c_str());
 
     encontrado = profesor.login(inicio);
     if(encontrado==true){
-        Menu *ventana = new Menu;
+        bool rol= profesor.compruebaRol(inicio);
+        Menu *ventana = new Menu(rol);
         ventana->show();
    }else{
         QMessageBox::critical(this, "Fallo al Iniciar Sesión", "El usuario o la contraseña son inválidos");

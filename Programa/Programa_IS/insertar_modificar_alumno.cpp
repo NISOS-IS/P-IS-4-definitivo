@@ -10,6 +10,9 @@ Insertar_Modificar_Alumno::Insertar_Modificar_Alumno(QWidget *parent) :
     ui(new Ui::Insertar_Modificar_Alumno)
 {
     ui->setupUi(this);
+    ui->lineEditTelefono->setValidator( new QIntValidator);
+    ui->lineEditCurso->setValidator( new QIntValidator);
+    ui->lineEditEquipo->setValidator( new QIntValidator);
 }
 
 Insertar_Modificar_Alumno::~Insertar_Modificar_Alumno()

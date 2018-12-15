@@ -30,10 +30,12 @@ class Profesor: public Persona{
 
         //métodos get y set de contrasena_
         inline string getContrasena(){return contrasena_;}
-        void setContrasena(string contrasena);
+        bool setContrasena(string contrasena);
 
         //Busca un profesor del fichero binario
         bool buscaProfesor(string dni);
+
+        bool compruebaRol(Profesor usuario);
 
         //Registra un profesor y lo añade al fichero binario
         bool registrarProfesor(Profesor profesor);

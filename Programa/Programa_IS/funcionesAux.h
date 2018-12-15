@@ -39,17 +39,19 @@ struct RegistroAlumno{
 struct RegUsu{
     char usuario[100];
     char contrasena[100];
+    char rol[15];
 };
 
 bool comprobarExistenciaDNI(string dni);
 bool comprobarLider(list<Alumno> &aux, bool lider);
+bool compruebaEmailProfesor(string email);
+bool compruebaUsuario(string usuario);
 bool comprobarEmail(list<Alumno> &aux, string email);
 string convertirBool(bool a);
 string convertirBoolLider(bool a);
 bool convertirStringLider(char *lider);
 string mayusculas(string cadena);
 bool escribirDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fechaNacimiento, int curso, int equipo, bool lider);
-//void modificarDatos(struct RegistroAlumno *alumno, bool lider);
 bool modificarDatos(string dni, string nombre, string apellidos, int telefono, string direccion, string email, string fechaNacimiento, int curso, int equipo, bool lider);
 int leerlinea(char *cad, int max);
 void mostrarListado();

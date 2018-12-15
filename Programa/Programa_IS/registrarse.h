@@ -12,7 +12,7 @@ class Registrarse : public QDialog
     Q_OBJECT
 
 public:
-    explicit Registrarse(QWidget *parent = 0);
+    explicit Registrarse(QWidget *parent = nullptr);
     ~Registrarse();
 
 private slots:

@@ -12,7 +12,7 @@ class Menu : public QDialog
     Q_OBJECT
 
 public:
-    explicit Menu(QWidget *parent = 0);
+    explicit Menu(const bool &rol, QWidget *parent = nullptr);
     ~Menu();
 
 private slots:
@@ -38,6 +38,7 @@ private slots:
 
 private:
     Ui::Menu *ui;
+    bool rol_;
 };
 
 #endif // MENU_H

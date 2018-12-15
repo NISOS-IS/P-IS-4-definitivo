@@ -11,6 +11,11 @@ Modificar::Modificar(const QString &dni, QWidget *parent) :
     dni_(dni)
 {
     ui->setupUi(this);
+
+    ui->lineEditTelefono->setValidator( new QIntValidator);
+    ui->lineEditCurso->setValidator( new QIntValidator);
+    ui->lineEditEquipo->setValidator( new QIntValidator);
+
     Agenda agenda;
                list<Alumno>aux;
                aux= agenda.buscarAlumno(dni.toStdString(), "", 0);

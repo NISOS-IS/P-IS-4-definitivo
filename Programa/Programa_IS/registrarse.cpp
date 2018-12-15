@@ -2,12 +2,14 @@
 #include "ui_registrarse.h"
 #include "profesor.h"
 #include "funcionesAux.h"
+#include <QMessageBox>
 
 Registrarse::Registrarse(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Registrarse)
 {
     ui->setupUi(this);
+    ui->lineEditTelefono->setValidator( new QIntValidator);
 }
 
 Registrarse::~Registrarse()
@@ -24,9 +26,10 @@ void Registrarse::on_pushButtonAceptar_clicked()
 {
     Profesor profesor, aux;
     RegUsu registro;
-    string dni, nombre, apellidos, direccion, email, fechaNacimiento, getRol, usuario, contrasena;
+    string dni, nombre, apellidos, direccion, email, fechaNacimiento, getRol, usuario, contrasena, contrasenaAux;
     int telefono;
-    bool habilitar=true, rol, funcionCorrecta=false, guardadoCorrecto=false;
+    char auxDNI[9];
+    bool habilitar=true, rol, funcionCorrecta=false, guardadoCorrecto=false, encontrado=false, guardar=true, emailRegistrado=true, usuarioRegistrado=true;
 
     QString fecha;
 
@@ -82,31 +85,68 @@ void Registrarse::on_pushButtonAceptar_clicked()
        }
        usuario= ui->lineEditUsuario->displayText().toStdString();
        //contrasena= ui->lineEditContrasena->displayText().toStdString();
-       contrasena= ui->lineEditContrasena->text().toStdString();
-
+       contrasenaAux= ui->lineEditContrasena->text().toStdString();
+       contrasena= contrasenaAux;
        aux.setDNI(dni);
+       strcpy(auxDNI, dni.c_str());
+       auxDNI[8]= toupper(auxDNI[8]);
+       dni= auxDNI;
+       if((aux.setDNI(dni))==false){
+            guardar=false;
+       }
+
        aux.setNombre(nombre);
        aux.setApellidos(apellidos);
-       aux.setTelefono(telefono);
+       if(aux.setTelefono(telefono)==false){
+           guardar=false;
+       }
        aux.setDireccion(direccion);
-       aux.setEmail(email);
-       aux.setFechaNacimiento(fechaNacimiento);
+
+        emailRegistrado= compruebaEmailProfesor(email);
+        if(emailRegistrado==false){
+            if((aux.setEmail(email))==false){
+                guardar=false;
+            }
+        }else{
+            guardar=false;
+            QMessageBox::critical(this, "Title", "Ese email ya esta registrado. Introduzca uno distinto");
+        }
+
+       if((aux.setFechaNacimiento(fechaNacimiento))==false){
+            guardar=false;
+       }
+
        aux.setRol(rol);
-       aux.setUsuario(usuario);
-       aux.setContrasena(contrasena);
 
-       strcpy(registro.usuario, usuario.c_str());
-       strcpy(registro.contrasena, contrasena.c_str());
+       usuarioRegistrado= compruebaUsuario(usuario);
+       if(usuarioRegistrado==false){
+            aux.setUsuario(usuario);
+       }else{
+           guardar=false;
+           QMessageBox::critical(this, "Title", "Ese Usuario ya esta registrado. Introduzca uno distinto");
+       }
 
-       if(aux.buscaProfesor(dni)==false){
-           funcionCorrecta= profesor.registrarProfesor(aux);
-           guardadoCorrecto= ActualizarFicheroInicio(registro);
+       if((aux.setContrasena(contrasena))==false){
+           QMessageBox::critical(this, "Title", "La contrasena debe tener mas de 4 caracteres");
+           guardar=false;
+       }
 
-           if(funcionCorrecta==true && guardadoCorrecto==true){
-               QMessageBox::information(this, "Correcto", "Profesor Guardado");
-               close();
+       if(guardar==true){
+           strcpy(registro.usuario, usuario.c_str());
+           strcpy(registro.contrasena, contrasena.c_str());
+           strcpy(registro.rol, getRol.c_str());
+           if(aux.buscaProfesor(dni)==false){
+               funcionCorrecta= profesor.registrarProfesor(aux);
+               guardadoCorrecto= ActualizarFicheroInicio(registro);
+
+               if(funcionCorrecta==true && guardadoCorrecto==true){
+                   QMessageBox::information(this, "Correcto", "Profesor Guardado");
+                   hide();
+               }else{
+                    QMessageBox::critical(this, "Error", "Profesor No Guardado");
+               }
            }else{
-                QMessageBox::critical(this, "Error", "Profesor No Guardado");
+               QMessageBox::critical(this, "Title", "DNI existente. Introduzca uno distinto");
            }
        }
     }

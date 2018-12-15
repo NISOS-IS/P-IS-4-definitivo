@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include "funcionesAux.h"
 #include "agenda.h"
+#include "profesor.h"
 
 using namespace std;
 
@@ -56,6 +57,50 @@ bool comprobarLider(list<Alumno> &aux, bool lider){
     else{
         return false;
     }
+}
+
+bool compruebaEmailProfesor(string email){
+    bool correcto = false;
+       ifstream file("profesores.bin", ios::in | ios::binary);
+       Registro aux;
+       bool encontrado = false;
+       if(file.is_open()){
+           while(!file.eof()){
+               file.read(reinterpret_cast <char*>(&aux), sizeof(Registro));
+               if(aux.email == email){
+                   encontrado = true;
+               }
+           }
+           if(encontrado==true){
+               correcto = true;
+           }
+           else{
+               correcto = false;
+           }
+       }
+       return correcto;
+}
+
+bool compruebaUsuario(string usuario){
+    bool correcto = false;
+       ifstream file("profesores.bin", ios::in | ios::binary);
+       Registro aux;
+       bool encontrado = false;
+       if(file.is_open()){
+           while(!file.eof()){
+               file.read(reinterpret_cast <char*>(&aux), sizeof(Registro));
+               if(aux.usuario == usuario){
+                   encontrado = true;
+               }
+           }
+           if(encontrado==true){
+               correcto = true;
+           }
+           else{
+               correcto = false;
+           }
+       }
+       return correcto;
 }
 
 
@@ -115,7 +160,6 @@ string convertirBoolLider(bool a){
     return aux;
 }
 
-
 /*
 Funcion convertirBool que convierte un bool en un string
 @param a
@@ -149,33 +193,6 @@ int leerlinea(char *cad, int max){
     cad[i] = '\0';
     return i;
 }
-
-
-/*
-Funcion letraDNI que calcula la letra correpondiente del dni
-@param dni
-@return char
-*/
-/*char letraDNI(int dni){
-    char letra[] = "TRWAGMYFPDXBNJZSQVHLCKE";
-    return letra[dni%23];
-}
-
-
-
-Funcion verificaDNI que comprueba que un dni es correcto
-@param dni
-@return short
-
-short verificaDNI(char *dni){
-    dni[8] = toupper(dni[8]);
-    if(strlen(dni) != 9){
-        return 0;
-    }
-    else{
-        return (letraDNI(atoi(dni)) == dni [8]);
-    }
-}*/
 
 /*
 Funcion mayusculas que convierte en mayusculas una cadena
@@ -338,136 +355,20 @@ bool modificarDatos(string dni, string nombre, string apellidos, int telefono, s
 }
 
 /*
-Funcion modificarDatos muestra al profesor las opciones que habra para modificar los datos del alumno
-@param *alumno, lider
-@return void
-
-void modificarDatos(struct RegistroAlumno *alumno, bool lider){
-    string auxStr;
-    char auxCad[100];
-    char dni[10];
-    int op, auxNum;
-
-    cout<<"Escoger opcion a modificar: "<<endl;
-    cout<<"1. Nombre"<<endl;
-    cout<<"2. Apellidos"<<endl;
-    cout<<"3. Telefono"<<endl;
-    cout<<"4. Direccion"<<endl;
-    cout<<"5. Fecha de Nacimiento"<<endl;
-    cout<<"6. Curso"<<endl;
-    cout<<"7. Equipo"<<endl;
-    cout<<"8. Lider"<<endl;
-    cout<<"9. Salir"<<endl;
-    cin>>op;
-    getchar();
-
-    switch(op){
-        case 1:
-            cout<<"Introduce Nombre: "<<endl;
-            leerlinea(auxCad, 100);
-            auxStr = auxCad;
-            auxStr = mayusculas(auxStr);
-            strcpy(auxCad, auxStr.c_str());
-            strcpy(alumno->nombre, auxCad);
-            break;
-
-        case 2:
-            cout<<"Introduce Apellidos: "<<endl;
-            leerlinea(auxCad, 100);
-            auxStr = auxCad;
-            auxStr = mayusculas(auxStr);
-            strcpy(auxCad, auxStr.c_str());
-            strcpy(alumno->apellidos, auxCad);
-            break;
-
-        case 3:
-            cout<<"Introduce Telefono: "<<endl;
-            cin>>auxNum;
-            alumno->telefono = auxNum;
-            break;
-
-        case 4:
-            cout<<"Introduce Direccion: "<<endl;
-            leerlinea(auxCad, 100);
-            auxStr = auxCad;
-            auxStr = mayusculas(auxStr);
-            strcpy(auxCad, auxStr.c_str());
-            strcpy(alumno->direccion, auxCad);
-            break;
-
-        case 5:
-            cout<<"Introduce Fecha Nacimiento: "<<endl;
-            cin>>auxStr;
-            strcpy(alumno->fechaNacimiento, auxStr.c_str());
-            break;
-
-        case 6:
-            cout<<"Introduce Curso: "<<endl;
-            cin>>auxNum;
-            (*alumno).curso = auxNum;
-            break;
-
-        case 7:
-            cout<<"Introduce Equipo: "<<endl;
-            cin>>auxNum;
-            (*alumno).equipo = auxNum;
-            break;
-
-        case 8:
-            if(((lider == true) && (strcmp(alumno->lider, "Lider")==0)) || (lider == false)){
-                cout<<"¿Lider o No Lider?"<<endl;
-                cout<<"1. Si"<<endl;
-                cout<<"2. No"<<endl;
-                cin>>auxNum;
-
-                if(auxNum == 1){
-                    strcpy(alumno->lider, "Lider");
-                }
-                else if(auxNum == 2){
-                    strcpy(alumno->lider, "No Lider");
-                }
-                getchar();
-            }
-            else{
-                cout<<"Ya existe un lider en este equipo"<<endl;
-            }
-            break;
-
-        case 9:
-            cout<<"Saliendo..."<<endl;
-            break;
-
-        default:
-            cout<<"Opcion no valida"<<endl;
-
-    }
-}
-
-/*
 Funcion mostrarListado que muestra el listado de todos los alumnos en el registro
 @return void
 */
 void mostrarListado(){
     Agenda agenda;
     list<Alumno> aux = agenda.mostrarLista();
-    for(list<Alumno>::iterator it = aux.begin(); it != aux.end(); it++){
-        cout<<"DNI: "<<it->getDNI()<<endl;
-        cout<<"Nombre: "<<it->getNombre()<<endl;
-        cout<<"Apellidos: "<<it->getApellidos()<<endl;
-        cout<<"Telefono: "<<it->getTelefono()<<endl;
-        cout<<"Direccion: "<<it->getDireccion()<<endl;
-        cout<<"Email: "<<it->getEmail()<<endl;
-        cout<<"Fecha de Nacimiento: "<<it->getFechaNacimiento()<<endl;
-        cout<<"Curso: "<<it->getCurso()<<endl;
-        cout<<"Equipo: "<<it->getEquipo()<<endl;
-        cout<<"Lider: "<<convertirBoolLider(it->getLider())<<"\n"<<endl;
-    }
     aux.clear();
 }
 
 
 /*
-
+Funcion ActualizaFicheroInicio que crea un fichero con el usuario y contraseña de los profesores
+@param RegUsu (struct)
+return bool
 */
 bool ActualizarFicheroInicio(RegUsu reg){
     ofstream file("iniciosesion.bin", ios::out | ios::binary | ios::app);

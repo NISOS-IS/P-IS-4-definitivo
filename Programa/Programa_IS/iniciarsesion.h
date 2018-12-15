@@ -12,7 +12,7 @@ class IniciarSesion : public QDialog
     Q_OBJECT
 
 public:
-    explicit IniciarSesion(QWidget *parent = 0);
+    explicit IniciarSesion(QWidget *parent = nullptr);
     ~IniciarSesion();
 
 private slots:

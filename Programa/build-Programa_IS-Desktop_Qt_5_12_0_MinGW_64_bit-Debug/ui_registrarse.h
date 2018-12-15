@@ -189,7 +189,6 @@ public:
         comboBoxRol = new QComboBox(layoutWidget);
         comboBoxRol->addItem(QString());
         comboBoxRol->addItem(QString());
-        comboBoxRol->addItem(QString());
         comboBoxRol->setObjectName(QString::fromUtf8("comboBoxRol"));
 
         horizontalLayout_8->addWidget(comboBoxRol);
@@ -261,9 +260,8 @@ public:
         label_6->setText(QApplication::translate("Registrarse", "E-mail:", nullptr));
         label_7->setText(QApplication::translate("Registrarse", "Fecha de Nacimiento:", nullptr));
         label_10->setText(QApplication::translate("Registrarse", "Rol:", nullptr));
-        comboBoxRol->setItemText(0, QString());
-        comboBoxRol->setItemText(1, QApplication::translate("Registrarse", "Ayudante", nullptr));
-        comboBoxRol->setItemText(2, QApplication::translate("Registrarse", "Coordinador", nullptr));
+        comboBoxRol->setItemText(0, QApplication::translate("Registrarse", "Ayudante", nullptr));
+        comboBoxRol->setItemText(1, QApplication::translate("Registrarse", "Coordinador", nullptr));
 
         label_8->setText(QApplication::translate("Registrarse", "Usuario:", nullptr));
         label_9->setText(QApplication::translate("Registrarse", "Contrase\303\261a:", nullptr));

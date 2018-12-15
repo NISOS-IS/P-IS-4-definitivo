@@ -12,7 +12,7 @@ class Insertar_Modificar_Alumno : public QDialog
     Q_OBJECT
 
 public:
-    explicit Insertar_Modificar_Alumno(QWidget *parent = 0);
+    explicit Insertar_Modificar_Alumno(QWidget *parent = nullptr);
     ~Insertar_Modificar_Alumno();
 
 private slots:
