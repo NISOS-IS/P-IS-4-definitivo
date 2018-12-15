@@ -194,8 +194,8 @@ bool Agenda::borrarAlumno(string dni){
     o uno solo
     */
     if(al.empty()){
-        cout<<"Agenda vacia";
-        remove("alumnos.bin");
+        cout<<"Lista vacia";
+        //remove("alumnos.bin");
         return false;
     }else{
         /* Preguntara al profesor si quiere eliminar el registro del alumno*/
@@ -247,7 +247,7 @@ list<Alumno> Agenda::mostrarLista(){
     list<Alumno> alumno;
     alumno.clear();
     Alumno aux;
-
+    
     if(in.is_open()){
         in.seekg(0, ios::end);
         j = in.tellg() / sizeof(RegistroAlumno);
@@ -255,7 +255,7 @@ list<Alumno> Agenda::mostrarLista(){
 
         //Lee todo el registro y los introduce en un objeto de clase Alumno, y el objeto estará en un list<Alumno>
         in.read((char*)&al, sizeof(RegistroAlumno));
-        do{
+        while(cont < j){
             aux.setDNI(al.dni);
             aux.setNombre(al.nombre);
             aux.setApellidos(al.apellidos);
@@ -269,7 +269,7 @@ list<Alumno> Agenda::mostrarLista(){
             alumno.push_back(aux);
             in.read((char*)&al, sizeof(RegistroAlumno));
             cont++;
-        }while(cont < j);
+        }
         in.close();
     }
     return alumno;
